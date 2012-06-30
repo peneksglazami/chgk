@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="ChGK:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/ChGK_war</output-path>
-    <root id="archive" name="ChGK_war.war">
-      <element id="artifact" artifact-name="ChGK:war exploded" />
-    </root>
-  </artifact>
-</component>
