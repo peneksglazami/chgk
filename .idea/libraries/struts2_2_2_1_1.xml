@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="struts2-2.2.1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/struts2-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/freemarker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xwork-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ognl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-spring-plugin-2.2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tiles-api-2.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tiles-core-2.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tiles-jsp-2.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-tiles-plugin-2.2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-dojo-plugin-2.2.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../Libraries/Apache Struts/struts-2.2.1.1/src/xwork-core/src/main/java" />
+      <root url="file://$PROJECT_DIR$/../../Libraries/Apache Struts/struts-2.2.1.1/src/core/src/main/java" />
+    </SOURCES>
+  </library>
+</component>

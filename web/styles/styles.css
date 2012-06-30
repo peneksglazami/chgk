@@ -1,0 +1,106 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+.main-table {
+    width: 100%;
+    height: 100%;
+    border-width: 0px;
+    border-spacing: 0px;
+}
+
+.main-table-header {
+    height: 50px;
+    background-image: url("../images/main-table-header.png");
+    font-weight: bold;
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 14pt;
+    color: #e6e6fa;
+}
+
+.main-table-header td {
+    padding: 0px 15px;
+}
+
+.main-table-body {
+    vertical-align: top;
+    background-image: url("../images/main-table-body.png");
+}
+
+.main-table-body td {
+    padding: 15px;
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 12pt;
+}
+
+.main-table-footer {
+    height: 25px;
+    background-image: url("../images/main-table-footer.png");
+}
+
+.main-table-footer td {
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.main-table-footer td a {
+    color: #e6e6fa;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+.table-body {
+}
+
+.label, .errorLabel, .errorMessage {
+    font-size: 12pt;
+    font-style: normal;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.actionLink {
+    color: #ff4500;
+}
+
+.edit-result-table td {
+    padding: 0px;
+    border-width: 1px;
+    border-spacing: 0px;
+    border-color: black;
+    border-style: solid;
+    empty-cells: show;
+}
+
+.edit-result-table .answer-col {
+    width: 24px;
+}
+
+.edit-result-table .answer-row {
+    height: 24px;
+}
+
+.list-table {
+    border-width: 1px;
+}
+
+.list-table tbody {
+    background-color: #d3d3d3;
+    cursor: pointer;
+}
+
+.list-table thead {
+    background-color: gray;
+}

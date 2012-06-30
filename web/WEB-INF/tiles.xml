@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="baseLayout" template="/template.jsp">
+        <put-attribute name="title" value="Что? Где? Когда?"/>
+    </definition>
+
+    <definition name="main" extends="baseLayout">
+        <put-attribute name="body" value="/main.jsp"/>
+    </definition>
+
+    <definition name="tournamentList" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Список турниров"/>
+        <put-attribute name="body" value="/tournament-list.jsp"/>
+    </definition>
+
+    <definition name="tournament" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Редактирование турнира"/>
+        <put-attribute name="body" value="/tournament.jsp"/>
+    </definition>
+
+    <definition name="tournamentInfo" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Турнир"/>
+        <put-attribute name="body" value="/tournament-info.jsp"/>
+    </definition>
+
+    <definition name="editTournamentResult" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Редактирование результатов турнира"/>
+        <put-attribute name="body" value="/tournament-edit-result.jsp"/>
+    </definition>
+
+    <definition name="team" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Редактирование команды"/>
+        <put-attribute name="body" value="/team.jsp"/>
+    </definition>
+</tiles-definitions>

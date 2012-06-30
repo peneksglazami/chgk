@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl"/>
+    <bean id="teamService" class="org.cherchgk.services.TeamServiceImpl"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="MYSQL"/>
+                <property name="showSql" value="true"/>
+                <property name="generateDdl" value="true"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/chgktournaments"/>
+        <!--<property name="url" value="jdbc:mysql://192.168.27.45/chgktournaments?useUnicode=true&amp;characterEncoding=Cp1251"/>-->
+        <property name="username" value="chgk"/>
+        <property name="password" value="chgk"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="tournamentListAction" scope="prototype" class="org.cherchgk.actions.TournamentListAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="editTournamentAction" scope="prototype" class="org.cherchgk.actions.EditTournamentAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="tournamentInfoAction" scope="prototype" class="org.cherchgk.actions.TournamentInfoAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="editTournamentResultAction" scope="prototype" class="org.cherchgk.actions.EditTournamentResultAction">
+        <constructor-arg ref="tournamentService"/>
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="showTournamentResultAction" scope="prototype" class="org.cherchgk.actions.ShowTournamentResultAction">
+        <constructor-arg ref="tournamentService"/>
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="newTeamAction" scope="prototype" class="org.cherchgk.actions.NewTeamAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="teamInfoAction" scope="prototype" class="org.cherchgk.actions.TeamInfoAction">
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="editTeamAction" scope="prototype" class="org.cherchgk.actions.EditTeamAction">
+        <constructor-arg ref="tournamentService"/>
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="deleteTeamAction" scope="prototype" class="org.cherchgk.actions.DeleteTeamAction">
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="editAnswerVerdictAction" scope="prototype" class="org.cherchgk.actions.EditAnswerVerdictAction">
+        <constructor-arg ref="teamService"/>
+    </bean>
+</beans>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.devMode" value="false"/>
+
+    <package name="chgk" extends="struts-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+
+        <action name="main">
+            <result type="tiles">main</result>
+        </action>
+        <action name="tournament-list" class="tournamentListAction" method="execute">
+            <result type="tiles">tournamentList</result>
+        </action>
+
+        <action name="new-tournament">
+            <result type="tiles">tournament</result>
+        </action>
+        <action name="edit-tournament" class="tournamentInfoAction">
+            <result type="tiles">tournament</result>
+        </action>
+        <action name="save-tournament" class="editTournamentAction" method="save">
+            <result name="input" type="tiles">tournament</result>
+            <result type="redirectAction">tournament-list</result>
+        </action>
+        <action name="tournament-info" class="tournamentInfoAction">
+            <result type="tiles">tournamentInfo</result>
+        </action>
+        <action name="edit-tournament-result" class="editTournamentResultAction">
+            <result type="tiles">editTournamentResult</result>
+        </action>
+        <action name="show-tournament-result" class="showTournamentResultAction">
+            <result>/tournament-result.jsp</result>
+        </action>
+
+        <action name="new-team" class="newTeamAction">
+            <result type="tiles">team</result>
+        </action>
+        <action name="edit-team" class="teamInfoAction">
+            <result type="tiles">team</result>
+        </action>
+        <action name="save-team" class="editTeamAction">
+            <result name="input" type="tiles">team</result>
+            <result type="redirectAction">
+                <param name="actionName">tournament-info</param>
+                <param name="tournamentId">${tournamentId}</param>
+            </result>
+        </action>
+        <action name="delete-team" class="deleteTeamAction">
+            <result type="redirectAction">
+                <param name="actionName">tournament-info</param>
+                <param name="tournamentId">${tournamentId}</param>
+            </result>
+        </action>
+
+        <action name="edit-answer-verdict" class="editAnswerVerdictAction">
+            <result type="freemarker">/WEB-INF/freemarker/edit-answer-verdict.ftl</result>
+        </action>
+    </package>
+</struts>
