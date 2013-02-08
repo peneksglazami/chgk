@@ -15,7 +15,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="MYSQL"/>
+                <property name="database" value="H2"/>
                 <property name="showSql" value="true"/>
                 <property name="generateDdl" value="true"/>
             </bean>
@@ -23,9 +23,8 @@
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost/chgktournaments"/>
-        <!--<property name="url" value="jdbc:mysql://192.168.27.45/chgktournaments?useUnicode=true&amp;characterEncoding=Cp1251"/>-->
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/chgktournaments"/>
         <property name="username" value="chgk"/>
         <property name="password" value="chgk"/>
     </bean>
