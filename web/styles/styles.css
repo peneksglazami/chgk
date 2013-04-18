@@ -1,11 +1,19 @@
-body {
-    padding: 0px;
-    margin: 0px;
+.page {
+    background-color: #FFFFFF;
+    margin: auto;
+    width: 1200px;
 }
 
-a {
-    text-decoration: none;
-    color: blue;
+.page-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.page-footer-content {
+    display: inline-block;
+    width: 1200px;
 }
 
 .main-table {
@@ -102,5 +110,5 @@ a {
 }
 
 .list-table thead {
-    background-color: gray;
+    background-color: lightsteelblue;
 }

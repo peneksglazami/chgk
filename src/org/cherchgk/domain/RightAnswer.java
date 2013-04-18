@@ -1,5 +1,7 @@
 package org.cherchgk.domain;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,10 +17,10 @@ public class RightAnswer {
 
     @Id
     @GeneratedValue
-    Long id;
-    Integer questionNumber;
+    private Long id;
+    private Integer questionNumber;
     @ManyToOne
-    Team team;
+    private Team team;
 
     public Long getId() {
         return id;

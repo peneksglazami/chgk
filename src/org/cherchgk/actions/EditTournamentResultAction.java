@@ -34,8 +34,6 @@ public class EditTournamentResultAction extends ActionSupport {
         long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
         tournament = tournamentService.find(tournamentId);
 
-
-
         return Action.SUCCESS;
     }
 
@@ -57,7 +55,7 @@ public class EditTournamentResultAction extends ActionSupport {
                 }
             }
             array.append("]");
-            if (i != teams.size() - 1) {
+            if (i != (teams.size() - 1)) {
                 array.append(",");
             }
         }

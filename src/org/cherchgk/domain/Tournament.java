@@ -1,6 +1,7 @@
 package org.cherchgk.domain;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,14 @@ public class Tournament implements DomainObject {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDateAsString() {
+        if (date == null) {
+            return "";
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return dateFormat.format(date);
     }
 
     public Integer getQuestionAmount() {

@@ -1,21 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <s:if test="tournaments.size > 0">
-    <table class="list-table table table-bordered">
+    <table class="striped ">
         <thead>
-        <tr>
+        <tr style="background-color:#bbbbbb">
             <th>Название турнира</th>
+            <th>Количество вопросов</th>
+            <th>Дата проведения</th>
         </tr>
         </thead>
         <tbody>
         <s:iterator var="tournament" value="tournaments">
-            <tr>
-                <s:url var="url" action="tournament-info">
-                    <s:param name="tournamentId">${tournament.id}</s:param>
-                </s:url>
-                <td onclick="javascript:document.location='<s:property value="%{url}"/>'">
-                        ${tournament.title}
-                </td>
+            <s:url var="url" action="tournament-info">
+                <s:param name="tournamentId">
+                    <s:property value="#tournament.id"/>
+                </s:param>
+            </s:url>
+            <tr style="cursor: pointer;" onclick="javascript:document.location='<s:property value="%{url}"/>'">
+                <td><s:property value="#tournament.title"/></td>
+                <td><s:property value="#tournament.questionAmount"/></td>
+                <td><s:property value="#tournament.dateAsString"/></td>
             </tr>
         </s:iterator>
         </tbody>
@@ -25,6 +29,6 @@
     <div>Пока не создано ни одного турнира</div>
 </s:else>
 <p>
-    <a href="<s:url action='new-tournament'/>" class="btn btn-primary">Создать турнир</a>
-    <a href="<s:url action='main'/>" class="btn btn-inverse">Возвратиться на главную страницу</a>
+    <a href="<s:url action='new-tournament'/>" class="button bg-color-green fg-color-white">Создать турнир</a>
+    <a href="<s:url action='main'/>" class="button">Возвратиться на главную страницу</a>
 </p>

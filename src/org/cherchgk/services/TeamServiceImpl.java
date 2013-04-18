@@ -2,6 +2,7 @@ package org.cherchgk.services;
 
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
+import org.cherchgk.utils.ActionContextHelper;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -18,6 +19,16 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
     public List<Team> findAll() {
         Query query = entityManager.createQuery("select tournament from Tournament tournament");
         return query.getResultList();
+    }
+
+    @Override
+    public void delete(Team team) {
+        Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team.id = :teamId")
+                .setParameter("teamId", team.getId());
+        for (RightAnswer rightAnswer : (List<RightAnswer>) query.getResultList()) {
+            entityManager.remove(rightAnswer);
+        }
+        entityManager.remove(team);
     }
 
     public List<RightAnswer> getTeamRightAnswers(Team team) {

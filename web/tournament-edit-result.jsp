@@ -166,3 +166,4 @@
         <td colspan="3" align="center">Что? Где? Когда?</td>
     </tr>
 </table>
+<input class="button" type="button" value="Назад" onclick="history.back()">

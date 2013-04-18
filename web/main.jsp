@@ -1,3 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<a href="<s:url action="tournament-list"/>">Список турниров</a>
+<a href="<s:url action="tournament-list"/>">
+    <div class="tile double bg-color-green">
+        <div class="tile-content">
+            <h4>Список турниров</h4>
+            <p>Переходите к редатированию турниров</p>
+        </div>
+    </div>
+</a>
