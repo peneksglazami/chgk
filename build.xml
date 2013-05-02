@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="chgk" default="all">
   
-  
+
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
   <property name="skip.tests" value="true"/>
@@ -92,10 +92,6 @@
     <pathelement location="${basedir}/lib/standard.jar"/>
   </path>
   
-  <path id="library.javac2.classpath">
-    <pathelement location="${basedir}/lib/javac2.jar"/>
-  </path>
-  
   <path id="library.spring-3.0.0.classpath">
     <pathelement location="${basedir}/lib/aopalliance.jar"/>
     <pathelement location="${basedir}/lib/org.springframework.aop-3.0.2.RELEASE.jar"/>
@@ -161,7 +157,6 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
-    <path refid="library.javac2.classpath"/>
   </path>
   
   <path id="chgk.runtime.production.module.classpath">
@@ -172,7 +167,6 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
-    <path refid="library.javac2.classpath"/>
   </path>
   
   <path id="chgk.module.classpath">
@@ -183,7 +177,6 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
-    <path refid="library.javac2.classpath"/>
   </path>
   
   <path id="chgk.runtime.module.classpath">
@@ -195,7 +188,6 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
-    <path refid="library.javac2.classpath"/>
   </path>
   
   
