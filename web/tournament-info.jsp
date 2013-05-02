@@ -16,7 +16,7 @@
     </s:url>
     <s:a href="%{editTournamentResultUrl}" cssClass="button">Редактировать результаты турнира</s:a>
 
-    <button class="bg-color-blue fg-color-white" data-role="dropdown">
+    <div class="button bg-color-blue fg-color-white" data-role="dropdown">
         <div>Просмотр результатов турнира</div>
         <ul class="dropdown-menu">
             <li>
@@ -40,7 +40,7 @@
                 <s:a href="%{showSeniorTournamentResultUrl}">Старшие школьники</s:a>
             </li>
         </ul>
-    </button>
+    </div>
 
     <s:url var="createTeamUrl" action="new-team">
         <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
