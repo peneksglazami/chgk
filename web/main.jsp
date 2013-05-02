@@ -4,7 +4,7 @@
     <div class="tile double bg-color-green">
         <div class="tile-content">
             <h4>Список турниров</h4>
-            <p>Переходите к редатированию турниров</p>
+            <p>Переходите к редактированию турниров</p>
         </div>
     </div>
 </a>
