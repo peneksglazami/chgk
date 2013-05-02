@@ -27,10 +27,11 @@
         <tr>
             <td colspan="2" align="right">
                 <s:if test="tournament == null || tournament.id == null">
-                    <s:submit cssClass="bg-color-green fg-color-white" value="Создать"/>
+                    <s:submit cssClass="bg-color-green fg-color-white" value="Создать" action="save-tournament"/>
                 </s:if>
                 <s:else>
-                    <s:submit cssClass="bg-color-green fg-color-white" value="Сохранить"/>
+                    <s:submit cssClass="bg-color-green fg-color-white" value="Сохранить" action="save-tournament"/>
+                    <s:submit cssClass="bg-color-red fg-color-white" value="Удалить" action="delete-tournament"/>
                 </s:else>
                 <input class="button" type="button" value="Отмена" onclick="history.back()">
             </td>

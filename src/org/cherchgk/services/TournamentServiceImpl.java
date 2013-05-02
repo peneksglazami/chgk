@@ -1,6 +1,5 @@
 package org.cherchgk.services;
 
-import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.Tournament;
 
@@ -12,6 +11,12 @@ import java.util.List;
  */
 public class TournamentServiceImpl extends AbstractService<Tournament> implements TournamentService {
 
+    private TeamService teamService;
+
+    public TournamentServiceImpl(TeamService teamService) {
+        this.teamService = teamService;
+    }
+
     public Tournament find(Long id) {
         return entityManager.find(Tournament.class, id);
     }
@@ -19,6 +24,13 @@ public class TournamentServiceImpl extends AbstractService<Tournament> implement
     public List<Tournament> findAll() {
         Query query = entityManager.createQuery("select tournament from Tournament tournament");
         return query.getResultList();
+    }
+
+    public void delete(Tournament tournament) {
+        for (Team team : tournament.getTeams()) {
+            teamService.delete(team);
+        }
+        entityManager.remove(tournament);
     }
 
     public int getNextTeamNumber(long tournamentId) {
