@@ -1,6 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<script type="text/javascript">
+    $(function () {
+        $.datepicker.setDefaults($.datepicker.regional[""]);
+        $("#datepicker").datepicker($.datepicker.regional["ru"]);
+    });
+</script>
 <s:form theme="simple" action="save-tournament">
     <s:hidden name="tournament.id"/>
     <table>
@@ -10,7 +16,9 @@
         </tr>
         <tr>
             <td align="right">Дата:</td>
-            <td><sx:datetimepicker name="tournament.date" displayFormat="dd.MM.yyyy"/></td>
+            <td>
+                <input type="text" id="datepicker" name="tournament.date" value="${tournament.dateAsString}"/>
+            </td>
         </tr>
         <tr>
             <td align="right">Количество вопросов:</td>

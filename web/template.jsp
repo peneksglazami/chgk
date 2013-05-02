@@ -6,10 +6,14 @@
 <html lang="en">
 <head>
     <sx:head compressed="true" debug="false" cache="true" parseContent="false"/>
+    <link rel="stylesheet" href="frameworks/jquery/themes/base/minified/jquery-ui.min.css"/>
     <link rel="stylesheet" href="frameworks/metro-ui/css/modern.css">
     <link rel="stylesheet" href="frameworks/metro-ui/css/modern-responsive.css">
     <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
-    <script type="text/javascript" src="frameworks/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="frameworks/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="frameworks/jquery/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker.min.js"></script>
+    <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker-ru.min.js"></script>
     <script type="text/javascript" src="frameworks/metro-ui/javascript/dropdown.js"></script>
     <title><tiles:getAsString name="title" ignore="true"/></title>
 </head>
