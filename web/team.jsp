@@ -32,6 +32,11 @@
     <s:hidden name="team.id"/>
     <table>
         <tr>
+            <td colspan="2">
+                <s:fielderror/>
+            </td>
+        </tr>
+        <tr>
             <td align="right">Номер</td>
             <td><s:textfield name="team.number" size="10"/></td>
         </tr>

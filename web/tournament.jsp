@@ -37,6 +37,11 @@
     <s:hidden name="tournament.id"/>
     <table>
         <tr>
+            <td colspan="2">
+                <s:fielderror/>
+            </td>
+        </tr>
+        <tr>
             <td align="right">Название:</td>
             <td><s:textfield name="tournament.title" size="50"/></td>
         </tr>

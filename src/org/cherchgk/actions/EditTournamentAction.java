@@ -32,7 +32,7 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
             }
             if (tournament.getQuestionAmount() == null) {
                 addFieldError("tournament.questionAmount", "Не указано количество вопросов");
-            } else if ((tournament.getQuestionAmount() < 1) && (tournament.getQuestionAmount() > 100)) {
+            } else if ((tournament.getQuestionAmount() < 1) || (tournament.getQuestionAmount() > 100)) {
                 addFieldError("tournament.questionAmount", "Количество вопросов должно быть от 1 до 100");
             }
         }
