@@ -14,6 +14,7 @@
     <script type="text/javascript" src="frameworks/jquery/jquery.ui.core.min.js"></script>
     <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker.min.js"></script>
     <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker-ru.min.js"></script>
+    <script type="text/javascript" src="frameworks/metro-ui/javascript/dialog.js"></script>
     <script type="text/javascript" src="frameworks/metro-ui/javascript/dropdown.js"></script>
     <title><tiles:getAsString name="title" ignore="true"/></title>
 </head>

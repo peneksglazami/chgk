@@ -1,6 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<s:form theme="simple">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#deleteButton').click(function (e) {
+            $.Dialog({
+                'title': 'Удаление команды',
+                'content': 'Вы точно хотите удалить команду? Вся информация о команде будет полностью удалена.',
+                'overlay': true,
+                'buttonsAlign': 'right',
+                'buttons': {
+                    'Да': {
+                        'action': function () {
+                            $('<input />').attr('type', 'hidden')
+                                    .attr('name', 'action:delete-team')
+                                    .attr('value', 'Удалить')
+                                    .appendTo('#edit-team');
+                            document.getElementById("edit-team").submit();
+                        }
+                    },
+                    'Нет': {
+                        'action': function () {
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
+<s:form theme="simple" id="edit-team">
     <s:hidden name="tournamentId" value="%{#parameters.tournamentId}"/>
     <s:hidden name="team.id"/>
     <table>
@@ -23,7 +50,7 @@
                 </s:if>
                 <s:else>
                     <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-team" method="save"/>
-                    <s:submit value="Удалить" cssClass="bg-color-red fg-color-white" action="delete-team"/>
+                    <input id="deleteButton" type="button" class="button bg-color-red fg-color-white" value="Удалить"/>
                 </s:else>
                 <input class="button" type="button" value="Отмена" onclick="history.back()">
             </td>
