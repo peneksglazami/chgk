@@ -210,7 +210,7 @@
   
   <target name="compile.module.chgk.production" description="Compile module ChGK; production classes">
     <mkdir dir="${chgk.output.dir}"/>
-    <javac destdir="${chgk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+    <javac destdir="${chgk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" encoding="UTF-8">
       <compilerarg line="${compiler.args.chgk}"/>
       <bootclasspath refid="chgk.module.bootclasspath"/>
       <classpath refid="chgk.module.production.classpath"/>
