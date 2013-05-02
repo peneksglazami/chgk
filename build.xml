@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="chgk" default="all">
+  
+  
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.commons.classpath">
+    <pathelement location="${basedir}/lib/commons-beanutils-1.7.0.jar"/>
+    <pathelement location="${basedir}/lib/commons-collections-3.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-digester-2.0.jar"/>
+    <pathelement location="${basedir}/lib/commons-fileupload.jar"/>
+    <pathelement location="${basedir}/lib/commons-io.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging.jar"/>
+  </path>
+  
+  <path id="library.db-drivers.classpath">
+    <pathelement location="${basedir}/lib/h2-1.3.170.jar"/>
+    <pathelement location="${basedir}/lib/mysql-connector-java-5.0.4-bin.jar"/>
+  </path>
+  
+  <path id="library.hibernate-3.6.0.classpath">
+    <pathelement location="${basedir}/lib/antlr-2.7.6.jar"/>
+    <pathelement location="${basedir}/lib/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+    <pathelement location="${basedir}/lib/hibernate3.jar"/>
+    <pathelement location="${basedir}/lib/javassist-3.12.0.GA.jar"/>
+    <pathelement location="${basedir}/lib/jta-1.1.jar"/>
+    <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
+  </path>
+  
+  <path id="library.java-ee.classpath">
+    <pathelement location="${basedir}/lib/jstl.jar"/>
+    <pathelement location="${basedir}/lib/servlet-api.jar"/>
+    <pathelement location="${basedir}/lib/standard.jar"/>
+  </path>
+  
+  <path id="library.javac2.classpath">
+    <pathelement location="${basedir}/lib/javac2.jar"/>
+  </path>
+  
+  <path id="library.spring-3.0.0.classpath">
+    <pathelement location="${basedir}/lib/aopalliance.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.aop-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.asm-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.aspects-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.beans-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.context-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.context.support-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.core-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.expression-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.instrument-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.instrument.tomcat-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.jdbc-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.jms-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.orm-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.oxm-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.test-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.transaction-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.web-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.web.portlet-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.web.servlet-3.0.2.RELEASE.jar"/>
+    <pathelement location="${basedir}/lib/org.springframework.web.struts-3.0.2.RELEASE.jar"/>
+  </path>
+  
+  <path id="library.struts2-2.2.1.1.classpath">
+    <pathelement location="${basedir}/lib/freemarker.jar"/>
+    <pathelement location="${basedir}/lib/ognl.jar"/>
+    <pathelement location="${basedir}/lib/struts2-core.jar"/>
+    <pathelement location="${basedir}/lib/struts2-dojo-plugin-2.2.1.1.jar"/>
+    <pathelement location="${basedir}/lib/struts2-spring-plugin-2.2.1.1.jar"/>
+    <pathelement location="${basedir}/lib/struts2-tiles-plugin-2.2.1.1.jar"/>
+    <pathelement location="${basedir}/lib/tiles-api-2.0.6.jar"/>
+    <pathelement location="${basedir}/lib/tiles-core-2.0.6.jar"/>
+    <pathelement location="${basedir}/lib/tiles-jsp-2.0.6.jar"/>
+    <pathelement location="${basedir}/lib/xwork-core.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module ChGK -->
+  
+  <dirname property="module.chgk.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.chgk" value="${compiler.args}"/>
+  
+  <property name="chgk.output.dir" value="${module.chgk.basedir}/out/production/ChGK"/>
+  <property name="chgk.testoutput.dir" value="${module.chgk.basedir}/out/test/ChGK"/>
+  
+  <path id="chgk.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="chgk.module.production.classpath">
+    <path refid="library.struts2-2.2.1.1.classpath"/>
+    <path refid="library.spring-3.0.0.classpath"/>
+    <path refid="library.hibernate-3.6.0.classpath"/>
+    <path refid="library.db-drivers.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.java-ee.classpath"/>
+    <path refid="library.javac2.classpath"/>
+  </path>
+  
+  <path id="chgk.runtime.production.module.classpath">
+    <pathelement location="${chgk.output.dir}"/>
+    <path refid="library.struts2-2.2.1.1.classpath"/>
+    <path refid="library.spring-3.0.0.classpath"/>
+    <path refid="library.hibernate-3.6.0.classpath"/>
+    <path refid="library.db-drivers.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.java-ee.classpath"/>
+    <path refid="library.javac2.classpath"/>
+  </path>
+  
+  <path id="chgk.module.classpath">
+    <pathelement location="${chgk.output.dir}"/>
+    <path refid="library.struts2-2.2.1.1.classpath"/>
+    <path refid="library.spring-3.0.0.classpath"/>
+    <path refid="library.hibernate-3.6.0.classpath"/>
+    <path refid="library.db-drivers.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.java-ee.classpath"/>
+    <path refid="library.javac2.classpath"/>
+  </path>
+  
+  <path id="chgk.runtime.module.classpath">
+    <pathelement location="${chgk.testoutput.dir}"/>
+    <pathelement location="${chgk.output.dir}"/>
+    <path refid="library.struts2-2.2.1.1.classpath"/>
+    <path refid="library.spring-3.0.0.classpath"/>
+    <path refid="library.hibernate-3.6.0.classpath"/>
+    <path refid="library.db-drivers.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.java-ee.classpath"/>
+    <path refid="library.javac2.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.chgk">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.chgk">
+    <patternset refid="excluded.from.module.chgk"/>
+  </patternset>
+  
+  <path id="chgk.module.sourcepath">
+    <dirset dir="${module.chgk.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.chgk" depends="compile.module.chgk.production,compile.module.chgk.tests" description="Compile module ChGK"/>
+  
+  <target name="compile.module.chgk.production" description="Compile module ChGK; production classes">
+    <mkdir dir="${chgk.output.dir}"/>
+    <javac destdir="${chgk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.chgk}"/>
+      <bootclasspath refid="chgk.module.bootclasspath"/>
+      <classpath refid="chgk.module.production.classpath"/>
+      <src refid="chgk.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.chgk"/>
+    </javac>
+    
+    <copy todir="${chgk.output.dir}">
+      <fileset dir="${module.chgk.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.chgk.tests" depends="compile.module.chgk.production" description="compile module ChGK; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.chgk" description="cleanup module">
+    <delete dir="${chgk.output.dir}"/>
+    <delete dir="${chgk.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.chgk, clean.artifact.chgk:war_exploded" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.chgk" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.chgk:war" value="${basedir}/out/artifacts/ChGK_war"/>
+    <property name="artifact.output.chgk:war_exploded" value="${basedir}/out/artifacts/ChGK_war_exploded"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.chgk.war" value="${artifacts.temp.dir}/chgk.war"/>
+  </target>
+  
+  <target name="clean.artifact.chgk:war_exploded" description="clean ChGK:war exploded artifact output">
+    <delete dir="${artifact.output.chgk:war_exploded}"/>
+  </target>
+  
+  <target name="artifact.chgk:war" depends="init.artifacts, artifact.chgk:war_exploded" description="Build &#39;ChGK:war&#39; artifact">
+    <property name="artifact.temp.output.chgk:war" value="${artifacts.temp.dir}/ChGK_war"/>
+    <mkdir dir="${artifact.temp.output.chgk:war}"/>
+    <zip destfile="${temp.jar.path.chgk.war}">
+      <zipfileset dir="${artifact.output.chgk:war_exploded}"/>
+    </zip>
+    <copy file="${temp.jar.path.chgk.war}" tofile="${artifact.temp.output.chgk:war}/chgk.war"/>
+  </target>
+  
+  <target name="artifact.chgk:war_exploded" depends="init.artifacts, compile.module.chgk" description="Build &#39;ChGK:war exploded&#39; artifact">
+    <mkdir dir="${artifact.output.chgk:war_exploded}"/>
+    <copy todir="${artifact.output.chgk:war_exploded}">
+      <fileset dir="${basedir}/web"/>
+    </copy>
+    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF"/>
+    <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/web.xml"/>
+    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF"/>
+    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/classes"/>
+    <copy todir="${artifact.output.chgk:war_exploded}/WEB-INF/classes">
+      <fileset dir="${chgk.output.dir}"/>
+    </copy>
+    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/classes/META-INF"/>
+    <copy file="${basedir}/src/META-INF/persistence.xml" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/classes/META-INF/persistence.xml"/>
+    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/lib"/>
+    <copy file="${basedir}/lib/struts2-core.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-core.jar"/>
+    <copy file="${basedir}/lib/freemarker.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/freemarker.jar"/>
+    <copy file="${basedir}/lib/xwork-core.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/xwork-core.jar"/>
+    <copy file="${basedir}/lib/ognl.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/ognl.jar"/>
+    <copy file="${basedir}/lib/struts2-spring-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-spring-plugin-2.2.1.1.jar"/>
+    <copy file="${basedir}/lib/tiles-api-2.0.6.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/tiles-api-2.0.6.jar"/>
+    <copy file="${basedir}/lib/tiles-core-2.0.6.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/tiles-core-2.0.6.jar"/>
+    <copy file="${basedir}/lib/tiles-jsp-2.0.6.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/tiles-jsp-2.0.6.jar"/>
+    <copy file="${basedir}/lib/struts2-tiles-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-tiles-plugin-2.2.1.1.jar"/>
+    <copy file="${basedir}/lib/struts2-dojo-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-dojo-plugin-2.2.1.1.jar"/>
+    <copy file="${basedir}/lib/aopalliance.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/aopalliance.jar"/>
+    <copy file="${basedir}/lib/org.springframework.beans-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.beans-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.core-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.core-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.web.struts-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.web.struts-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.instrument-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.instrument-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.jms-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.jms-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.asm-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.asm-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.context-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.context-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.expression-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.expression-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.jdbc-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.jdbc-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.aop-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.aop-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.orm-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.orm-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.context.support-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.context.support-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.transaction-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.transaction-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.web-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.web-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.web.portlet-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.web.portlet-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.web.servlet-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.web.servlet-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.aspects-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.aspects-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.oxm-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.oxm-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.instrument.tomcat-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.instrument.tomcat-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/org.springframework.test-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.test-3.0.2.RELEASE.jar"/>
+    <copy file="${basedir}/lib/mysql-connector-java-5.0.4-bin.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/mysql-connector-java-5.0.4-bin.jar"/>
+    <copy file="${basedir}/lib/h2-1.3.170.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/h2-1.3.170.jar"/>
+    <copy file="${basedir}/lib/antlr-2.7.6.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/antlr-2.7.6.jar"/>
+    <copy file="${basedir}/lib/slf4j-api-1.6.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+    <copy file="${basedir}/lib/jta-1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jta-1.1.jar"/>
+    <copy file="${basedir}/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+    <copy file="${basedir}/lib/dom4j-1.6.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/dom4j-1.6.1.jar"/>
+    <copy file="${basedir}/lib/javassist-3.12.0.GA.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/javassist-3.12.0.GA.jar"/>
+    <copy file="${basedir}/lib/hibernate3.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/hibernate3.jar"/>
+    <copy file="${basedir}/lib/commons-collections-3.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-collections-3.1.jar"/>
+    <copy file="${basedir}/lib/commons-beanutils-1.7.0.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+    <copy file="${basedir}/lib/commons-logging.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-logging.jar"/>
+    <copy file="${basedir}/lib/commons-io.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-io.jar"/>
+    <copy file="${basedir}/lib/commons-fileupload.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-fileupload.jar"/>
+    <copy file="${basedir}/lib/commons-digester-2.0.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/commons-digester-2.0.jar"/>
+    <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
+    <copy file="${basedir}/lib/jstl.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jstl.jar"/>
+    <copy file="${basedir}/lib/standard.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/standard.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">
+    <mkdir dir="${artifact.output.chgk:war}"/>
+    <copy todir="${artifact.output.chgk:war}">
+      <fileset dir="${artifact.temp.output.chgk:war}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
