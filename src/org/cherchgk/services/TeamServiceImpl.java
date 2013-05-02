@@ -2,7 +2,6 @@ package org.cherchgk.services;
 
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
-import org.cherchgk.utils.ActionContextHelper;
 
 import javax.persistence.Query;
 import java.util.List;

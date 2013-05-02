@@ -8,7 +8,9 @@
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl"/>
+    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl">
+        <constructor-arg ref="teamService"/>
+    </bean>
     <bean id="teamService" class="org.cherchgk.services.TeamServiceImpl"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -40,6 +42,10 @@
     </bean>
 
     <bean id="editTournamentAction" scope="prototype" class="org.cherchgk.actions.EditTournamentAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="deleteTournamentAction" scope="prototype" class="org.cherchgk.actions.DeleteTournamentAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 

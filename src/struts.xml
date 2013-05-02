@@ -30,6 +30,9 @@
             <result name="input" type="tiles">tournament</result>
             <result type="redirectAction">tournament-list</result>
         </action>
+        <action name="delete-tournament" class="deleteTournamentAction">
+            <result type="redirectAction">tournament-list</result>
+        </action>
         <action name="tournament-info" class="tournamentInfoAction">
             <result type="tiles">tournamentInfo</result>
         </action>
