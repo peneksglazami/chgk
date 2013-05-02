@@ -50,7 +50,7 @@
 
 <s:if test="tournament.teams.size > 0">
     <b>Список зарегистрированных команд</b>
-    <table class="list-table table table-bordered">
+    <table class="list-table table table-bordered row-hovered">
         <col width="20px"/>
         <col width="50px"/>
         <col/>

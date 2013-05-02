@@ -112,3 +112,7 @@
 .list-table thead {
     background-color: lightsteelblue;
 }
+
+table.row-hovered tbody tr:hover {
+    background-color: #ff4500;
+}
