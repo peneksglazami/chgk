@@ -28,8 +28,15 @@ public class EditTeamAction extends ActionSupport implements Preparable {
 
     @Override
     public void validate() {
+        long tournamentId = (team.getTournament() == null) ? Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId")) : team.getTournament().getId();
+        Tournament tournament = tournamentService.find(tournamentId);
         if ("".equals(team.getName())) {
             addFieldError("team.name", "Не указано название команды");
+        }
+        for (Team t : tournament.getTeams()) {
+            if (!t.getId().equals(team.getId()) && t.getName().equals(team.getName())) {
+                addFieldError("team.name", "Команда с таким названием уже зарегистрирована на турнир");
+            }
         }
         if (team.getNumber() == null) {
             addFieldError("team.number", "Не указано номер команды");
@@ -37,8 +44,6 @@ public class EditTeamAction extends ActionSupport implements Preparable {
             addFieldError("team.number", "Номер команды должен быть больше нуля");
         } else {
             // проверим, что указанный номер ещё не занят
-            long tournamentId = team.getTournament() == null ? Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId")) : team.getTournament().getId();
-            Tournament tournament = tournamentService.find(tournamentId);
             for (Team t : tournament.getTeams()) {
                 if (!t.getId().equals(team.getId()) && team.getNumber().equals(t.getNumber())) {
                     addFieldError("team.number", "Такой номер уже присвоен другой команде");
