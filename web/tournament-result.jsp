@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Что? Где? Когда? - Результаты турнира</title>
+    <title>Что? Где? Когда? - Результаты турнира<s:if test="teamCategory != null"> - <s:property value="teamCategory.title"/></s:if></title>
 </head>
 <body>
 <table width="590px" align="center">
@@ -16,10 +16,10 @@
             <s:date name="tournament.date" format="dd.MM.yyyy"/>
         </td>
     </tr>
-    <s:if test="teamType != null">
+    <s:if test="teamCategory != null">
         <tr>
             <td align="center" colspan="5" style="font-size: 16pt; font-weight: bold;">
-                <s:property value="teamType.title"/>
+                <s:property value="teamCategory.title"/>
             </td>
         </tr>
     </s:if>
@@ -34,9 +34,9 @@
     </tr>
     <s:iterator var="teamResult" value="teamResults">
         <tr>
-            <s:if test="teamType==null">
+            <s:if test="teamCategory==null && tournament.teamCategories.size > 0">
                 <td align="left" style="padding: 5px; font-size: 14pt;" width="20px">
-                    ${teamResult.team.type.name == 'JUNIOR' ? 'мш' : 'сш'}
+                    ${teamResult.team.teamCategory.title}
                 </td>
                 <td align="left" style="padding: 5px; font-size: 14pt;" width="330px">${teamResult.team.name}</td>
             </s:if>

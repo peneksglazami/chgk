@@ -31,6 +31,38 @@
                 }
             });
         });
+
+        $('#addCategoryLink').click(function (e) {
+            $.Dialog({
+                'title': 'Добавление категории',
+                'content': 'Название категории: <input id="categoryTitle" type="text">',
+                'overlay': true,
+                'buttonsAlign': 'right',
+                'buttons': {
+                    'Добавить': {
+                        'action': function () {
+                            var value = Utils.htmlEncode($("#categoryTitle").val());
+                            var id = new Date().getTime();
+                            $("#categoriesList").append('<div id="new_category_' + id + '">'
+                                    + value + ' <a id="delete_new_category_' + id + '" style="cursor: pointer"'
+                                    + id + '>Удалить</a>' +
+                                    '<input type="hidden" name="new_category_' + id + '" value="' + value + '"></div>');
+                            $("#delete_new_category_" + id).click(function (e) {
+                                $("#new_category_" + id).remove();
+                            });
+                        }
+                    },
+                    'Отмена': {
+                        'action': function () {
+                        }
+                    }
+                }
+            });
+        });
+
+        $("a[id^='delete_category']").click(function (e) {
+            $(this).parent().remove();
+        });
     });
 </script>
 <s:form theme="simple" id="edit-tournament">
@@ -54,6 +86,21 @@
         <tr>
             <td align="right">Количество вопросов:</td>
             <td><s:textfield name="tournament.questionAmount" size="2"/></td>
+        </tr>
+        <tr>
+            <td align="right">Категории команд:</td>
+            <td>
+                <div id="categoriesList">
+                    <s:if test="tournament != null || tournament.id != null || tournament.teamCategories.size > 0">
+                        <s:iterator var="category" value="tournament.teamCategories">
+                            <div>
+                                ${category.title} <a id="delete_category_${category.id}" style="cursor: pointer">Удалить</a><input type="hidden" name="category_${category.id}" value="${category.title}">
+                            </div>
+                        </s:iterator>
+                    </s:if>
+                </div>
+                <a id="addCategoryLink" style="cursor: pointer">Добавить категорию</a>
+            </td>
         </tr>
         <tr>
             <td colspan="2" align="right">

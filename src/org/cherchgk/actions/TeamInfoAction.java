@@ -3,8 +3,11 @@ package org.cherchgk.actions;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import org.cherchgk.domain.Team;
+import org.cherchgk.domain.Tournament;
 import org.cherchgk.services.TeamService;
 import org.cherchgk.utils.ActionContextHelper;
+
+import java.util.Map;
 
 /**
  * Действие получения информации по команде
@@ -31,5 +34,13 @@ public class TeamInfoAction extends ActionSupport implements Preparable {
 
     public long tournamentId() {
         return team.getTournament().getId();
+    }
+
+    public Tournament getTournament() {
+        return team.getTournament();
+    }
+
+    public Map<Long, String> getTeamCategories() {
+        return team.getTournament().getTeamCategoriesMap();
     }
 }

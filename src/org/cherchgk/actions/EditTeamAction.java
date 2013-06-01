@@ -4,10 +4,13 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import org.cherchgk.domain.Team;
+import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
 import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
+
+import java.util.Map;
 
 /**
  * Действие создания и редактирования описания команды
@@ -19,7 +22,7 @@ public class EditTeamAction extends ActionSupport implements Preparable {
     private TournamentService tournamentService;
     private TeamService teamService;
     private Team team;
-    private Long tournamentId;
+    private Tournament tournament;
 
     public EditTeamAction(TournamentService tournamentService, TeamService teamService) {
         this.tournamentService = tournamentService;
@@ -37,8 +40,6 @@ public class EditTeamAction extends ActionSupport implements Preparable {
             addFieldError("team.number", "Номер команды должен быть больше нуля");
         } else {
             // проверим, что указанный номер ещё не занят
-            long tournamentId = team.getTournament() == null ? Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId")) : team.getTournament().getId();
-            Tournament tournament = tournamentService.find(tournamentId);
             for (Team t : tournament.getTeams()) {
                 if (!t.getId().equals(team.getId()) && team.getNumber().equals(t.getNumber())) {
                     addFieldError("team.number", "Такой номер уже присвоен другой команде");
@@ -53,17 +54,15 @@ public class EditTeamAction extends ActionSupport implements Preparable {
         if ((teamId != null) && !"".equals(teamId)) {
             team = teamService.find(Long.valueOf(teamId));
         }
+        Long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournament.id"));
+        tournament = tournamentService.find(tournamentId);
     }
 
     public String save() {
         synchronized (EditTeamAction.class) {
             if (team.getTournament() == null) {
-                tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
-                Tournament tournament = tournamentService.find(tournamentId);
                 team.setTournament(tournament);
                 tournament.getTeams().add(team);
-            } else {
-                tournamentId = team.getTournament().getId();
             }
             teamService.save(team);
         }
@@ -75,6 +74,10 @@ public class EditTeamAction extends ActionSupport implements Preparable {
         return Action.SUCCESS;
     }
 
+    public Tournament getTournament() {
+        return tournament;
+    }
+
     public Team getTeam() {
         return team;
     }
@@ -83,11 +86,16 @@ public class EditTeamAction extends ActionSupport implements Preparable {
         this.team = team;
     }
 
-    public Long getTournamentId() {
-        return tournamentId;
+    public void setTeamCategory(Long teamCategoryId) {
+        for (TeamCategory category : tournament.getTeamCategories()) {
+            if (category.getId().equals(teamCategoryId)) {
+                team.setTeamCategory(category);
+                break;
+            }
+        }
     }
 
-    public void setTournamentId(Long tournamentId) {
-        this.tournamentId = tournamentId;
+    public Map<Long, String> getTeamCategories() {
+        return tournament.getTeamCategoriesMap();
     }
 }

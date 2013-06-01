@@ -3,8 +3,10 @@ package org.cherchgk.domain;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Команда
@@ -14,32 +16,14 @@ import java.util.Collection;
 @Entity
 public class Team implements DomainObject {
 
-    public enum Type {
-        JUNIOR("Младшие школьники"),
-        SENIOR("Старшие школьники");
-
-        private String title;
-
-        private Type(String title) {
-            this.title = title;
-        }
-
-        public String getTitle() {        
-            return title;
-        }
-        
-        public String getName() {
-            return name();
-        }
-    }
-
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private Integer number;
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private TeamCategory teamCategory;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Tournament tournament;
@@ -76,11 +60,11 @@ public class Team implements DomainObject {
         this.tournament = tournament;
     }
 
-    public Type getType() {
-        return type;
+    public TeamCategory getTeamCategory() {
+        return teamCategory;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setTeamCategory(TeamCategory teamCategory) {
+        this.teamCategory = teamCategory;
     }
 }

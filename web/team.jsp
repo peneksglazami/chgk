@@ -28,7 +28,7 @@
     });
 </script>
 <s:form theme="simple" id="edit-team">
-    <s:hidden name="tournamentId" value="%{#parameters.tournamentId}"/>
+    <s:hidden name="tournament.id"/>
     <s:hidden name="team.id"/>
     <table>
         <tr>
@@ -44,10 +44,12 @@
             <td align="right">Название</td>
             <td><s:textfield name="team.name" size="50"/></td>
         </tr>
-        <tr>
-            <td align="right">Возрастная группа</td>
-            <td><s:select name="team.type" list="#{'JUNIOR':'Младшие школьники', 'SENIOR':'Старшие школьники'}"/></td>
-        </tr>
+        <s:if test="tournament.teamCategories.size > 0">
+            <tr>
+                <td align="right">Категория команды</td>
+                <td><s:select name="teamCategory" list="teamCategories" value="team.teamCategory.id"/></td>
+            </tr>
+        </s:if>
         <tr>
             <td colspan="2" align="right">
                 <s:if test="team == null || team.id == null">

@@ -3,7 +3,9 @@ package org.cherchgk.domain;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Турнир
@@ -23,6 +25,9 @@ public class Tournament implements DomainObject {
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
     private List<Team> teams;
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("title")
+    private List<TeamCategory> teamCategories;
 
     public Long getId() {
         return id;
@@ -70,5 +75,29 @@ public class Tournament implements DomainObject {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+
+    public List<TeamCategory> getTeamCategories() {
+        return teamCategories;
+    }
+
+    public void setTeamCategories(List<TeamCategory> teamCategories) {
+        this.teamCategories = teamCategories;
+    }
+
+    /**
+     * Получить информацию о категориях команд, разрешённых на турнире
+     * в виде ассоциативного массива (ключ - идентификатор категории;
+     * значение - название категории).
+     *
+     * @return ассоциативный массив с информацией о категориях, разрешённых
+     *         на турнире.
+     */
+    public Map<Long, String> getTeamCategoriesMap() {
+        Map<Long, String> teamCategories = new LinkedHashMap<Long, String>();
+        for (TeamCategory category : getTeamCategories()) {
+            teamCategories.put(category.getId(), category.getTitle());
+        }
+        return teamCategories;
     }
 }
