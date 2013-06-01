@@ -4,11 +4,14 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
+import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
 import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,20 +27,32 @@ public class ShowTournamentResultAction extends ActionSupport {
     private TeamService teamService;
     private List<TeamResult> teamResults;
     private Tournament tournament;
-    private Team.Type teamType;
+    private TeamCategory teamCategory;
+    private EntityManager entityManager;
 
     public ShowTournamentResultAction(TournamentService tournamentService, TeamService teamService) {
         this.tournamentService = tournamentService;
         this.teamService = teamService;
     }
 
+    @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     public String execute() throws Exception {
         long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
-        if (ActionContextHelper.getRequestParameterValue("teamType") != null) {
-            teamType = Team.Type.valueOf(ActionContextHelper.getRequestParameterValue("teamType"));
-        }
         tournament = tournamentService.find(tournamentId);
+        if (ActionContextHelper.getRequestParameterValue("teamCategoryId") != null) {
+            long teamCategoryId = Long.valueOf(ActionContextHelper.getRequestParameterValue("teamCategoryId"));
+            for (TeamCategory category : tournament.getTeamCategories()) {
+                if (category.getId().equals(teamCategoryId)) {
+                    teamCategory = category;
+                    break;
+                }
+            }
+        }
         List<Team> teams = tournament.getTeams();
 
         int[] questionsRanking = new int[tournament.getQuestionAmount()];
@@ -65,10 +80,10 @@ public class ShowTournamentResultAction extends ActionSupport {
             teamResults.add(new TeamResult(teams.get(i), teamSum[i], teamRanking[i]));
         }
 
-        if (teamType != null) {
+        if (teamCategory != null) {
             List<TeamResult> filteredTeamResults = new ArrayList<TeamResult>();
             for (TeamResult teamResult : teamResults) {
-                if (teamResult.getTeam().getType() == teamType) {
+                if (teamCategory.equals(teamResult.getTeam().getTeamCategory())) {
                     filteredTeamResults.add(teamResult);
                 }
             }
@@ -105,7 +120,7 @@ public class ShowTournamentResultAction extends ActionSupport {
         return tournament;
     }
 
-    public Team.Type getTeamType() {
-        return teamType;
+    public TeamCategory getTeamCategory() {
+        return teamCategory;
     }
 }

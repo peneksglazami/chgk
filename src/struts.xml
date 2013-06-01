@@ -53,7 +53,7 @@
             <result name="input" type="tiles">team</result>
             <result type="redirectAction">
                 <param name="actionName">tournament-info</param>
-                <param name="tournamentId">${tournamentId}</param>
+                <param name="tournamentId">${tournament.id}</param>
             </result>
         </action>
         <action name="delete-team" class="deleteTeamAction">
