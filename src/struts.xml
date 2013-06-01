@@ -59,7 +59,7 @@
         <action name="delete-team" class="deleteTeamAction">
             <result type="redirectAction">
                 <param name="actionName">tournament-info</param>
-                <param name="tournamentId">${tournament.id}</param>
+                <param name="tournamentId">${tournamentId}</param>
             </result>
         </action>
 
