@@ -8,7 +8,7 @@ import javax.persistence.*;
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 @Entity
-public class TeamCategory {
+public class TeamCategory implements Comparable<TeamCategory> {
 
     @Id
     @GeneratedValue
@@ -46,6 +46,18 @@ public class TeamCategory {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(TeamCategory o) {
+        if (this == o) return 0;
+        if (o.title == null) {
+            return (title == null) ? 0 : 1;
+        }
+        if (title == null) {
+            return -1;
+        }
+        return title.compareTo(o.title);
     }
 
     public Long getId() {

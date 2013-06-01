@@ -92,9 +92,17 @@
             <td>
                 <div id="categoriesList">
                     <s:if test="tournament != null || tournament.id != null || tournament.teamCategories.size > 0">
+                        <s:set var="newCategoryId" value="%{0}"/>
                         <s:iterator var="category" value="tournament.teamCategories">
                             <div>
-                                ${category.title} <a id="delete_category_${category.id}" style="cursor: pointer">Удалить</a><input type="hidden" name="category_${category.id}" value="${category.title}">
+                                    ${category.title} <a id="delete_category_${category.id}" style="cursor: pointer">Удалить</a>
+                                <s:if test="category.id != null">
+                                    <input type="hidden" name="category_${category.id}" value="${category.title}">
+                                </s:if>
+                                <s:else>
+                                    <s:set var="newCategoryId" value="%{#newCategoryId + 1}"/>
+                                    <input type="hidden" name="new_category_${newCategoryId}" value="${category.title}"/>
+                                </s:else>
                             </div>
                         </s:iterator>
                     </s:if>

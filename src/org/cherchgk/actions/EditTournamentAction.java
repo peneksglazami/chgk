@@ -9,6 +9,7 @@ import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
     @Override
     public void validate() {
         if (tournament != null) {
+            updateTeamCategories();
             if ("".equals(tournament.getTitle())) {
                 addFieldError("tournament.title", "Не указано название турнира");
             }
@@ -50,6 +52,11 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
     }
 
     public String save() {
+        tournamentService.save(tournament);
+        return Action.SUCCESS;
+    }
+
+    private void updateTeamCategories() {
         List<TeamCategory> newTeamCategoryList = new ArrayList<TeamCategory>();
         if (tournament.getTeamCategories() != null) {
             for (TeamCategory teamCategory : tournament.getTeamCategories()) {
@@ -64,15 +71,13 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
                 newTeamCategoryList.add(new TeamCategory(ActionContextHelper.getRequestParameterValue(paramName), tournament));
             }
         }
+        Collections.sort(newTeamCategoryList);
         if (tournament.getTeamCategories() == null) {
             tournament.setTeamCategories(newTeamCategoryList);
         } else {
             tournament.getTeamCategories().clear();
             tournament.getTeamCategories().addAll(newTeamCategoryList);
         }
-
-        tournamentService.save(tournament);
-        return Action.SUCCESS;
     }
 
     public Tournament getTournament() {
