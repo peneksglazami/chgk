@@ -31,8 +31,6 @@ public class EditTeamAction extends ActionSupport implements Preparable {
 
     @Override
     public void validate() {
-        long tournamentId = (team.getTournament() == null) ? Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId")) : team.getTournament().getId();
-        Tournament tournament = tournamentService.find(tournamentId);
         if ("".equals(team.getName())) {
             addFieldError("team.name", "Не указано название команды");
         }
