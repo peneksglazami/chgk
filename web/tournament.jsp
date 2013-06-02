@@ -80,7 +80,7 @@
         <tr>
             <td align="right">Дата:</td>
             <td>
-                <input type="text" id="datepicker" name="tournament.date" value="${tournament.dateAsString}"/>
+                <input type="text" id="datepicker" name="tournament.date" size="7" value="${tournament.dateAsString}"/>
             </td>
         </tr>
         <tr>
