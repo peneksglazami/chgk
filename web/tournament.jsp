@@ -95,12 +95,14 @@
                         <s:set var="newCategoryId" value="%{0}"/>
                         <s:iterator var="category" value="tournament.teamCategories">
                             <div>
-                                    ${category.title} <a id="delete_category_${category.id}" style="cursor: pointer">Удалить</a>
-                                <s:if test="category.id != null">
+                                    ${category.title}
+                                <s:if test="#category.id != null">
+                                    <a id="delete_category_${category.id}" style="cursor: pointer">Удалить</a>
                                     <input type="hidden" name="category_${category.id}" value="${category.title}">
                                 </s:if>
                                 <s:else>
                                     <s:set var="newCategoryId" value="%{#newCategoryId + 1}"/>
+                                    <a id="delete_category_${newCategoryId}" style="cursor: pointer">Удалить</a>
                                     <input type="hidden" name="new_category_${newCategoryId}" value="${category.title}"/>
                                 </s:else>
                             </div>

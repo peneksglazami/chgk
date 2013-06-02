@@ -57,27 +57,27 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
     }
 
     private void updateTeamCategories() {
-        List<TeamCategory> newTeamCategoryList = new ArrayList<TeamCategory>();
+        List<TeamCategory> deletedTeamCategories = new ArrayList<TeamCategory>();
         if (tournament.getTeamCategories() != null) {
             for (TeamCategory teamCategory : tournament.getTeamCategories()) {
-                if (ActionContextHelper.getRequestParameterValue("category_" + teamCategory.getId()) != null) {
-                    newTeamCategoryList.add(teamCategory);
-                    teamCategory.setTournament(tournament);
+                if (ActionContextHelper.getRequestParameterValue("category_" + teamCategory.getId()) == null) {
+                    deletedTeamCategories.add(teamCategory);
                 }
             }
         }
+        List<TeamCategory> newTeamCategoryList = new ArrayList<TeamCategory>();
         for (String paramName : ActionContextHelper.getRequestParameters().keySet()) {
             if (paramName.startsWith("new_category")) {
                 newTeamCategoryList.add(new TeamCategory(ActionContextHelper.getRequestParameterValue(paramName), tournament));
             }
         }
-        Collections.sort(newTeamCategoryList);
         if (tournament.getTeamCategories() == null) {
             tournament.setTeamCategories(newTeamCategoryList);
         } else {
-            tournament.getTeamCategories().clear();
+            tournament.getTeamCategories().removeAll(deletedTeamCategories);
             tournament.getTeamCategories().addAll(newTeamCategoryList);
         }
+        Collections.sort(tournament.getTeamCategories());
     }
 
     public Tournament getTournament() {
