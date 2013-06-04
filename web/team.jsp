@@ -11,11 +11,11 @@
                 'buttons': {
                     'Да': {
                         'action': function () {
-                            $('<input />').attr('type', 'hidden')
-                                    .attr('name', 'action:delete-team')
-                                    .attr('value', 'Удалить')
-                                    .appendTo('#edit-team');
-                            document.getElementById("edit-team").submit();
+                            var form = $('<form>' +
+                                    '<input type="hidden" name="action:delete-team">' +
+                                    '<input type="hidden" name="teamId" value="${team.id}"' +
+                                    '</form>');
+                            form.submit();
                         }
                     },
                     'Нет': {
