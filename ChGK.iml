@@ -58,6 +58,7 @@
     <orderEntry type="library" name="db-drivers" level="project" />
     <orderEntry type="library" name="commons" level="project" />
     <orderEntry type="library" name="java-ee" level="project" />
+    <orderEntry type="library" name="shiro-1.2.2" level="project" />
   </component>
 </module>
 

@@ -16,10 +16,16 @@
         <action name="main">
             <result type="tiles">main</result>
         </action>
+        <action name="login" class="org.cherchgk.actions.security.LoginAction">
+            <result type="redirectAction">main</result>
+        </action>
+        <action name="logout" class="org.cherchgk.actions.security.LogoutAction">
+            <result type="redirectAction">main</result>
+        </action>
+
         <action name="tournament-list" class="tournamentListAction" method="execute">
             <result type="tiles">tournamentList</result>
         </action>
-
         <action name="new-tournament">
             <result type="tiles">tournament</result>
         </action>

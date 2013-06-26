@@ -11,13 +11,15 @@ import java.util.Map;
  */
 public class ActionContextHelper {
 
+    private static HttpServletRequest getRequest() {
+        return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+    }
+
     public static String getRequestParameterValue(String paramName) {
-        HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-        return request.getParameter(paramName);
+        return getRequest().getParameter(paramName);
     }
 
     public static Map<String, Object> getRequestParameters() {
-        HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-        return request.getParameterMap();
+        return getRequest().getParameterMap();
     }
 }

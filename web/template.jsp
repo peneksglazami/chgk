@@ -3,6 +3,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html lang="en">
 <head>
     <sx:head compressed="true" debug="false" cache="true" parseContent="false"/>
@@ -18,12 +19,52 @@
     <script type="text/javascript" src="frameworks/metro-ui/javascript/dropdown.js"></script>
     <script type="text/javascript" src="scripts/utils.js"></script>
     <title><tiles:getAsString name="title" ignore="true"/></title>
+    <shiro:notAuthenticated>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#loginAction').click(function (e) {
+                    $.Dialog({
+                        'title': 'Вход',
+                        'content': '<form id="loginForm">' +
+                                '<input type="hidden" name="action:login">' +
+                                '<table>' +
+                                '<tr><td>Логин:</td><td><input name="login" type="text"></td></tr>' +
+                                '<tr><td>Пароль:</td><td><input name="password" type="password"></td></tr>' +
+                                '</table>' +
+                                '<form>',
+                        'overlay': true,
+                        'buttonsAlign': 'right',
+                        'buttons': {
+                            'Да': {
+                                'action': function () {
+                                    $('#loginForm').submit();
+                                }
+                            },
+                            'Отмена': {
+                                'action': function () {
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </shiro:notAuthenticated>
 </head>
 <body class="modern-ui">
 <div class="page">
     <div class="nav-bar">
-        <div class="nav-bar-inner padding10 fg-color-white">
+        <div style="display: inline-block;" class="nav-bar-inner padding10 fg-color-white">
             <b><tiles:getAsString name="title" ignore="true"/></b>
+        </div>
+        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
+            <shiro:notAuthenticated>
+                <div id="loginAction" class="fg-color-white" style="cursor: pointer">Войти</div>
+            </shiro:notAuthenticated>
+            <shiro:authenticated>
+                <shiro:principal/>
+                <s:a action="logout" cssClass="fg-color-white">Выход</s:a>
+            </shiro:authenticated>
         </div>
     </div>
 </div>
