@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="spring-3.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/aopalliance.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.beans-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.core-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.web.struts-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.instrument-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.jms-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.asm-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.context-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.expression-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.jdbc-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.aop-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.orm-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.context.support-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.transaction-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.web-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.web.portlet-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.web.servlet-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.aspects-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.oxm-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.instrument.tomcat-3.0.2.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.springframework.test-3.0.2.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
