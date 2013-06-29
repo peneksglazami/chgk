@@ -28,7 +28,7 @@
                         'content': '<form id="loginForm">' +
                                 '<input type="hidden" name="action:login">' +
                                 '<table>' +
-                                '<tr><td>Логин:</td><td><input name="login" type="text"></td></tr>' +
+                                '<tr><td>Логин:</td><td><input id="loginInput" name="login" type="text"></td></tr>' +
                                 '<tr><td>Пароль:</td><td><input name="password" type="password"></td></tr>' +
                                 '</table>' +
                                 '<form>',
@@ -46,6 +46,7 @@
                             }
                         }
                     });
+                    $("#loginInput").focus();
                 });
             });
         </script>
