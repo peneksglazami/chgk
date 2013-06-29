@@ -1,11 +1,14 @@
 package org.cherchgk.security.realms;
 
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 
 /**
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class HibernateRealm implements org.apache.shiro.realm.Realm {
+public class HibernateRealm extends AuthorizingRealm {
 
     @Override
     public String getName() {
@@ -18,10 +21,15 @@ public class HibernateRealm implements org.apache.shiro.realm.Realm {
     }
 
     @Override
-    public AuthenticationInfo getAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         // TODO: необходимо реализовать аутентификацию
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
         return authenticationInfo;
+    }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        return null;
     }
 }
