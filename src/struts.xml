@@ -17,7 +17,11 @@
             <result type="tiles">main</result>
         </action>
         <action name="login" class="org.cherchgk.actions.security.LoginAction">
-            <result type="redirectAction">main</result>
+            <result type="redirectAction" name="success">main</result>
+            <result type="redirectAction" name="error">
+                <param name="actionName">main</param>
+                <param name="loginResult">FAILED</param>
+            </result>
         </action>
         <action name="logout" class="org.cherchgk.actions.security.LogoutAction">
             <result type="redirectAction">main</result>

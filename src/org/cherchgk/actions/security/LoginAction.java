@@ -25,6 +25,7 @@ public class LoginAction extends ActionSupport {
         try {
             currentUser.login(token);
         } catch (AuthenticationException ex) {
+            return Action.ERROR;
         }
         return Action.SUCCESS;
     }
