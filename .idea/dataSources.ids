@@ -314,5 +314,90 @@
       <column name="REMARKS" sqlType="VARCHAR" length="2147483647" precision="0" nullable="true" jdbcType="12"/>
       <column name="ID" sqlType="INTEGER" length="10" precision="0" nullable="true" jdbcType="4"/>
     </table>
+    <table name="PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMUEyOTM3NUNfNUU2Q180Mzg0X0FENkRfQzNEM0U4QjhBRDlCKQ==" autoIncrement="true"/>
+      <column name="PERMISSION" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CONSTRAINT_F" columns="ID"/>
+      <exported-key name="FKF8A5693824CA07A7" table="ROLE_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="PERMISSION_ID"/>
+      <exported-key name="FK6C1F06C324CA07A7" table="USER_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="PERMISSION_ID"/>
+    </table>
+    <table name="RIGHTANSWER" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMzlFRDkxQzJfQTk0M180QjUwX0IwM0RfNEM1N0FCOUE3MjM2KQ==" autoIncrement="true"/>
+      <column name="QUESTIONNUMBER" sqlType="INTEGER" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="TEAM_ID" sqlType="BIGINT" length="19" precision="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_7" columns="ID"/>
+      <foreign-key name="FK2BE590DAA93245DB" columns="TEAM_ID" ref-table="TEAM" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <index name="FK2BE590DAA93245DB_INDEX_7" unique="false" columns="TEAM_ID"/>
+    </table>
+    <table name="ROLE" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfNjIzNkJBOTNfRkJFQV80MTM3XzhFMzFfODg2Q0U0OUFBMjlFKQ==" autoIncrement="true"/>
+      <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CONSTRAINT_2" columns="ID"/>
+      <exported-key name="FKF8A569389ACE3007" table="ROLE_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="ROLE_ID"/>
+      <exported-key name="FK8B9F886A9ACE3007" table="USER_ROLE" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="ROLE_ID"/>
+    </table>
+    <table name="ROLE_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ROLE_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="PERMISSION_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_9" columns="ROLE_ID,PERMISSION_ID"/>
+      <foreign-key name="FKF8A5693824CA07A7" columns="PERMISSION_ID" ref-table="PERMISSION" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FKF8A569389ACE3007" columns="ROLE_ID" ref-table="ROLE" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+    </table>
+    <table name="TEAM" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfRDdFMDAzNEFfQjFBQ180MTc3Xzk2MzhfNDhGRTE1QTk4QjA3KQ==" autoIncrement="true"/>
+      <column name="NAME" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="NUMBER" sqlType="INTEGER" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="TEAMCATEGORY_ID" sqlType="BIGINT" length="19" precision="0" nullable="true" jdbcType="-5"/>
+      <column name="TOURNAMENT_ID" sqlType="BIGINT" length="19" precision="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_27" columns="ID"/>
+      <foreign-key name="FK27B67DA474F03B" columns="TEAMCATEGORY_ID" ref-table="TEAMCATEGORY" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK27B67D308DD59B" columns="TOURNAMENT_ID" ref-table="TOURNAMENT" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK2BE590DAA93245DB" table="RIGHTANSWER" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="TEAM_ID"/>
+      <index name="FK27B67D308DD59B_INDEX_2" unique="false" columns="TOURNAMENT_ID"/>
+      <index name="FK27B67DA474F03B_INDEX_2" unique="false" columns="TEAMCATEGORY_ID"/>
+    </table>
+    <table name="TEAMCATEGORY" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfMTQ0RURBMUFfRDdDQV80Njc2XzkwQ0NfREY1QjU3NTE2OUQ2KQ==" autoIncrement="true"/>
+      <column name="TITLE" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="TOURNAMENT_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_78" columns="ID"/>
+      <foreign-key name="FKFC590A9B308DD59B" columns="TOURNAMENT_ID" ref-table="TOURNAMENT" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK27B67DA474F03B" table="TEAM" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="TEAMCATEGORY_ID"/>
+      <index name="FKFC590A9B308DD59B_INDEX_7" unique="false" columns="TOURNAMENT_ID"/>
+    </table>
+    <table name="TOURNAMENT" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQkM4NkU4ODRfMDIwRF80RjJDX0E2RTFfOENBNDIyNDMwMzU3KQ==" autoIncrement="true"/>
+      <column name="DATE" sqlType="TIMESTAMP" length="23" precision="10" nullable="true" jdbcType="93"/>
+      <column name="QUESTIONAMOUNT" sqlType="INTEGER" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="TITLE" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CONSTRAINT_E" columns="ID"/>
+      <exported-key name="FK27B67D308DD59B" table="TEAM" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="TOURNAMENT_ID"/>
+      <exported-key name="FKFC590A9B308DD59B" table="TEAMCATEGORY" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="TOURNAMENT_ID"/>
+    </table>
+    <table name="USER" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" def="KE5FWFQgVkFMVUUgRk9SIFBVQkxJQy5TWVNURU1fU0VRVUVOQ0VfQzEwMUM2NzZfRUI2N180NDhBX0FGODdfRTU3RjcxNkUxNDNEKQ==" autoIncrement="true"/>
+      <column name="BLOCKED" sqlType="BOOLEAN" length="1" precision="0" nullable="false" jdbcType="16"/>
+      <column name="PASSWORD" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="PASSWORDSALT" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <column name="USERNAME" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CONSTRAINT_27E" columns="ID"/>
+      <exported-key name="FK6C1F06C39ACF9B5C" table="USER_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="ROLE_ID"/>
+      <exported-key name="FK8B9F886A3FF8F3E7" table="USER_ROLE" schema="PUBLIC" catalog="CHGKTOURNAMENTS" columns="USER_ID"/>
+    </table>
+    <table name="USER_PERMISSION" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="ROLE_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="PERMISSION_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_FE" columns="ROLE_ID,PERMISSION_ID"/>
+      <foreign-key name="FK6C1F06C324CA07A7" columns="PERMISSION_ID" ref-table="PERMISSION" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK6C1F06C39ACF9B5C" columns="ROLE_ID" ref-table="USER" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+    </table>
+    <table name="USER_ROLE" schema="PUBLIC" catalog="CHGKTOURNAMENTS" type="TABLE">
+      <column name="USER_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="ROLE_ID" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="CONSTRAINT_B" columns="USER_ID,ROLE_ID"/>
+      <foreign-key name="FK8B9F886A9ACE3007" columns="ROLE_ID" ref-table="ROLE" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK8B9F886A3FF8F3E7" columns="USER_ID" ref-table="USER" ref-schema="PUBLIC" ref-catalog="CHGKTOURNAMENTS" ref-columns="ID" update-rule="1" delete-rule="1" deferrability="2"/>
+      <index name="FK8B9F886A9ACE3007_INDEX_B" unique="false" columns="ROLE_ID"/>
+    </table>
   </data-source>
 </component>

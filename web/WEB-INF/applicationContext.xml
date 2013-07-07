@@ -2,9 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
@@ -36,6 +36,12 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <context:annotation-config />
+
+    <bean class="org.cherchgk.services.SecurityService" scope="singleton"/>
+
+    <bean class="org.cherchgk.security.InitSecurityBean" scope="singleton"/>
 
     <bean id="tournamentListAction" scope="prototype" class="org.cherchgk.actions.TournamentListAction">
         <constructor-arg ref="tournamentService"/>
