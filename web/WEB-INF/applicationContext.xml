@@ -39,6 +39,8 @@
 
     <context:annotation-config />
 
+    <bean class="org.cherchgk.utils.EntityManagerProvider" scope="singleton" lazy-init="false"/>
+
     <bean class="org.cherchgk.services.SecurityService" scope="singleton"/>
 
     <bean class="org.cherchgk.security.InitSecurityBean" scope="singleton"/>

@@ -4,11 +4,20 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.cherchgk.utils.EntityManagerProvider;
+
+import javax.persistence.EntityManager;
 
 /**
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 public class HibernateRealm extends AuthorizingRealm {
+
+    private EntityManager entityManager;
+
+    public HibernateRealm() {
+        entityManager = EntityManagerProvider.getEntityManager();
+    }
 
     @Override
     public String getName() {
