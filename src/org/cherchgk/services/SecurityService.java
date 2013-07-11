@@ -2,7 +2,7 @@ package org.cherchgk.services;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.util.ByteSource;
 import org.cherchgk.domain.security.Permission;
 import org.cherchgk.domain.security.Role;
@@ -54,7 +54,7 @@ public class SecurityService {
     private void createUser(String username, String password, Role role, boolean blocked) {
         RandomNumberGenerator rng = new SecureRandomNumberGenerator();
         ByteSource salt = rng.nextBytes();
-        String hashedPassword = new Sha256Hash(password, salt, 1024).toHex();
+        String hashedPassword = new Sha512Hash(password, salt, 1024).toHex();
 
         User user = new User();
         user.setUsername(username);

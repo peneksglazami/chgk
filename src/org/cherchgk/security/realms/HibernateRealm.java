@@ -2,11 +2,15 @@ package org.cherchgk.security.realms;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.codec.Hex;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.cherchgk.domain.security.User;
 import org.cherchgk.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  * @author Andrey Grigorov (peneksglazami@gmail.com)
@@ -31,10 +35,19 @@ public class HibernateRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        // TODO: необходимо реализовать аутентификацию
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
-        return authenticationInfo;
+        String username = token.getUsername();
+        User user;
+        try {
+            user = entityManager.createQuery("select user from User user where user.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            throw new UnknownAccountException("No account found for user [" + username + "]");
+        }
+
+        return new SimpleAuthenticationInfo(username, ByteSource.Util.bytes(Hex.decode(user.getPassword())),
+                ByteSource.Util.bytes(Hex.decode(user.getPasswordSalt())), getName());
     }
 
     @Override
