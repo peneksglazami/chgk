@@ -10,8 +10,6 @@ import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,16 +26,10 @@ public class ShowTournamentResultAction extends ActionSupport {
     private List<TeamResult> teamResults;
     private Tournament tournament;
     private TeamCategory teamCategory;
-    private EntityManager entityManager;
 
     public ShowTournamentResultAction(TournamentService tournamentService, TeamService teamService) {
         this.tournamentService = tournamentService;
         this.teamService = teamService;
-    }
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
     }
 
     @Override
