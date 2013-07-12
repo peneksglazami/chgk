@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <s:if test="tournaments.size > 0">
     <table class="striped row-hovered">
         <thead>
@@ -29,6 +30,8 @@
     <div>Пока не создано ни одного турнира</div>
 </s:else>
 <p>
-    <a href="<s:url action='new-tournament'/>" class="button bg-color-green fg-color-white">Создать турнир</a>
+    <shiro:hasPermission name="tournament:create">
+        <a href="<s:url action='new-tournament'/>" class="button bg-color-green fg-color-white">Создать турнир</a>
+    </shiro:hasPermission>
     <a href="<s:url action='main'/>" class="button">Возвратиться на главную страницу</a>
 </p>

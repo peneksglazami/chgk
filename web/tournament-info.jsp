@@ -2,19 +2,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 Название: <b><s:property value="tournament.title"/></b><br/>
 Дата: <b><s:date name="tournament.date" format="dd.MM.yyyy"/></b><br/>
 
 <div>
-    <s:url var="editTournamentUrl" action="edit-tournament">
-        <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
-    </s:url>
-    <s:a href="%{editTournamentUrl}" cssClass="button">Изменить описание турнира</s:a>
-
-    <s:url var="editTournamentResultUrl" action="edit-tournament-result">
-        <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
-    </s:url>
-    <s:a href="%{editTournamentResultUrl}" cssClass="button">Редактировать результаты турнира</s:a>
+    <shiro:hasPermission name="tournament:edit:${tournament.id}">
+        <s:url var="editTournamentUrl" action="edit-tournament">
+            <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+        </s:url>
+        <s:a href="%{editTournamentUrl}" cssClass="button">Изменить описание турнира</s:a>
+    </shiro:hasPermission>
+    <shiro:hasPermission name="tournament:edit:${tournament.id}">
+        <s:url var="editTournamentResultUrl" action="edit-tournament-result">
+            <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+        </s:url>
+        <s:a href="%{editTournamentResultUrl}" cssClass="button">Редактировать результаты турнира</s:a>
+    </shiro:hasPermission>
 
     <s:if test="tournament.teamCategories.size > 0">
         <div class="button bg-color-blue fg-color-white" data-role="dropdown">
@@ -45,10 +49,12 @@
         <s:a href="%{showTournamentResultUrl}" cssClass="button bg-color-blue fg-color-white">Просмотр результатов турнира</s:a>
     </s:else>
 
-    <s:url var="createTeamUrl" action="new-team">
-        <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
-    </s:url>
-    <s:a href="%{createTeamUrl}" cssClass="button bg-color-green fg-color-white">Зарегистрировать команду</s:a>
+    <shiro:hasPermission name="tournament:edit:${tournament.id}">
+        <s:url var="createTeamUrl" action="new-team">
+            <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+        </s:url>
+        <s:a href="%{createTeamUrl}" cssClass="button bg-color-green fg-color-white">Зарегистрировать команду</s:a>
+    </shiro:hasPermission>
 </div>
 
 <s:if test="tournament.teams.size > 0">
