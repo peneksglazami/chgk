@@ -28,16 +28,10 @@ public class ShowTournamentResultAction extends ActionSupport {
     private List<TeamResult> teamResults;
     private Tournament tournament;
     private TeamCategory teamCategory;
-    private EntityManager entityManager;
 
     public ShowTournamentResultAction(TournamentService tournamentService, TeamService teamService) {
         this.tournamentService = tournamentService;
         this.teamService = teamService;
-    }
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
     }
 
     @Override
