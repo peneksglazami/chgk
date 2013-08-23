@@ -61,4 +61,24 @@ public class TeamResult implements Comparable<TeamResult> {
         }
         return 1;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TeamResult)) return false;
+
+        TeamResult that = (TeamResult) o;
+
+        if (ranking != that.ranking) return false;
+        if (rightAnswers != that.rightAnswers) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = rightAnswers;
+        result = 31 * result + ranking;
+        return result;
+    }
 }
