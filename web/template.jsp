@@ -59,13 +59,13 @@
             <b><tiles:getAsString name="title" ignore="true"/></b>
         </div>
         <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
-            <shiro:notAuthenticated>
+            <shiro:guest>
                 <div id="loginAction" class="fg-color-white" style="cursor: pointer">Войти</div>
-            </shiro:notAuthenticated>
-            <shiro:authenticated>
+            </shiro:guest>
+            <shiro:user>
                 <shiro:principal/>
                 <s:a action="logout" cssClass="fg-color-white">Выход</s:a>
-            </shiro:authenticated>
+            </shiro:user>
         </div>
     </div>
 </div>
