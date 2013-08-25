@@ -35,4 +35,9 @@
         <put-attribute name="title" value="Что? Где? Когда? - Редактирование команды"/>
         <put-attribute name="body" value="/team.jsp"/>
     </definition>
+
+    <definition name="userList" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Список пользователей"/>
+        <put-attribute name="body" value="/user-list.jsp"/>
+    </definition>
 </tiles-definitions>

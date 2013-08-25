@@ -78,4 +78,9 @@ public class SecurityService {
         List<User> users = userQuery.getResultList();
         return users.isEmpty() ? null : users.get(0);
     }
+
+    public List<User> getAllUsers() {
+        Query usersQuery = entityManager.createQuery("select user from User user");
+        return usersQuery.getResultList();
+    }
 }

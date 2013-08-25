@@ -77,4 +77,10 @@
             <result type="freemarker">/WEB-INF/freemarker/edit-answer-verdict.ftl</result>
         </action>
     </package>
+
+    <package name="settings" extends="chgk" namespace="/settings">
+        <action name="user-list" class="userListAction">
+            <result type="tiles">userList</result>
+        </action>
+    </package>
 </struts>

@@ -91,4 +91,8 @@
     <bean id="editAnswerVerdictAction" scope="prototype" class="org.cherchgk.actions.EditAnswerVerdictAction">
         <constructor-arg ref="teamService"/>
     </bean>
+
+    <bean id="userListAction" class="org.cherchgk.actions.UserListAction">
+        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+    </bean>
 </beans>

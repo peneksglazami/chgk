@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:if test="${param.loginResult eq 'FAILED'}">
     <script type="text/javascript">
         $(document).ready(function () {
@@ -32,3 +33,13 @@
         </div>
     </div>
 </a>
+<shiro:hasAnyRoles name="administrator,organizer">
+    <a href="<s:url action="settings/user-list"/>">
+        <div class="tile double bg-color-orange">
+            <div class="tile-content">
+                <h4>Список пользователей</h4>
+                <p>Переходите к редактированию списка пользователей</p>
+            </div>
+        </div>
+    </a>
+</shiro:hasAnyRoles>

@@ -7,17 +7,17 @@
 <html lang="en">
 <head>
     <sx:head compressed="true" debug="false" cache="true" parseContent="false"/>
-    <link rel="stylesheet" href="frameworks/jquery/themes/base/minified/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="frameworks/metro-ui/css/modern.css">
-    <link rel="stylesheet" href="frameworks/metro-ui/css/modern-responsive.css">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css"/>
-    <script type="text/javascript" src="frameworks/jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="frameworks/jquery/jquery.ui.core.min.js"></script>
-    <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker.min.js"></script>
-    <script type="text/javascript" src="frameworks/jquery/jquery.ui.datepicker-ru.min.js"></script>
-    <script type="text/javascript" src="frameworks/metro-ui/javascript/dialog.js"></script>
-    <script type="text/javascript" src="frameworks/metro-ui/javascript/dropdown.js"></script>
-    <script type="text/javascript" src="scripts/utils.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/frameworks/jquery/themes/base/minified/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/frameworks/metro-ui/css/modern.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/frameworks/metro-ui/css/modern-responsive.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/styles.css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.datepicker.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.datepicker-ru.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/metro-ui/javascript/dialog.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/metro-ui/javascript/dropdown.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/utils.js"></script>
     <title><tiles:getAsString name="title" ignore="true"/></title>
     <shiro:notAuthenticated>
         <script type="text/javascript">
