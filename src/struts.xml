@@ -82,5 +82,8 @@
         <action name="user-list" class="userListAction">
             <result type="tiles">userList</result>
         </action>
+        <action name="new-user">
+            <result type="tiles">user</result>
+        </action>
     </package>
 </struts>

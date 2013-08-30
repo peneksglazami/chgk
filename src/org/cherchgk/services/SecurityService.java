@@ -79,8 +79,15 @@ public class SecurityService {
         return users.isEmpty() ? null : users.get(0);
     }
 
+    public User getUserById(Long userId) {
+        Query userQuery = entityManager.createQuery("select user from User user where user.id = :userId")
+                .setParameter("userId", userId);
+        List<User> users = userQuery.getResultList();
+        return users.isEmpty() ? null : users.get(0);
+    }
+
     public List<User> getAllUsers() {
-        Query usersQuery = entityManager.createQuery("select user from User user");
+        Query usersQuery = entityManager.createQuery("select user from User user order by user.username");
         return usersQuery.getResultList();
     }
 }

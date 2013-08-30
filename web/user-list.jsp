@@ -15,3 +15,9 @@
     </s:iterator>
     </tbody>
 </table>
+<p>
+    <shiro:hasPermission name="user:create">
+        <a href="<s:url action='new-user'/>" class="button bg-color-green fg-color-white">Создать пользователя</a>
+    </shiro:hasPermission>
+    <a href="<s:url action='main' namespace="/"/>" class="button">Возвратиться на главную страницу</a>
+</p>

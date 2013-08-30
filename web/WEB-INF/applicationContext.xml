@@ -95,4 +95,8 @@
     <bean id="userListAction" class="org.cherchgk.actions.UserListAction">
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
+
+    <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.EditUserAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
 </beans>
