@@ -1,4 +1,4 @@
-package org.cherchgk.actions;
+package org.cherchgk.actions.team;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;

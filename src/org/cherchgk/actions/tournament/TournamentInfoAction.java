@@ -1,4 +1,4 @@
-package org.cherchgk.actions;
+package org.cherchgk.actions.tournament;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.domain.Tournament;

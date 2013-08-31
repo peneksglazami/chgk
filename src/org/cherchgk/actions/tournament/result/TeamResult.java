@@ -1,4 +1,4 @@
-package org.cherchgk.actions;
+package org.cherchgk.actions.tournament.result;
 
 import org.cherchgk.domain.Team;
 

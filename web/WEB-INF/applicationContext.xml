@@ -45,58 +45,58 @@
 
     <bean class="org.cherchgk.security.InitSecurityBean" scope="singleton"/>
 
-    <bean id="tournamentListAction" scope="prototype" class="org.cherchgk.actions.TournamentListAction">
+    <bean id="tournamentListAction" scope="prototype" class="org.cherchgk.actions.tournament.TournamentListAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 
-    <bean id="editTournamentAction" scope="prototype" class="org.cherchgk.actions.EditTournamentAction">
+    <bean id="editTournamentAction" scope="prototype" class="org.cherchgk.actions.tournament.EditTournamentAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 
-    <bean id="deleteTournamentAction" scope="prototype" class="org.cherchgk.actions.DeleteTournamentAction">
+    <bean id="deleteTournamentAction" scope="prototype" class="org.cherchgk.actions.tournament.DeleteTournamentAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 
-    <bean id="tournamentInfoAction" scope="prototype" class="org.cherchgk.actions.TournamentInfoAction">
+    <bean id="tournamentInfoAction" scope="prototype" class="org.cherchgk.actions.tournament.TournamentInfoAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 
-    <bean id="editTournamentResultAction" scope="prototype" class="org.cherchgk.actions.EditTournamentResultAction">
-        <constructor-arg ref="tournamentService"/>
-        <constructor-arg ref="teamService"/>
-    </bean>
-
-    <bean id="showTournamentResultAction" scope="prototype" class="org.cherchgk.actions.ShowTournamentResultAction">
+    <bean id="editTournamentResultAction" scope="prototype" class="org.cherchgk.actions.tournament.result.EditTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="newTeamAction" scope="prototype" class="org.cherchgk.actions.NewTeamAction">
-        <constructor-arg ref="tournamentService"/>
-    </bean>
-
-    <bean id="teamInfoAction" scope="prototype" class="org.cherchgk.actions.TeamInfoAction">
-        <constructor-arg ref="teamService"/>
-    </bean>
-
-    <bean id="editTeamAction" scope="prototype" class="org.cherchgk.actions.EditTeamAction">
+    <bean id="showTournamentResultAction" scope="prototype" class="org.cherchgk.actions.tournament.result.ShowTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="deleteTeamAction" scope="prototype" class="org.cherchgk.actions.DeleteTeamAction">
+    <bean id="newTeamAction" scope="prototype" class="org.cherchgk.actions.team.NewTeamAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="teamInfoAction" scope="prototype" class="org.cherchgk.actions.team.TeamInfoAction">
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="editAnswerVerdictAction" scope="prototype" class="org.cherchgk.actions.EditAnswerVerdictAction">
+    <bean id="editTeamAction" scope="prototype" class="org.cherchgk.actions.team.EditTeamAction">
+        <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="userListAction" class="org.cherchgk.actions.UserListAction">
+    <bean id="deleteTeamAction" scope="prototype" class="org.cherchgk.actions.team.DeleteTeamAction">
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="editAnswerVerdictAction" scope="prototype" class="org.cherchgk.actions.tournament.result.EditAnswerVerdictAction">
+        <constructor-arg ref="teamService"/>
+    </bean>
+
+    <bean id="userListAction" class="org.cherchgk.actions.user.UserListAction">
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
 
-    <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.EditUserAction">
-        <constructor-arg ref="tournamentService"/>
+    <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.user.EditUserAction">
+        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
 </beans>
