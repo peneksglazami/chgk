@@ -24,8 +24,15 @@ public class EditUserAction extends ActionSupport implements Preparable {
     @Override
     public void validate() {
         if (user != null) {
-            if ("".equals(user.getUsername())) {
-                addFieldError("user.username", "Не указан логин пользователя");
+            if (user.getId() == null) {
+                if ("".equals(user.getUsername())) {
+                    addFieldError("user.username", "Не указан логин пользователя");
+                } else {
+                    User existedUser = securityService.getUserByName(user.getUsername());
+                    if (existedUser != null) {
+                        addFieldError("user.username", "Пользователь с таким логином уже существует");
+                    }
+                }
             }
             if ("".equals(user.getPassword())) {
                 addFieldError("user.password", "Не указан пароль");

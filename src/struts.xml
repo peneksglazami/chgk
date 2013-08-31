@@ -85,5 +85,8 @@
         <action name="new-user">
             <result type="tiles">user</result>
         </action>
+        <action name="edit-user" class="userInfoAction">
+            <result type="tiles">user</result>
+        </action>
     </package>
 </struts>

@@ -37,7 +37,7 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <bean class="org.cherchgk.utils.EntityManagerProvider" scope="singleton" lazy-init="false"/>
 
@@ -61,12 +61,14 @@
         <constructor-arg ref="tournamentService"/>
     </bean>
 
-    <bean id="editTournamentResultAction" scope="prototype" class="org.cherchgk.actions.tournament.result.EditTournamentResultAction">
+    <bean id="editTournamentResultAction" scope="prototype"
+          class="org.cherchgk.actions.tournament.result.EditTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="showTournamentResultAction" scope="prototype" class="org.cherchgk.actions.tournament.result.ShowTournamentResultAction">
+    <bean id="showTournamentResultAction" scope="prototype"
+          class="org.cherchgk.actions.tournament.result.ShowTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
@@ -88,7 +90,8 @@
         <constructor-arg ref="teamService"/>
     </bean>
 
-    <bean id="editAnswerVerdictAction" scope="prototype" class="org.cherchgk.actions.tournament.result.EditAnswerVerdictAction">
+    <bean id="editAnswerVerdictAction" scope="prototype"
+          class="org.cherchgk.actions.tournament.result.EditAnswerVerdictAction">
         <constructor-arg ref="teamService"/>
     </bean>
 
@@ -97,6 +100,10 @@
     </bean>
 
     <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.user.EditUserAction">
+        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+    </bean>
+
+    <bean id="userInfoAction" scope="prototype" class="org.cherchgk.actions.user.UserInfoAction">
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
 </beans>

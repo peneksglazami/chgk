@@ -9,7 +9,12 @@
     </thead>
     <tbody>
     <s:iterator var="user" value="users">
-        <tr style="cursor: pointer;">
+        <s:url var="url" action="edit-user">
+            <s:param name="userId">
+                <s:property value="#user.id"/>
+            </s:param>
+        </s:url>
+        <tr style="cursor: pointer;" onclick="javascript:document.location='<s:property value="%{url}"/>'">
             <td><s:property value="#user.username"/></td>
         </tr>
     </s:iterator>

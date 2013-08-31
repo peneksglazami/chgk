@@ -6,7 +6,7 @@
         $('#deleteButton').click(function (e) {
             $.Dialog({
                 'title': 'Удаление пользователя',
-                'content': 'Вы точно хотите удалить пользователя? Вся информация о пользователя будет полностью удалена.',
+                'content': 'Вы точно хотите удалить пользователя? Вся информация о пользователе будет полностью удалена.',
                 'overlay': true,
                 'buttonsAlign': 'right',
                 'buttons': {
@@ -38,7 +38,14 @@
         </tr>
         <tr>
             <td align="right">Логин</td>
-            <td><s:textfield name="user.username" size="50" maxlength="20"/></td>
+            <td>
+                <s:if test="user == null || user.id == null">
+                    <s:textfield name="user.username" size="50" maxlength="20"/>
+                </s:if>
+                <s:else>
+                    <s:label name="user.username"/>
+                </s:else>
+            </td>
         </tr>
         <tr>
             <td align="right">Пароль</td>
