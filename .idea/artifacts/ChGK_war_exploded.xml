@@ -16,6 +16,7 @@
           <element id="library" level="project" name="commons" />
           <element id="library" level="project" name="java-ee" />
           <element id="library" level="project" name="shiro-1.2.2" />
+          <element id="library" level="project" name="cglib-nodep-2.2.3" />
         </element>
       </element>
     </root>

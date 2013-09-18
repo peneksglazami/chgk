@@ -59,6 +59,7 @@
     <orderEntry type="library" name="commons" level="project" />
     <orderEntry type="library" name="java-ee" level="project" />
     <orderEntry type="library" name="shiro-1.2.2" level="project" />
+    <orderEntry type="library" name="cglib-nodep-2.2.3" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
