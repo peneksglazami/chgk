@@ -60,10 +60,10 @@
         <tr>
             <td colspan="2" align="right">
                 <s:if test="user == null || user.id == null">
-                    <s:submit value="Создать" cssClass="bg-color-green fg-color-white" action="save-user" method="user"/>
+                    <s:submit value="Создать" cssClass="bg-color-green fg-color-white" action="save-user"/>
                 </s:if>
                 <s:else>
-                    <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-user" method="user"/>
+                    <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-user"/>
                     <input id="deleteButton" type="button" class="button bg-color-red fg-color-white" value="Удалить"/>
                 </s:else>
                 <input class="button" type="button" value="Отмена" onclick="history.back()">

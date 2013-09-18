@@ -88,5 +88,9 @@
         <action name="edit-user" class="userInfoAction">
             <result type="tiles">user</result>
         </action>
+        <action name="save-user" class="editUserAction" method="save">
+            <result name="input" type="tiles">user</result>
+            <result type="redirectAction">user-list</result>
+        </action>
     </package>
 </struts>
