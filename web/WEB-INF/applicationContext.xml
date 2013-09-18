@@ -103,6 +103,10 @@
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
 
+    <bean id="deleteUserAction" scope="prototype" class="org.cherchgk.actions.user.DeleteUserAction">
+        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+    </bean>
+
     <bean id="userInfoAction" scope="prototype" class="org.cherchgk.actions.user.UserInfoAction">
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>

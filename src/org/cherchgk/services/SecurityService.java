@@ -65,6 +65,11 @@ public class SecurityService {
         entityManager.persist(user);
     }
 
+    public void deleteUser(Long userId) {
+        User user = getUserById(userId);
+        entityManager.remove(user);
+    }
+
     public Role getRoleByName(String roleName) {
         Query roleQuery = entityManager.createQuery("select role from Role role where role.name = :roleName")
                 .setParameter("roleName", roleName);

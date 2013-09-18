@@ -92,5 +92,8 @@
             <result name="input" type="tiles">user</result>
             <result type="redirectAction">user-list</result>
         </action>
+        <action name="delete-user" class="deleteUserAction">
+            <result type="redirectAction">user-list</result>
+        </action>
     </package>
 </struts>

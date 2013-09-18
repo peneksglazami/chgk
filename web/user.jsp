@@ -12,11 +12,11 @@
                 'buttons': {
                     'Да': {
                         'action': function () {
-                            var form = $('<form>' +
-                                    '<input type="hidden" name="action:delete-user">' +
-                                    '<input type="hidden" name="userId" value="${user.id}"' +
-                                    '</form>');
-                            form.submit();
+                            $('<input />').attr('type', 'hidden')
+                                    .attr('name', 'action:delete-user')
+                                    .attr('value', 'Удалить')
+                                    .appendTo('#edit-user');
+                            document.getElementById("edit-user").submit();
                         }
                     },
                     'Нет': {
