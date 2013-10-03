@@ -99,6 +99,8 @@
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>
 
+    <bean id="newUserAction" scope="prototype" class="org.cherchgk.actions.user.NewUserAction"/>
+
     <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.user.EditUserAction">
         <constructor-arg ref="org.cherchgk.services.SecurityService"/>
     </bean>

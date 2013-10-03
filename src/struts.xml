@@ -82,7 +82,7 @@
         <action name="user-list" class="userListAction">
             <result type="tiles">userList</result>
         </action>
-        <action name="new-user">
+        <action name="new-user" class="newUserAction">
             <result type="tiles">user</result>
         </action>
         <action name="edit-user" class="userInfoAction">

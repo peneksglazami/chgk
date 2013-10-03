@@ -18,10 +18,19 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Сервис по работе с подсистемой безопасности
+ *
  * @author Andrey Grigorov
  */
 @Transactional
 public class SecurityService {
+
+    /**
+     * Количество итераций, выполняющихся при хешировании пароля.
+     * Должно совпадать со значением passwordMatcher.hashIterations, указанным
+     * в .../web/WEB-INF/shiro.ini.
+     */
+    private static final int hashIterations = 1024;
 
     private EntityManager entityManager;
 
@@ -52,17 +61,20 @@ public class SecurityService {
     }
 
     private void createUser(String username, String password, Role role, boolean blocked) {
-        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
-        ByteSource salt = rng.nextBytes();
-        String hashedPassword = new Sha512Hash(password, salt, 1024).toHex();
-
         User user = new User();
         user.setUsername(username);
-        user.setPassword(hashedPassword);
-        user.setPasswordSalt(salt.toHex());
+        setUserPassword(user, password);
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         user.setBlocked(blocked);
         entityManager.persist(user);
+    }
+
+    public void setUserPassword(User user, String password) {
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        ByteSource salt = rng.nextBytes();
+        String passwordHash = new Sha512Hash(password, salt, hashIterations).toHex();
+        user.setPassword(passwordHash);
+        user.setPasswordSalt(salt.toHex());
     }
 
     public void deleteUser(Long userId) {

@@ -7,6 +7,12 @@ import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Действие создания и редактирования пользователя
  *
@@ -16,15 +22,23 @@ public class EditUserAction extends ActionSupport implements Preparable {
 
     private SecurityService securityService;
     private User user;
+    private String previousPasswordHash;
+    private String previousPasswordHashPrefix;
+    private EntityManager entityManager;
 
     public EditUserAction(SecurityService securityService) {
         this.securityService = securityService;
     }
 
+    @PersistenceContext
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     public void validate() {
         if (user != null) {
-            if (user.getId() == null) {
+            if (user.getId() == null) { // создание нового пользователя
                 if ("".equals(user.getUsername())) {
                     addFieldError("user.username", "Не указан логин пользователя");
                 } else {
@@ -44,11 +58,22 @@ public class EditUserAction extends ActionSupport implements Preparable {
         String userId = ActionContextHelper.getRequestParameterValue("user.id");
         if ((userId != null) && !"".equals(userId)) {
             user = securityService.getUserById(Long.valueOf(userId));
+            previousPasswordHash = user.getPassword();
+            previousPasswordHashPrefix = previousPasswordHash.substring(0, 5);
         }
     }
 
     public String save() {
-
+        if (user.getId() == null) { // создание нового пользователя
+            securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), "administrator", false);
+        } else { // обновление существующего
+            if (previousPasswordHashPrefix.equals(user.getPassword())) {
+                user.setPassword(previousPasswordHash);
+            } else {
+                securityService.setUserPassword(user, user.getPassword());
+            }
+            entityManager.merge(user);
+        }
         return Action.SUCCESS;
     }
 
@@ -58,5 +83,12 @@ public class EditUserAction extends ActionSupport implements Preparable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Map<String, String> getRoles() {
+        Map<String, String> roles = new LinkedHashMap<String, String>();
+        roles.put("administrator", "Администратор");
+        roles.put("orginizer", "Организатор");
+        return Collections.unmodifiableMap(roles);
     }
 }
