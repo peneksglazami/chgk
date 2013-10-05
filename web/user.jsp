@@ -71,9 +71,10 @@
                 <s:else>
                     <shiro:hasPermission name="user:edit:${user.id}">
                         <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-user"/>
-                        <!-- TODO: запретить пользователю удалять себя -->
-                        <input id="deleteButton" type="button" class="button bg-color-red fg-color-white"
-                               value="Удалить"/>
+                        <s:if test="user.username != currentUserName">
+                            <input id="deleteButton" type="button" class="button bg-color-red fg-color-white"
+                                   value="Удалить"/>
+                        </s:if>
                     </shiro:hasPermission>
                 </s:else>
                 <input class="button" type="button" value="Отмена" onclick="history.back()">

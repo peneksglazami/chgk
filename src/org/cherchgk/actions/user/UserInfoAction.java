@@ -2,6 +2,7 @@ package org.cherchgk.actions.user;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import org.apache.shiro.SecurityUtils;
 import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
@@ -44,5 +45,9 @@ public class UserInfoAction extends ActionSupport implements Preparable {
         roles.put("administrator", "Администратор");
         roles.put("orginizer", "Организатор");
         return Collections.unmodifiableMap(roles);
+    }
+
+    public String getCurrentUserName() {
+        return SecurityUtils.getSubject().getPrincipal().toString();
     }
 }
