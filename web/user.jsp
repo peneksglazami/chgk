@@ -58,7 +58,7 @@
         <shiro:hasRole name="administrator">
             <tr>
                 <td align="right">Роль</td>
-                <td><s:select name="role" list="roles" value="user.role.name"/></td>
+                <td><s:select name="role" list="roles" value="currentRoleName"/></td>
             </tr>
         </shiro:hasRole>
         <tr>

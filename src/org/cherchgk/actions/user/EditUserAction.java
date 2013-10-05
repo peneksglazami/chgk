@@ -79,7 +79,7 @@ public class EditUserAction extends ActionSupport implements Preparable {
             } else {
                 securityService.setUserPassword(user, user.getPassword());
             }
-            entityManager.merge(user);
+            securityService.updateUser(user);
         }
         return Action.SUCCESS;
     }

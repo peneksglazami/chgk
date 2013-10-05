@@ -82,6 +82,10 @@ public class SecurityService {
         entityManager.remove(user);
     }
 
+    public void updateUser(User user) {
+        entityManager.merge(user);
+    }
+
     public Role getRoleByName(String roleName) {
         Query roleQuery = entityManager.createQuery("select role from Role role where role.name = :roleName")
                 .setParameter("roleName", roleName);
