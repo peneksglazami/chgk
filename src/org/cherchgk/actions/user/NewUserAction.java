@@ -23,7 +23,7 @@ public class NewUserAction extends ActionSupport {
     public Map<String, String> getRoles() {
         Map<String, String> roles = new LinkedHashMap<String, String>();
         roles.put("administrator", "Администратор");
-        roles.put("orginizer", "Организатор");
+        roles.put("organizer", "Организатор");
         return Collections.unmodifiableMap(roles);
     }
 }

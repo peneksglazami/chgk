@@ -3,6 +3,7 @@ package org.cherchgk.actions.user;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import org.cherchgk.domain.security.Role;
 import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
@@ -10,6 +11,7 @@ import org.cherchgk.utils.ActionContextHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,7 +67,12 @@ public class EditUserAction extends ActionSupport implements Preparable {
 
     public String save() {
         if (user.getId() == null) { // создание нового пользователя
-            securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), "administrator", false);
+            Iterator<Role> roleIterator = user.getRoles().iterator();
+            String roleName = null;
+            if (roleIterator.hasNext()) {
+                roleName = roleIterator.next().getName();
+            }
+            securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), roleName, false);
         } else { // обновление существующего
             if (previousPasswordHashPrefix.equals(user.getPassword())) {
                 user.setPassword(previousPasswordHash);
@@ -88,7 +95,12 @@ public class EditUserAction extends ActionSupport implements Preparable {
     public Map<String, String> getRoles() {
         Map<String, String> roles = new LinkedHashMap<String, String>();
         roles.put("administrator", "Администратор");
-        roles.put("orginizer", "Организатор");
+        roles.put("organizer", "Организатор");
         return Collections.unmodifiableMap(roles);
+    }
+
+    public void setRole(String roleName) {
+        user.getRoles().clear();
+        user.getRoles().add(securityService.getRoleByName(roleName));
     }
 }

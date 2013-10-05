@@ -43,7 +43,7 @@ public class UserInfoAction extends ActionSupport implements Preparable {
     public Map<String, String> getRoles() {
         Map<String, String> roles = new LinkedHashMap<String, String>();
         roles.put("administrator", "Администратор");
-        roles.put("orginizer", "Организатор");
+        roles.put("organizer", "Организатор");
         return Collections.unmodifiableMap(roles);
     }
 
