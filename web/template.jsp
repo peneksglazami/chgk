@@ -64,7 +64,7 @@
             </shiro:guest>
             <shiro:user>
                 <shiro:principal/>
-                <s:a action="logout" cssClass="fg-color-white">Выход</s:a>
+                <s:a action="logout" namespace="/" cssClass="fg-color-white">Выход</s:a>
             </shiro:user>
         </div>
     </div>
