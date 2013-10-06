@@ -72,7 +72,7 @@ public class EditUserAction extends ActionSupport implements Preparable {
             if (roleIterator.hasNext()) {
                 roleName = roleIterator.next().getName();
             }
-            securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), roleName, false);
+            securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), roleName);
         } else { // обновление уже существующего пользователя
             if (previousPasswordHashPrefix.equals(user.getPassword())) {
                 user.setPassword(previousPasswordHash);

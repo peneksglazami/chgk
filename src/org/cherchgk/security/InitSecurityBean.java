@@ -43,7 +43,7 @@ public class InitSecurityBean implements InitializingBean {
             }
         }
 
-        securityService.createUserIfNotExist("admin", "admin", "administrator", false);
-        securityService.createUserIfNotExist("organizer", "organizer", "organizer", true);
+        securityService.createUserIfNotExist("admin", "admin", "administrator");
+        securityService.createUserIfNotExist("organizer", "organizer", "organizer");
     }
 }

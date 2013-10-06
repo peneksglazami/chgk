@@ -28,7 +28,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "PERMISSION_ID")
     )
     private Set<Permission> permissions;
-    private boolean blocked;
 
     public Long getId() {
         return id;
@@ -76,13 +75,5 @@ public class User {
 
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
-    }
-
-    public boolean isBlocked() {
-        return blocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
     }
 }

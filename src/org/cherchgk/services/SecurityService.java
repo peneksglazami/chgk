@@ -53,19 +53,18 @@ public class SecurityService {
         }
     }
 
-    public void createUserIfNotExist(String username, String password, String roleName, boolean blocked) {
+    public void createUserIfNotExist(String username, String password, String roleName) {
         User user = getUserByName(username);
         if (user == null) {
-            createUser(username, password, getRoleByName(roleName), blocked);
+            createUser(username, password, getRoleByName(roleName));
         }
     }
 
-    private void createUser(String username, String password, Role role, boolean blocked) {
+    private void createUser(String username, String password, Role role) {
         User user = new User();
         user.setUsername(username);
         setUserPassword(user, password);
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
-        user.setBlocked(blocked);
         entityManager.persist(user);
     }
 
