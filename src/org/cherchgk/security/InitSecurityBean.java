@@ -30,6 +30,9 @@ public class InitSecurityBean implements InitializingBean {
 
         Set<Permission> organizerPermissions = new HashSet<Permission>();
         organizerPermissions.add(new Permission("tournament:create"));
+        organizerPermissions.add(new Permission("tournament:edit"));
+        organizerPermissions.add(new Permission("team:create"));
+        organizerPermissions.add(new Permission("team:edit"));
         securityService.setRolePermissions("organizer", organizerPermissions);
 
         if (ApplicationSettings.isDemoMode()) {

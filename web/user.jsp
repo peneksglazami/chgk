@@ -77,7 +77,7 @@
                         </s:if>
                     </shiro:hasPermission>
                 </s:else>
-                <input class="button" type="button" value="Отмена" onclick="history.back()">
+                <input class="button" type="button" value="Назад" onclick="history.back()">
             </td>
         </tr>
     </table>
