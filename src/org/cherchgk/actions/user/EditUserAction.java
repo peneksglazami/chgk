@@ -8,12 +8,7 @@ import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Действие создания и редактирования пользователя
@@ -26,15 +21,9 @@ public class EditUserAction extends ActionSupport implements Preparable {
     private User user;
     private String previousPasswordHash;
     private String previousPasswordHashPrefix;
-    private EntityManager entityManager;
 
     public EditUserAction(SecurityService securityService) {
         this.securityService = securityService;
-    }
-
-    @PersistenceContext
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
     }
 
     @Override
@@ -63,6 +52,17 @@ public class EditUserAction extends ActionSupport implements Preparable {
             previousPasswordHash = user.getPassword();
             previousPasswordHashPrefix = previousPasswordHash.substring(0, 5);
         }
+        if (user == null) {
+            /*
+             * Возможно, это костыль, и можно всё сделать средствами Struts.
+             * Сделано для того, чтобы при вызове метода setRole user был не
+             * равен null, так как setUser вызывается мозже setRole.
+             * В EditTeamAction такого делать не пришлось, может быть, там
+             * нам просто повезло и звёзды сошлись так, что сначала вызывается
+             * setTeam, а потом setTeamCategory.
+             */
+            user = new User();
+        }
     }
 
     public String save() {
@@ -73,7 +73,7 @@ public class EditUserAction extends ActionSupport implements Preparable {
                 roleName = roleIterator.next().getName();
             }
             securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), roleName, false);
-        } else { // обновление существующего
+        } else { // обновление уже существующего пользователя
             if (previousPasswordHashPrefix.equals(user.getPassword())) {
                 user.setPassword(previousPasswordHash);
             } else {
@@ -100,7 +100,12 @@ public class EditUserAction extends ActionSupport implements Preparable {
     }
 
     public void setRole(String roleName) {
-        user.getRoles().clear();
-        user.getRoles().add(securityService.getRoleByName(roleName));
+        Role role = securityService.getRoleByName(roleName);
+        if (user.getRoles() != null) { // пользователь уже существует, сбросим все роли
+            user.getRoles().clear();
+        } else { // создаём нового пользователя, поэтому сначала создаём множество для хранения ролей
+            user.setRoles(new HashSet<Role>());
+        }
+        user.getRoles().add(role);
     }
 }
