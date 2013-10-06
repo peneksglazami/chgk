@@ -40,7 +40,7 @@ public class EditTeamAction extends ActionSupport implements Preparable {
             }
         }
         if (team.getNumber() == null) {
-            addFieldError("team.number", "Не указано номер команды");
+            addFieldError("team.number", "Не указан номер команды");
         } else if (team.getNumber() < 1) {
             addFieldError("team.number", "Номер команды должен быть больше нуля");
         } else {
