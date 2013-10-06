@@ -62,6 +62,10 @@
   
   <!-- Project Libraries -->
   
+  <path id="library.cglib-nodep-2.2.3.classpath">
+    <pathelement location="${basedir}/lib/cglib-nodep-2.2.3.jar"/>
+  </path>
+  
   <path id="library.commons.classpath">
     <pathelement location="${basedir}/lib/commons-beanutils-1.7.0.jar"/>
     <pathelement location="${basedir}/lib/commons-collections-3.1.jar"/>
@@ -87,9 +91,14 @@
   </path>
   
   <path id="library.java-ee.classpath">
+    <pathelement location="${basedir}/lib/jsp-api.jar"/>
     <pathelement location="${basedir}/lib/jstl.jar"/>
     <pathelement location="${basedir}/lib/servlet-api.jar"/>
     <pathelement location="${basedir}/lib/standard.jar"/>
+  </path>
+  
+  <path id="library.shiro-1.2.2.classpath">
+    <pathelement location="${basedir}/lib/shiro-all-1.2.2.jar"/>
   </path>
   
   <path id="library.spring-3.0.0.classpath">
@@ -130,6 +139,9 @@
   </path>
   
   
+  <!-- Global Libraries -->
+  
+  
   <!-- Application Server Libraries -->
   
   <!-- Modules -->
@@ -157,6 +169,8 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
+    <path refid="library.shiro-1.2.2.classpath"/>
+    <path refid="library.cglib-nodep-2.2.3.classpath"/>
   </path>
   
   <path id="chgk.runtime.production.module.classpath">
@@ -167,6 +181,8 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
+    <path refid="library.shiro-1.2.2.classpath"/>
+    <path refid="library.cglib-nodep-2.2.3.classpath"/>
   </path>
   
   <path id="chgk.module.classpath">
@@ -177,6 +193,8 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
+    <path refid="library.shiro-1.2.2.classpath"/>
+    <path refid="library.cglib-nodep-2.2.3.classpath"/>
   </path>
   
   <path id="chgk.runtime.module.classpath">
@@ -188,6 +206,8 @@
     <path refid="library.db-drivers.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.java-ee.classpath"/>
+    <path refid="library.shiro-1.2.2.classpath"/>
+    <path refid="library.cglib-nodep-2.2.3.classpath"/>
   </path>
   
   
@@ -210,7 +230,7 @@
   
   <target name="compile.module.chgk.production" description="Compile module ChGK; production classes">
     <mkdir dir="${chgk.output.dir}"/>
-    <javac destdir="${chgk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" encoding="UTF-8">
+    <javac destdir="${chgk.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.chgk}"/>
       <bootclasspath refid="chgk.module.bootclasspath"/>
       <classpath refid="chgk.module.production.classpath"/>
@@ -243,14 +263,26 @@
   
   <target name="init.artifacts">
     <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.chgk" value="${basedir}/out/artifacts/chgk"/>
     <property name="artifact.output.chgk:war" value="${basedir}/out/artifacts/ChGK_war"/>
     <property name="artifact.output.chgk:war_exploded" value="${basedir}/out/artifacts/ChGK_war_exploded"/>
     <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.chgk.jar" value="${artifacts.temp.dir}/chgk.jar"/>
     <property name="temp.jar.path.chgk.war" value="${artifacts.temp.dir}/chgk.war"/>
   </target>
   
   <target name="clean.artifact.chgk:war_exploded" description="clean ChGK:war exploded artifact output">
     <delete dir="${artifact.output.chgk:war_exploded}"/>
+  </target>
+  
+  <target name="artifact.chgk" depends="init.artifacts, compile.module.chgk" description="Build &#39;chgk&#39; artifact">
+    <property name="artifact.temp.output.chgk" value="${artifacts.temp.dir}/chgk"/>
+    <mkdir dir="${artifact.temp.output.chgk}"/>
+    <jar destfile="${temp.jar.path.chgk.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${chgk.output.dir}"/>
+      <zipfileset file="${basedir}/src/META-INF/persistence.xml" prefix="META-INF"/>
+    </jar>
+    <copy file="${temp.jar.path.chgk.jar}" tofile="${artifact.temp.output.chgk}/chgk.jar"/>
   </target>
   
   <target name="artifact.chgk:war" depends="init.artifacts, artifact.chgk:war_exploded" description="Build &#39;ChGK:war&#39; artifact">
@@ -262,7 +294,7 @@
     <copy file="${temp.jar.path.chgk.war}" tofile="${artifact.temp.output.chgk:war}/chgk.war"/>
   </target>
   
-  <target name="artifact.chgk:war_exploded" depends="init.artifacts, compile.module.chgk" description="Build &#39;ChGK:war exploded&#39; artifact">
+  <target name="artifact.chgk:war_exploded" depends="init.artifacts, artifact.chgk" description="Build &#39;ChGK:war exploded&#39; artifact">
     <mkdir dir="${artifact.output.chgk:war_exploded}"/>
     <copy todir="${artifact.output.chgk:war_exploded}">
       <fileset dir="${basedir}/web"/>
@@ -270,12 +302,6 @@
     <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF"/>
     <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/web.xml"/>
     <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF"/>
-    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/classes"/>
-    <copy todir="${artifact.output.chgk:war_exploded}/WEB-INF/classes">
-      <fileset dir="${chgk.output.dir}"/>
-    </copy>
-    <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/classes/META-INF"/>
-    <copy file="${basedir}/src/META-INF/persistence.xml" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/classes/META-INF/persistence.xml"/>
     <mkdir dir="${artifact.output.chgk:war_exploded}/WEB-INF/lib"/>
     <copy file="${basedir}/lib/struts2-core.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-core.jar"/>
     <copy file="${basedir}/lib/freemarker.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/freemarker.jar"/>
@@ -326,9 +352,19 @@
     <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
     <copy file="${basedir}/lib/jstl.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jstl.jar"/>
     <copy file="${basedir}/lib/standard.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/standard.jar"/>
+    <copy file="${basedir}/lib/jsp-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jsp-api.jar"/>
+    <copy file="${basedir}/lib/shiro-all-1.2.2.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/shiro-all-1.2.2.jar"/>
+    <copy file="${basedir}/lib/cglib-nodep-2.2.3.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/cglib-nodep-2.2.3.jar"/>
+    <copy todir="${artifact.output.chgk:war_exploded}/WEB-INF/lib">
+      <fileset dir="${artifact.temp.output.chgk}"/>
+    </copy>
   </target>
   
-  <target name="build.all.artifacts" depends="artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">
+  <target name="build.all.artifacts" depends="artifact.chgk, artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">
+    <mkdir dir="${artifact.output.chgk}"/>
+    <copy todir="${artifact.output.chgk}">
+      <fileset dir="${artifact.temp.output.chgk}"/>
+    </copy>
     <mkdir dir="${artifact.output.chgk:war}"/>
     <copy todir="${artifact.output.chgk:war}">
       <fileset dir="${artifact.temp.output.chgk:war}"/>

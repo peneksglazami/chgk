@@ -116,3 +116,9 @@
 table.row-hovered tbody tr:hover {
     background-color: #ff4500;
 }
+
+.demo-users {
+    position: absolute;
+    right: 10px;
+    text-align: right;
+}

@@ -1,7 +1,9 @@
 package org.cherchgk.security;
 
 import org.cherchgk.domain.security.Permission;
+import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
+import org.cherchgk.utils.ApplicationSettings;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +31,17 @@ public class InitSecurityBean implements InitializingBean {
         Set<Permission> organizerPermissions = new HashSet<Permission>();
         organizerPermissions.add(new Permission("tournament:create"));
         securityService.setRolePermissions("organizer", organizerPermissions);
+
+        if (ApplicationSettings.isDemoMode()) {
+            User admin = securityService.getUserByName("admin");
+            if (admin != null) {
+                securityService.deleteUser(admin.getId());
+            }
+            User organizer = securityService.getUserByName("organizer");
+            if (organizer != null) {
+                securityService.deleteUser(organizer.getId());
+            }
+        }
 
         securityService.createUserIfNotExist("admin", "admin", "administrator", false);
         securityService.createUserIfNotExist("organizer", "organizer", "organizer", true);

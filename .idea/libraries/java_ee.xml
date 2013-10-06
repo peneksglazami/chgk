@@ -4,6 +4,7 @@
       <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jstl.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/standard.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

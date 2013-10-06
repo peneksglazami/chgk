@@ -4,10 +4,6 @@
     <root id="root">
       <element id="javaee-facet-resources" facet="ChGK/web/Web" />
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="ChGK" />
-          <element id="jpa-descriptors" facet="ChGK/jpa/JPA" />
-        </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="struts2-2.2.1.1" />
           <element id="library" level="project" name="spring-3.0.0" />
@@ -17,6 +13,7 @@
           <element id="library" level="project" name="java-ee" />
           <element id="library" level="project" name="shiro-1.2.2" />
           <element id="library" level="project" name="cglib-nodep-2.2.3" />
+          <element id="artifact" artifact-name="chgk" />
         </element>
       </element>
     </root>

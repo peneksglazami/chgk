@@ -11,6 +11,10 @@
     </context-param>
 
     <listener>
+        <listener-class>org.cherchgk.web.ApplicationSettingsLoaderListener</listener-class>
+    </listener>
+
+    <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
