@@ -6,6 +6,8 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon" />
     <sx:head compressed="true" debug="false" cache="true" parseContent="false"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/frameworks/jquery/themes/base/minified/jquery-ui.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/frameworks/metro-ui/css/modern.css">
