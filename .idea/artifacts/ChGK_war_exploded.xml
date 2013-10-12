@@ -10,10 +10,11 @@
           <element id="library" level="project" name="db-drivers" />
           <element id="library" level="project" name="hibernate-3.6.0" />
           <element id="library" level="project" name="commons" />
-          <element id="library" level="project" name="java-ee" />
           <element id="library" level="project" name="shiro-1.2.2" />
           <element id="library" level="project" name="cglib-nodep-2.2.3" />
           <element id="artifact" artifact-name="chgk" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jstl.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/standard.jar" />
         </element>
       </element>
     </root>
