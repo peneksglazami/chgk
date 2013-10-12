@@ -356,6 +356,7 @@
     </copy>
     <copy file="${basedir}/lib/jstl.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jstl.jar"/>
     <copy file="${basedir}/lib/standard.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/standard.jar"/>
+    <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
   </target>
   
   <target name="build.all.artifacts" depends="artifact.chgk, artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">
