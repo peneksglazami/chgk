@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.Tournament;
+import org.cherchgk.security.PermissionChecker;
 import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Действие открытия на редактирование результатов выполнения запроса
+ * Действие открытия на редактирование результатов турнира.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
@@ -32,6 +33,7 @@ public class EditTournamentResultAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
+        PermissionChecker.checkPermissions("tournament:edit:" + tournamentId);
         tournament = tournamentService.find(tournamentId);
 
         return Action.SUCCESS;
