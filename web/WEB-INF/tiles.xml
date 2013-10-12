@@ -45,4 +45,9 @@
         <put-attribute name="title" value="Что? Где? Когда? - Редактирование пользователя"/>
         <put-attribute name="body" value="/user.jsp"/>
     </definition>
+    
+    <definition name="securityViolation" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Не надо так"/>
+        <put-attribute name="body" value="/security-violation.jsp"/>
+    </definition>
 </tiles-definitions>

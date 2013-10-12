@@ -13,6 +13,14 @@
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
 
+        <global-results>
+            <result name="securityViolation" type="tiles">securityViolation</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="org.apache.shiro.authz.AuthorizationException" result="securityViolation"/>
+        </global-exception-mappings>
+
         <action name="main">
             <result type="tiles">main</result>
         </action>
