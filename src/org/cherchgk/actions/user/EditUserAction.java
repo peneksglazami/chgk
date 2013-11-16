@@ -5,13 +5,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import org.cherchgk.domain.security.Role;
 import org.cherchgk.domain.security.User;
+import org.cherchgk.security.PermissionChecker;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
 
 import java.util.*;
 
 /**
- * Действие создания и редактирования пользователя
+ * Действие создания и редактирования пользователя.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
@@ -67,6 +68,7 @@ public class EditUserAction extends ActionSupport implements Preparable {
 
     public String save() {
         if (user.getId() == null) { // создание нового пользователя
+            PermissionChecker.checkPermissions("user:create");
             Iterator<Role> roleIterator = user.getRoles().iterator();
             String roleName = null;
             if (roleIterator.hasNext()) {
@@ -74,6 +76,7 @@ public class EditUserAction extends ActionSupport implements Preparable {
             }
             securityService.createUserIfNotExist(user.getUsername(), user.getPassword(), roleName);
         } else { // обновление уже существующего пользователя
+            PermissionChecker.checkPermissions("user:edit:" + user.getId());
             if (previousPasswordHashPrefix.equals(user.getPassword())) {
                 user.setPassword(previousPasswordHash);
             } else {
