@@ -23,7 +23,7 @@ public class DeleteTournamentAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         String tournamentId = ActionContextHelper.getRequestParameterValue("tournament.id");
-        PermissionChecker.checkPermissions("tournament:delete:" + tournamentId);
+        PermissionChecker.checkPermissions("tournament:edit:" + tournamentId);
         Tournament tournament = tournamentService.find(Long.valueOf(tournamentId));
         tournamentService.delete(tournament);
         return Action.SUCCESS;

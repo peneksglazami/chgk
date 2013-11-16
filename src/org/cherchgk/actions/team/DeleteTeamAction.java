@@ -22,7 +22,7 @@ public class DeleteTeamAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         String teamId = ActionContextHelper.getRequestParameterValue("teamId");
-        PermissionChecker.checkPermissions("team:delete:" + teamId);
+        PermissionChecker.checkPermissions("team:edit:" + teamId);
         Team team = teamService.find(Long.valueOf(teamId));
         tournamentId = team.getTournament().getId();
         teamService.delete(team);
