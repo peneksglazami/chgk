@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.Preparable;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
+import org.cherchgk.security.PermissionChecker;
 import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
@@ -64,6 +65,11 @@ public class EditTeamAction extends ActionSupport implements Preparable {
     }
 
     public String save() {
+        if (team.getId() == null) {
+            PermissionChecker.checkPermissions("team:create");
+        } else {
+            PermissionChecker.checkPermissions("team:edit:" + team.getId());
+        }
         synchronized (EditTeamAction.class) {
             if (team.getTournament() == null) {
                 team.setTournament(tournament);
