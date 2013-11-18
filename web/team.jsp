@@ -15,8 +15,8 @@
                             'action': function () {
                                 var form = $('<form>' +
                                         '<input type="hidden" name="action:delete-team">' +
-                                        '<input type="hidden" name="teamId" value="${team.id}"' +
-                                        '</form>');
+                                        '<input type="hidden" name="teamId" value="${team.id}">' +
+                                        '</form>').appendTo('body');
                                 form.submit();
                             }
                         },
