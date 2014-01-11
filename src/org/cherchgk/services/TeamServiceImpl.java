@@ -17,6 +17,7 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
 
     public List<Team> findAll() {
         Query query = entityManager.createQuery("select tournament from Tournament tournament");
+        query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }
 
@@ -24,6 +25,7 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
     public void delete(Team team) {
         Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team.id = :teamId")
                 .setParameter("teamId", team.getId());
+        query.setHint("org.hibernate.cacheable", true);
         for (RightAnswer rightAnswer : (List<RightAnswer>) query.getResultList()) {
             entityManager.remove(rightAnswer);
         }
@@ -33,6 +35,7 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
     public List<RightAnswer> getTeamRightAnswers(Team team) {
         Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team = :team")
                 .setParameter("team", team);
+        query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }
 
@@ -40,6 +43,7 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
         Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team.id = :teamId and answer.questionNumber = :questionNumber")
                 .setParameter("teamId", teamId)
                 .setParameter("questionNumber", questionNumber);
+        query.setHint("org.hibernate.cacheable", true);
         List<RightAnswer> rightAnswers = query.getResultList();
         RightAnswer rightAnswer = null;
         if (rightAnswers.size() == 1) {

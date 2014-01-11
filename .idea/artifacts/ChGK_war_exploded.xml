@@ -16,6 +16,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/lib/jstl.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/standard.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/servlet-api.jar" />
+          <element id="library" level="project" name="ehcache-2.2.0" />
         </element>
       </element>
     </root>

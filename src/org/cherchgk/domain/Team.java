@@ -1,5 +1,7 @@
 package org.cherchgk.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,6 +16,7 @@ import javax.persistence.ManyToOne;
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Team implements DomainObject {
 
     @Id

@@ -1,5 +1,8 @@
 package org.cherchgk.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +16,7 @@ import java.util.Map;
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Tournament implements DomainObject {
 
     @Id
@@ -24,9 +28,11 @@ public class Tournament implements DomainObject {
     @OneToMany
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<Team> teams;
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("title")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<TeamCategory> teamCategories;
 
     public Long getId() {

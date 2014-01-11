@@ -14,6 +14,7 @@ import org.cherchgk.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,9 +45,10 @@ public class HibernateRealm extends AuthorizingRealm {
         String username = token.getUsername();
         User user;
         try {
-            user = entityManager.createQuery("select user from User user where user.username = :username", User.class)
-                    .setParameter("username", username)
-                    .getSingleResult();
+            Query query = entityManager.createQuery("select user from User user where user.username = :username", User.class)
+                    .setParameter("username", username);
+            query.setHint("org.hibernate.cacheable", true);
+            user = (User) query.getSingleResult();
         } catch (NoResultException ex) {
             throw new UnknownAccountException("No account found for user [" + username + "]");
         }
@@ -58,9 +60,10 @@ public class HibernateRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) getAvailablePrincipal(principals);
-        User user = entityManager.createQuery("select user from User user where user.username = :username", User.class)
-                .setParameter("username", username)
-                .getSingleResult();
+        Query query = entityManager.createQuery("select user from User user where user.username = :username", User.class)
+                .setParameter("username", username);
+        query.setHint("org.hibernate.cacheable", true);
+        User user = (User) query.getSingleResult();
 
         Set<String> roleNames = new HashSet<String>();
         Set<String> permissions = new HashSet<String>();

@@ -1,5 +1,8 @@
 package org.cherchgk.domain.security;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,6 +11,7 @@ import javax.persistence.Id;
  * @author Andrey Grigorov
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Permission {
     @Id
     @GeneratedValue

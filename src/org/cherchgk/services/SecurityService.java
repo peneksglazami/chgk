@@ -88,6 +88,7 @@ public class SecurityService {
     public Role getRoleByName(String roleName) {
         Query roleQuery = entityManager.createQuery("select role from Role role where role.name = :roleName")
                 .setParameter("roleName", roleName);
+        roleQuery.setHint("org.hibernate.cacheable", true);
         List<Role> roles = roleQuery.getResultList();
         return roles.isEmpty() ? null : roles.get(0);
     }
@@ -95,6 +96,7 @@ public class SecurityService {
     public User getUserByName(String username) {
         Query userQuery = entityManager.createQuery("select user from User user where user.username = :username")
                 .setParameter("username", username);
+        userQuery.setHint("org.hibernate.cacheable", true);
         List<User> users = userQuery.getResultList();
         return users.isEmpty() ? null : users.get(0);
     }
@@ -102,12 +104,14 @@ public class SecurityService {
     public User getUserById(Long userId) {
         Query userQuery = entityManager.createQuery("select user from User user where user.id = :userId")
                 .setParameter("userId", userId);
+        userQuery.setHint("org.hibernate.cacheable", true);
         List<User> users = userQuery.getResultList();
         return users.isEmpty() ? null : users.get(0);
     }
 
     public List<User> getAllUsers() {
         Query usersQuery = entityManager.createQuery("select user from User user order by user.username");
+        usersQuery.setHint("org.hibernate.cacheable", true);
         return usersQuery.getResultList();
     }
 }

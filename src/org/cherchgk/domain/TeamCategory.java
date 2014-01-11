@@ -1,5 +1,8 @@
 package org.cherchgk.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +11,7 @@ import javax.persistence.*;
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class TeamCategory implements Comparable<TeamCategory> {
 
     @Id

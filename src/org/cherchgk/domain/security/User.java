@@ -1,5 +1,8 @@
 package org.cherchgk.domain.security;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +10,7 @@ import java.util.Set;
  * @author Andrey Grigorov
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User {
 
     @Id
@@ -21,12 +25,14 @@ public class User {
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
     )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Role> roles;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             joinColumns = @JoinColumn(name = "ROLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "PERMISSION_ID")
     )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Permission> permissions;
 
     public Long getId() {

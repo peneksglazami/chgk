@@ -23,6 +23,7 @@ public class TournamentServiceImpl extends AbstractService<Tournament> implement
 
     public List<Tournament> findAll() {
         Query query = entityManager.createQuery("select tournament from Tournament tournament");
+        query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }
 
