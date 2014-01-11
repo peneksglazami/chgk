@@ -29,7 +29,7 @@
 <s:else>
     <div>Пока не создано ни одного турнира</div>
 </s:else>
-<p>
+<p style="padding-top: 5px;">
     <shiro:hasPermission name="tournament:create">
         <a href="<s:url action='new-tournament'/>" class="button bg-color-green fg-color-white">Создать турнир</a>
     </shiro:hasPermission>
