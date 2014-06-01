@@ -65,8 +65,12 @@
         }
 
         for (var teamId in results) {
-            dojo.byId("sum_" + teamId).innerHTML = teamSum[teamId];
-            dojo.byId("ranking_" + teamId).innerHTML = teamRanking[teamId];
+            $('td[id^="sum_' + teamId + '"]').each(function(index, elem) {
+                elem.innerHTML = teamSum[teamId];
+            });
+            $('td[id^="ranking_' + teamId + '"]').each(function(index, elem) {
+                elem.innerHTML = teamRanking[teamId];
+            });
         }
 
         for (var questionNumber in questionRanking) {
@@ -106,7 +110,9 @@
                 if (i < 3) {
                     rank = "<span style='color: red;'>" + rank + "</span>";
                 }
-                dojo.byId("rank_" + teamsInfo[g].teamId).innerHTML = rank;
+                $('td[id^="rank_' + teamsInfo[g].teamId + '"]').each(function(index, elem) {
+                    elem.innerHTML = rank;
+                });
             }
             i = j + 1;
         }
@@ -117,7 +123,9 @@
         for (var i = 0; i < results[teamId].length; i++) {
             sum += results[teamId][i];
         }
-        dojo.byId("sum_" + teamId).innerHTML = sum;
+        $('td[id^="sum_' + teamId + '"]').each(function(index, elem) {
+            elem.innerHTML = sum;
+        });
     }
 
     function setRightAnswerImage(teamId, questionNumber, verdict) {
@@ -184,9 +192,9 @@
                                          style="display: none;"/>
                                 </td>
                             </c:forEach>
-                            <td id="sum_${team.id}" align="center"></td>
-                            <td id="ranking_${team.id}" align="center"></td>
-                            <td id="rank_${team.id}" align="center"></td>
+                            <td id="sum_${team.id}_${roundNumber}" align="center"></td>
+                            <td id="ranking_${team.id}_${roundNumber}" align="center"></td>
+                            <td id="rank_${team.id}_${roundNumber}" align="center"></td>
                         </tr>
                     </s:iterator>
                     <tr>
