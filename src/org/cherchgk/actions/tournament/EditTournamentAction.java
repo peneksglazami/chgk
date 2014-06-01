@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Действие создания и редактирования описания турнира
+ * Действие создания и редактирования описания турнира.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
@@ -39,8 +39,19 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
             }
             if (tournament.getQuestionAmount() == null) {
                 addFieldError("tournament.questionAmount", "Не указано количество вопросов");
-            } else if ((tournament.getQuestionAmount() < 1) || (tournament.getQuestionAmount() > 100)) {
+            }
+            if (tournament.getRoundAmount() == null) {
+                addFieldError("tournament.roundAmount", "Не указано количество туров");
+            }
+            if ((tournament.getQuestionAmount() != null)
+                    && ((tournament.getQuestionAmount() < 1) || (tournament.getQuestionAmount() > 100))) {
                 addFieldError("tournament.questionAmount", "Количество вопросов должно быть от 1 до 100");
+            }
+            if ((tournament.getQuestionAmount() != null)
+                    && (tournament.getRoundAmount() != null)
+                    && (tournament.getQuestionAmount() % tournament.getRoundAmount() != 0)) {
+                addFieldError("tournament.questionAmount", "Количество вопросов должно быть кратно "
+                        + tournament.getRoundAmount());
             }
         }
     }

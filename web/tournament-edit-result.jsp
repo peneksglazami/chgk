@@ -8,25 +8,26 @@
         results[teamId][questionNumber - 1] = 1 - results[teamId][questionNumber - 1];
 
         dojo.io.bind({
-            url:"edit-answer-verdict.action",
-            content:{
-                "teamId":teamId,
-                "questionNumber":questionNumber,
-                "verdict":results[teamId][questionNumber - 1]
+            url: "edit-answer-verdict.action",
+            content: {
+                "teamId": teamId,
+                "questionNumber": questionNumber,
+                "verdict": results[teamId][questionNumber - 1]
             },
-            sync:false,
-            method:"post",
-            transport:"XMLHTTPTransport",
-            load:function (type, data, http, args) {
+            sync: false,
+            method: "post",
+            transport: "XMLHTTPTransport",
+            load: function (type, data, http, args) {
                 setRightAnswerImage(teamId, questionNumber, results[teamId][questionNumber - 1] == 1);
                 refreshTable();
             },
-            error:function (type, error, http) {
+            error: function (type, error, http) {
             }
         });
     }
     dojo.addOnLoad(function () {
         refreshTable();
+        showRoundTab(1);
         for (var teamId in results) {
             for (var i = 0; i < results[teamId].length; i++) {
                 if (results[teamId][i] == 1) {
@@ -75,9 +76,9 @@
         var teamsInfo = [];
         for (var teamId in results) {
             var info = {
-                "teamId":teamId,
-                "sum":teamSum[teamId],
-                "ranking":teamRanking[teamId]
+                "teamId": teamId,
+                "sum": teamSum[teamId],
+                "ranking": teamRanking[teamId]
             };
             teamsInfo.push(info);
         }
@@ -122,48 +123,85 @@
     function setRightAnswerImage(teamId, questionNumber, verdict) {
         dojo.byId("img_" + teamId + "_" + questionNumber).style.display = verdict ? '' : 'none';
     }
+
+    function showRoundTab(roundNumber) {
+        dojo.html.getElementsByClassName("tab-round").forEach(function (tab) {
+            dojo.html.removeClass(tab.id, "active");
+        });
+        dojo.html.getElementsByClassName("frame").forEach(function (frame) {
+            frame.style.display = 'none';
+        });
+
+        dojo.byId("frame_round_" + roundNumber).style.display = 'block';
+        dojo.html.addClass("tab_round_" + roundNumber, "active");
+    }
 </script>
 Название: <b><s:property value="tournament.title"/></b><br/>
 Дата: <b><s:date name="tournament.date" format="dd.MM.yyyy"/></b><br/>
 <s:set var="questionAmount" value="tournament.questionAmount"/>
-<table class="edit-result-table">
-    <col>
-    <col>
-    <c:forEach var="questionNumber" begin="1" end="${questionAmount}">
-        <col class="answer-col">
-    </c:forEach>
-    <tr>
-        <td>№</td>
-        <td>Команда</td>
-        <c:forEach var="questionNumber" begin="1" end="${questionAmount}">
-            <td align="center">${questionNumber}</td>
+<s:set var="roundAmount" value="tournament.roundAmount"/>
+<div class="tab-control">
+    <ul class="tabs">
+        <c:forEach var="roundNumber" begin="1" end="${roundAmount}">
+            <li id="tab_round_${roundNumber}" class="tab-round"><a
+                    onclick="showRoundTab(${roundNumber});">Тур ${roundNumber}</a></li>
         </c:forEach>
-        <td align="center">Сумма</td>
-        <td align="center">Рейтинг</td>
-        <td align="center">Место</td>
-    </tr>
-    <s:iterator var="team" value="tournament.teams">
-        <tr class="answer-row">
-            <td>${team.number}</td>
-            <td>${team.name}</td>
-            <c:forEach var="questionNumber" begin="1" end="${questionAmount}">
-                <td id="answer_${team.id}_${questionNumber}" align="center" style="cursor: pointer;"
-                    onclick="changeVerdict(${team.id}, ${questionNumber});">
-                    <img id="img_${team.id}_${questionNumber}" src="images/right-answer.gif" alt="+" border="0"
-                         style="display: none;"/>
-                </td>
-            </c:forEach>
-            <td id="sum_${team.id}" align="center"></td>
-            <td id="ranking_${team.id}" align="center"></td>
-            <td id="rank_${team.id}" align="center"></td>
-        </tr>
-    </s:iterator>
-    <tr>
-        <td colspan="2">Рейтинг вопроса</td>
-        <c:forEach var="questionNumber" begin="1" end="${questionAmount}">
-            <td id="question_ranking_${questionNumber}" align="center"></td>
+    </ul>
+
+    <div class="frames">
+        <c:forEach var="roundNumber" begin="1" end="${roundAmount}">
+            <div class="frame" id="frame_round_${roundNumber}">
+                <table class="edit-result-table">
+                    <col>
+                    <col>
+                    <c:forEach var="questionNumber" begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
+                               end="${roundNumber * (questionAmount div roundAmount)}">
+                        <col class="answer-col">
+                    </c:forEach>
+                    <tr>
+                        <td>№</td>
+                        <td>Команда</td>
+                        <c:forEach var="questionNumber"
+                                   begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
+                                   end="${roundNumber * (questionAmount div roundAmount)}">
+                            <td align="center">${questionNumber}</td>
+                        </c:forEach>
+                        <td align="center">Сумма</td>
+                        <td align="center">Рейтинг</td>
+                        <td align="center">Место</td>
+                    </tr>
+                    <s:iterator var="team" value="tournament.teams">
+                        <tr class="answer-row">
+                            <td>${team.number}</td>
+                            <td>${team.name}</td>
+                            <c:forEach var="questionNumber"
+                                       begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
+                                       end="${roundNumber * (questionAmount div roundAmount)}">
+                                <td id="answer_${team.id}_${questionNumber}" align="center" style="cursor: pointer;"
+                                    onclick="changeVerdict(${team.id}, ${questionNumber});">
+                                    <img id="img_${team.id}_${questionNumber}" src="images/right-answer.gif" alt="+"
+                                         border="0"
+                                         style="display: none;"/>
+                                </td>
+                            </c:forEach>
+                            <td id="sum_${team.id}" align="center"></td>
+                            <td id="ranking_${team.id}" align="center"></td>
+                            <td id="rank_${team.id}" align="center"></td>
+                        </tr>
+                    </s:iterator>
+                    <tr>
+                        <td colspan="2">Рейтинг вопроса</td>
+                        <c:forEach var="questionNumber"
+                                   begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
+                                   end="${roundNumber * (questionAmount div roundAmount)}">
+                            <td id="question_ranking_${questionNumber}" align="center"></td>
+                        </c:forEach>
+                        <td colspan="3" align="center">Что? Где? Когда?</td>
+                    </tr>
+                </table>
+            </div>
         </c:forEach>
-        <td colspan="3" align="center">Что? Где? Когда?</td>
-    </tr>
-</table>
+    </div>
+</div>
+
 <input class="button" type="button" value="Назад" onclick="history.back()">

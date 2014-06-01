@@ -25,6 +25,7 @@ public class Tournament implements DomainObject {
     private String title;
     private Date date;
     private Integer questionAmount;
+    private Integer roundAmount;
     @OneToMany
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
@@ -73,6 +74,14 @@ public class Tournament implements DomainObject {
 
     public void setQuestionAmount(Integer questionAmount) {
         this.questionAmount = questionAmount;
+    }
+
+    public Integer getRoundAmount() {
+        return roundAmount;
+    }
+
+    public void setRoundAmount(Integer roundAmount) {
+        this.roundAmount = roundAmount;
     }
 
     public List<Team> getTeams() {

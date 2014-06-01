@@ -111,6 +111,17 @@
             </td>
         </tr>
         <tr>
+            <td align="right">Количество туров:</td>
+            <td>
+                <shiro:hasPermission name="tournament:edit:${tournament.id}">
+                    <s:textfield name="tournament.roundAmount" size="2"/>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="tournament:edit:${tournament.id}">
+                    <s:label name="tournament.roundAmount"/>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        <tr>
             <td align="right">Категории команд:</td>
             <td>
                 <div id="categoriesList">

@@ -122,3 +122,93 @@ table.row-hovered tbody tr:hover {
     right: 10px;
     text-align: right;
 }
+
+.tab-control {
+    margin-top: 5px;
+}
+
+.tab-control .tabs {
+    padding-left: 0;
+    list-style: none;
+    margin: 0  !important;
+    z-index: 2;
+}
+
+.tab-control .tabs li ul,
+
+.tab-control .tabs li ol {
+    list-style: none;
+    padding-left: 25px;
+}
+
+.tab-control .tabs:before,
+
+.tab-control .tabs:after {
+    display: table;
+    content: "";
+}
+
+.tab-control .tabs:after {
+    clear: both;
+}
+
+.tab-control .tabs > li {
+    background-color: #ffffff;
+    display: block;
+    float: left;
+    margin-left: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.tab-control .tabs > li > a {
+    border: 1px #eeeeee solid;
+    display: block;
+    float: left;
+    padding: 5px 10px;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    color: inherit;
+    background-color: #eeeeee;
+}
+
+.tab-control .tabs > li.active a {
+    border-bottom-color: #ffffff;
+    background-color: #ffffff;
+    border-top: 2px #e51400 solid;
+}
+
+.tab-control .tabs > li.active:hover a {
+    background-color: #ffffff;
+    color: #1d1d1d;
+}
+
+.tab-control .tabs > li:hover a {
+    background-color: #d5d5d5;
+    color: #ffffff;
+}
+
+.tab-control .tabs > li.place-right {
+    float: right;
+    margin-right: 5px;
+    margin-left: auto;
+}
+
+.tab-control .tabs.no-spaces > li {
+    margin-left: 0;
+}
+
+.tab-control .frames {
+    z-index: 1;
+    border: 1px #eeeeee solid;
+    margin-top: -1px;
+}
+
+.tab-control .frames .frame {
+    display: none;
+}
+
+.tab-control .frame {
+    padding: 20px;
+}

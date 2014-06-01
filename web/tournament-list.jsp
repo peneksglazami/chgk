@@ -7,6 +7,7 @@
         <tr style="background-color:#bbbbbb">
             <th>Название турнира</th>
             <th>Количество вопросов</th>
+            <th>Количество туров</th>
             <th>Дата проведения</th>
         </tr>
         </thead>
@@ -20,6 +21,7 @@
             <tr style="cursor: pointer;" onclick="javascript:document.location='<s:property value="%{url}"/>'">
                 <td><s:property value="#tournament.title"/></td>
                 <td><s:property value="#tournament.questionAmount"/></td>
+                <td><s:property value="#tournament.roundAmount"/></td>
                 <td><s:property value="#tournament.dateAsString"/></td>
             </tr>
         </s:iterator>
