@@ -104,4 +104,8 @@ public class EditTournamentAction extends ActionSupport implements Preparable {
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
+
+    public Tournament.QuestionNumberingType[] getQuestionNumberingTypes() {
+        return Tournament.QuestionNumberingType.values();
+    }
 }

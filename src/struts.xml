@@ -38,7 +38,7 @@
         <action name="tournament-list" class="tournamentListAction" method="execute">
             <result type="tiles">tournamentList</result>
         </action>
-        <action name="new-tournament">
+        <action name="new-tournament" class="newTournamentAction">
             <result type="tiles">tournament</result>
         </action>
         <action name="edit-tournament" class="tournamentInfoAction">

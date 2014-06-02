@@ -65,10 +65,10 @@
         }
 
         for (var teamId in results) {
-            $('td[id^="sum_' + teamId + '"]').each(function(index, elem) {
+            $('td[id^="sum_' + teamId + '"]').each(function (index, elem) {
                 elem.innerHTML = teamSum[teamId];
             });
-            $('td[id^="ranking_' + teamId + '"]').each(function(index, elem) {
+            $('td[id^="ranking_' + teamId + '"]').each(function (index, elem) {
                 elem.innerHTML = teamRanking[teamId];
             });
         }
@@ -110,7 +110,7 @@
                 if (i < 3) {
                     rank = "<span style='color: red;'>" + rank + "</span>";
                 }
-                $('td[id^="rank_' + teamsInfo[g].teamId + '"]').each(function(index, elem) {
+                $('td[id^="rank_' + teamsInfo[g].teamId + '"]').each(function (index, elem) {
                     elem.innerHTML = rank;
                 });
             }
@@ -123,7 +123,7 @@
         for (var i = 0; i < results[teamId].length; i++) {
             sum += results[teamId][i];
         }
-        $('td[id^="sum_' + teamId + '"]').each(function(index, elem) {
+        $('td[id^="sum_' + teamId + '"]').each(function (index, elem) {
             elem.innerHTML = sum;
         });
     }
@@ -169,11 +169,20 @@
                     <tr>
                         <td>№</td>
                         <td>Команда</td>
-                        <c:forEach var="questionNumber"
-                                   begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
-                                   end="${roundNumber * (questionAmount div roundAmount)}">
-                            <td align="center">${questionNumber}</td>
-                        </c:forEach>
+                        <s:if test="tournament.questionNumberingType.name == 'SEQUENTIALLY'">
+                            <c:forEach var="questionNumber"
+                                       begin="${(roundNumber - 1) * (questionAmount div roundAmount) + 1}"
+                                       end="${roundNumber * (questionAmount div roundAmount)}">
+                                <td align="center">${questionNumber}</td>
+                            </c:forEach>
+                        </s:if>
+                        <s:else>
+                            <c:forEach var="questionNumber"
+                                       begin="1"
+                                       end="${questionAmount div roundAmount}">
+                                <td align="center">${questionNumber}</td>
+                            </c:forEach>
+                        </s:else>
                         <td align="center">Сумма</td>
                         <td align="center">Рейтинг</td>
                         <td align="center">Место</td>

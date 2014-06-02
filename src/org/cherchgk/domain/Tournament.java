@@ -19,6 +19,28 @@ import java.util.Map;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Tournament implements DomainObject {
 
+    /**
+     * Способы нумерации вопросов в туре.
+     */
+    public enum QuestionNumberingType {
+        SEQUENTIALLY("Сквозная"),
+        ROUND("Потуровая");
+
+        private String title;
+
+        private QuestionNumberingType(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getName() {
+            return name();
+        }
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -26,6 +48,8 @@ public class Tournament implements DomainObject {
     private Date date;
     private Integer questionAmount;
     private Integer roundAmount;
+    @Enumerated(EnumType.STRING)
+    private QuestionNumberingType questionNumberingType;
     @OneToMany
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
@@ -84,6 +108,14 @@ public class Tournament implements DomainObject {
         this.roundAmount = roundAmount;
     }
 
+    public QuestionNumberingType getQuestionNumberingType() {
+        return questionNumberingType;
+    }
+
+    public void setQuestionNumberingType(QuestionNumberingType questionNumberingType) {
+        this.questionNumberingType = questionNumberingType;
+    }
+
     public List<Team> getTeams() {
         return teams;
     }
@@ -106,7 +138,7 @@ public class Tournament implements DomainObject {
      * значение - название категории).
      *
      * @return ассоциативный массив с информацией о категориях, разрешённых
-     *         на турнире.
+     * на турнире.
      */
     public Map<Long, String> getTeamCategoriesMap() {
         Map<Long, String> teamCategories = new LinkedHashMap<Long, String>();

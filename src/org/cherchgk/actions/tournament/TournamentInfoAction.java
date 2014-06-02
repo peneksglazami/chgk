@@ -6,7 +6,7 @@ import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
 /**
- * Действие просмотра информации о турнире
+ * Действие просмотра информации о турнире.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
@@ -25,5 +25,9 @@ public class TournamentInfoAction extends ActionSupport {
             tournament = tournamentService.find(tournamentId);
         }
         return tournament;
+    }
+
+    public Tournament.QuestionNumberingType[] getQuestionNumberingTypes() {
+        return Tournament.QuestionNumberingType.values();
     }
 }

@@ -56,6 +56,8 @@
         <constructor-arg ref="tournamentService"/>
     </bean>
 
+    <bean id="newTournamentAction" scope="prototype" class="org.cherchgk.actions.tournament.NewTournamentAction"/>
+
     <bean id="editTournamentAction" scope="prototype" class="org.cherchgk.actions.tournament.EditTournamentAction">
         <constructor-arg ref="tournamentService"/>
     </bean>

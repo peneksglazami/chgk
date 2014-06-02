@@ -122,6 +122,19 @@
             </td>
         </tr>
         <tr>
+            <td align="right">Нумерация вопросов:</td>
+            <td>
+                <shiro:hasPermission name="tournament:edit:${tournament.id}">
+                    <s:select name="tournament.questionNumberingType"
+                              listValue="title"
+                              list="questionNumberingTypes"/>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="tournament:edit:${tournament.id}">
+                    <s:label name="tournament.questionNumberingType.title"/>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        <tr>
             <td align="right">Категории команд:</td>
             <td>
                 <div id="categoriesList">
