@@ -83,13 +83,22 @@
     color: #ff4500;
 }
 
+.edit-result-table {
+    margin: 0px;
+    border-collapse: collapse;
+}
+
 .edit-result-table td {
     padding: 0px;
     border-width: 1px;
     border-spacing: 0px;
-    border-color: black;
+    border-color: #646464;
     border-style: solid;
     empty-cells: show;
+}
+
+.edit-result-table td:last-child {
+    border-right: 1px solid #646464;
 }
 
 .edit-result-table .answer-col {

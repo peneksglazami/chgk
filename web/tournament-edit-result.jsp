@@ -27,7 +27,6 @@
     }
     dojo.addOnLoad(function () {
         refreshTable();
-        showRoundTab(1);
         for (var teamId in results) {
             for (var i = 0; i < results[teamId].length; i++) {
                 if (results[teamId][i] == 1) {
@@ -151,14 +150,25 @@
 <div class="tab-control">
     <ul class="tabs">
         <c:forEach var="roundNumber" begin="1" end="${roundAmount}">
-            <li id="tab_round_${roundNumber}" class="tab-round"><a
-                    onclick="showRoundTab(${roundNumber});">Тур ${roundNumber}</a></li>
+            <c:if test="${roundNumber == 1}">
+                <li id="tab_round_${roundNumber}" class="tab-round active">
+            </c:if>
+            <c:if test="${roundNumber > 1}">
+                <li id="tab_round_${roundNumber}" class="tab-round">
+            </c:if>
+                <a onclick="showRoundTab(${roundNumber});">Тур ${roundNumber}</a>
+            </li>
         </c:forEach>
     </ul>
 
     <div class="frames">
         <c:forEach var="roundNumber" begin="1" end="${roundAmount}">
-            <div class="frame" id="frame_round_${roundNumber}">
+            <c:if test="${roundNumber == 1}">
+                <div class="frame" id="frame_round_${roundNumber}" style="display: block;">
+            </c:if>
+            <c:if test="${roundNumber > 1}">
+                <div class="frame" id="frame_round_${roundNumber}" style="display: none;">
+            </c:if>
                 <table class="edit-result-table">
                     <col>
                     <col>
@@ -166,6 +176,9 @@
                                end="${roundNumber * (questionAmount div roundAmount)}">
                         <col class="answer-col">
                     </c:forEach>
+                    <col>
+                    <col>
+                    <col>
                     <tr>
                         <td>№</td>
                         <td>Команда</td>
@@ -221,4 +234,4 @@
     </div>
 </div>
 
-<input class="button" type="button" value="Назад" onclick="history.back()">
+<input class="button" style="margin-top: 10px;" type="button" value="Назад" onclick="history.back()">
