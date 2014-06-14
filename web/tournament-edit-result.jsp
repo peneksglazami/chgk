@@ -2,8 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/frameworks/atmosphere/atmosphere-min.js"></script>
 <script type="text/javascript">
-    var results = <s:property value="jsonResult"/>;
+    var results = <s:property value="jsonResult" escape="false"/>;
     function changeVerdict(teamId, questionNumber) {
         results[teamId][questionNumber - 1] = 1 - results[teamId][questionNumber - 1];
 
@@ -142,6 +144,35 @@
         dojo.byId("frame_round_" + roundNumber).style.display = 'block';
         dojo.html.addClass("tab_round_" + roundNumber, "active");
     }
+
+    var request = {
+        url: '${pageContext.request.contextPath}' + '/meteor',
+        contentType: "application/json",
+        transport: "websocket",
+        reconnectInterval: 5000,
+        fallbackTransport: "long-polling",
+        async: true,
+        headers: {
+            "chgk-tournament-id": "<s:property value="tournament.id"/>"
+        },
+        attachHeadersAsQueryString: true,
+        onMessage: function (response) {
+            var message = response.responseBody;
+            try {
+                results = jQuery.parseJSON(message);
+                refreshTable();
+                for (var teamId in results) {
+                    for (var i = 0; i < results[teamId].length; i++) {
+                        setRightAnswerImage(teamId, i + 1, results[teamId][i] == 1);
+                    }
+                }
+            } catch (e) {
+                return;
+            }
+        }
+    };
+    atmosphere.subscribe(request);
+
 </script>
 Название: <b><s:property value="tournament.title"/></b><br/>
 Дата: <b><s:date name="tournament.date" format="dd.MM.yyyy"/></b><br/>
