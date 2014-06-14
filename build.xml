@@ -60,6 +60,10 @@
   
   <!-- Project Libraries -->
   
+  <path id="library.atmosphere-2.1.5.classpath">
+    <pathelement location="${basedir}/lib/atmosphere-runtime-2.1.5.jar"/>
+  </path>
+  
   <path id="library.cglib-nodep-2.2.3.classpath">
     <pathelement location="${basedir}/lib/cglib-nodep-2.2.3.jar"/>
   </path>
@@ -152,7 +156,7 @@
   
   
   
-  <property name="compiler.args.chgk" value="${compiler.args}"/>
+  <property name="compiler.args.chgk" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
   
   <property name="chgk.output.dir" value="${module.chgk.basedir}/out/production/ChGK"/>
   <property name="chgk.testoutput.dir" value="${module.chgk.basedir}/out/test/ChGK"/>
@@ -171,6 +175,7 @@
     <path refid="library.shiro-1.2.2.classpath"/>
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
+    <path refid="library.atmosphere-2.1.5.classpath"/>
   </path>
   
   <path id="chgk.runtime.production.module.classpath">
@@ -184,6 +189,7 @@
     <path refid="library.shiro-1.2.2.classpath"/>
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
+    <path refid="library.atmosphere-2.1.5.classpath"/>
   </path>
   
   <path id="chgk.module.classpath">
@@ -197,6 +203,7 @@
     <path refid="library.shiro-1.2.2.classpath"/>
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
+    <path refid="library.atmosphere-2.1.5.classpath"/>
   </path>
   
   <path id="chgk.runtime.module.classpath">
@@ -211,6 +218,7 @@
     <path refid="library.shiro-1.2.2.classpath"/>
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
+    <path refid="library.atmosphere-2.1.5.classpath"/>
   </path>
   
   
@@ -277,7 +285,7 @@
   <target name="clean.artifact.chgk:war_exploded" description="clean ChGK:war exploded artifact output">
     <delete dir="${artifact.output.chgk:war_exploded}"/>
   </target>
-  
+
   <target name="artifact.chgk" depends="init.artifacts, compile.module.chgk" description="Build &#39;chgk&#39; artifact">
     <property name="artifact.temp.output.chgk" value="${artifacts.temp.dir}/chgk"/>
     <mkdir dir="${artifact.temp.output.chgk}"/>
@@ -361,6 +369,7 @@
     <copy file="${basedir}/lib/standard.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/standard.jar"/>
     <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
     <copy file="${basedir}/lib/ehcache-core-2.2.0.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/ehcache-core-2.2.0.jar"/>
+    <copy file="${basedir}/lib/atmosphere-runtime-2.1.5.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/atmosphere-runtime-2.1.5.jar"/>
   </target>
   
   <target name="build.all.artifacts" depends="artifact.chgk, artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">
