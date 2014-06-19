@@ -39,7 +39,7 @@ public class TeamInfoAction extends ActionSupport implements Preparable {
     }
 
     public void prepare() throws Exception {
-        long teamId = Long.valueOf(ActionContextHelper.getRequestParameterValue("teamId"));
+        long teamId = Long.parseLong(ActionContextHelper.getRequestParameterValue("teamId"));
         team = teamService.find(teamId);
     }
 

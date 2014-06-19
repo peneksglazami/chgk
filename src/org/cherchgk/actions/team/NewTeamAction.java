@@ -40,7 +40,7 @@ public class NewTeamAction extends ActionSupport implements Preparable {
     }
 
     public void prepare() throws Exception {
-        long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
+        long tournamentId = Long.parseLong(ActionContextHelper.getRequestParameterValue("tournamentId"));
         tournament = tournamentService.find(tournamentId);
         team.setNumber(tournamentService.getNextTeamNumber(tournamentId));
     }

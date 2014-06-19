@@ -49,10 +49,10 @@ public class ShowTournamentResultAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
+        long tournamentId = Long.parseLong(ActionContextHelper.getRequestParameterValue("tournamentId"));
         tournament = tournamentService.find(tournamentId);
         if (ActionContextHelper.getRequestParameterValue("teamCategoryId") != null) {
-            long teamCategoryId = Long.valueOf(ActionContextHelper.getRequestParameterValue("teamCategoryId"));
+            long teamCategoryId = Long.parseLong(ActionContextHelper.getRequestParameterValue("teamCategoryId"));
             for (TeamCategory category : tournament.getTeamCategories()) {
                 if (category.getId().equals(teamCategoryId)) {
                     teamCategory = category;

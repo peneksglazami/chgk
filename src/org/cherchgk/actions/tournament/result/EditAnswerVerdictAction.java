@@ -38,12 +38,12 @@ public class EditAnswerVerdictAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        long teamId = Long.valueOf(ActionContextHelper.getRequestParameterValue("teamId"));
+        long teamId = Long.parseLong(ActionContextHelper.getRequestParameterValue("teamId"));
         Team team = teamService.find(teamId);
         String tournamentId = team.getTournament().getId().toString();
         PermissionChecker.checkPermissions("tournament:edit:" + tournamentId);
-        int questionNumber = Integer.valueOf(ActionContextHelper.getRequestParameterValue("questionNumber"));
-        int verdict = Integer.valueOf(ActionContextHelper.getRequestParameterValue("verdict"));
+        int questionNumber = Integer.parseInt(ActionContextHelper.getRequestParameterValue("questionNumber"));
+        int verdict = Integer.parseInt(ActionContextHelper.getRequestParameterValue("verdict"));
         teamService.setAnswerVerdict(teamId, questionNumber, verdict == 1);
         BroadcasterFactory.getDefault().lookup(tournamentId, true)
                 .broadcast(ResultUtils.getJSONResult(team.getTournament(), teamService));

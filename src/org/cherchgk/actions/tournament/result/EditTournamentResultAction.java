@@ -41,7 +41,7 @@ public class EditTournamentResultAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        long tournamentId = Long.valueOf(ActionContextHelper.getRequestParameterValue("tournamentId"));
+        long tournamentId = Long.parseLong(ActionContextHelper.getRequestParameterValue("tournamentId"));
         PermissionChecker.checkPermissions("tournament:edit:" + tournamentId);
         tournament = tournamentService.find(tournamentId);
 
