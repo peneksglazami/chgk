@@ -18,7 +18,7 @@ package org.cherchgk.services;
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -31,31 +31,37 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
     }
 
     public List<Team> findAll() {
-        Query query = entityManager.createQuery("select tournament from Tournament tournament");
+        TypedQuery<Team> query = entityManager.createQuery("select tournament from Tournament tournament", Team.class);
         query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }
 
     @Override
     public void delete(Team team) {
-        Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team.id = :teamId")
+        TypedQuery<RightAnswer> query = entityManager.createQuery("select answer "
+                + "from RightAnswer answer "
+                + "where answer.team.id = :teamId", RightAnswer.class)
                 .setParameter("teamId", team.getId());
         query.setHint("org.hibernate.cacheable", true);
-        for (RightAnswer rightAnswer : (List<RightAnswer>) query.getResultList()) {
+        for (RightAnswer rightAnswer : query.getResultList()) {
             entityManager.remove(rightAnswer);
         }
         entityManager.remove(team);
     }
 
     public List<RightAnswer> getTeamRightAnswers(Team team) {
-        Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team = :team")
+        TypedQuery<RightAnswer> query = entityManager.createQuery("select answer "
+                + "from RightAnswer answer "
+                + "where answer.team = :team", RightAnswer.class)
                 .setParameter("team", team);
         query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }
 
     public void setAnswerVerdict(long teamId, int questionNumber, boolean verdict) {
-        Query query = entityManager.createQuery("select answer from RightAnswer answer where answer.team.id = :teamId and answer.questionNumber = :questionNumber")
+        TypedQuery<RightAnswer> query = entityManager.createQuery("select answer "
+                + "from RightAnswer answer "
+                + "where answer.team.id = :teamId and answer.questionNumber = :questionNumber", RightAnswer.class)
                 .setParameter("teamId", teamId)
                 .setParameter("questionNumber", questionNumber);
         query.setHint("org.hibernate.cacheable", true);
