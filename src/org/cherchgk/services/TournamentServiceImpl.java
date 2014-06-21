@@ -18,7 +18,7 @@ package org.cherchgk.services;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.Tournament;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -37,7 +37,8 @@ public class TournamentServiceImpl extends AbstractService<Tournament> implement
     }
 
     public List<Tournament> findAll() {
-        Query query = entityManager.createQuery("select tournament from Tournament tournament");
+        TypedQuery<Tournament> query = entityManager.createQuery("select tournament from Tournament tournament",
+                Tournament.class);
         query.setHint("org.hibernate.cacheable", true);
         return query.getResultList();
     }

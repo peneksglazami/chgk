@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -101,7 +101,9 @@ public class SecurityService {
     }
 
     public Role getRoleByName(String roleName) {
-        Query roleQuery = entityManager.createQuery("select role from Role role where role.name = :roleName")
+        TypedQuery<Role> roleQuery = entityManager.createQuery("select role "
+                + "from Role role "
+                + "where role.name = :roleName", Role.class)
                 .setParameter("roleName", roleName);
         roleQuery.setHint("org.hibernate.cacheable", true);
         List<Role> roles = roleQuery.getResultList();
@@ -109,7 +111,9 @@ public class SecurityService {
     }
 
     public User getUserByName(String username) {
-        Query userQuery = entityManager.createQuery("select user from User user where user.username = :username")
+        TypedQuery<User> userQuery = entityManager.createQuery("select user "
+                + "from User user "
+                + "where user.username = :username", User.class)
                 .setParameter("username", username);
         userQuery.setHint("org.hibernate.cacheable", true);
         List<User> users = userQuery.getResultList();
@@ -117,7 +121,9 @@ public class SecurityService {
     }
 
     public User getUserById(Long userId) {
-        Query userQuery = entityManager.createQuery("select user from User user where user.id = :userId")
+        TypedQuery<User> userQuery = entityManager.createQuery("select user "
+                + "from User user "
+                + "where user.id = :userId", User.class)
                 .setParameter("userId", userId);
         userQuery.setHint("org.hibernate.cacheable", true);
         List<User> users = userQuery.getResultList();
@@ -125,7 +131,9 @@ public class SecurityService {
     }
 
     public List<User> getAllUsers() {
-        Query usersQuery = entityManager.createQuery("select user from User user order by user.username");
+        TypedQuery<User> usersQuery = entityManager.createQuery("select user "
+                + "from User user "
+                + "order by user.username", User.class);
         usersQuery.setHint("org.hibernate.cacheable", true);
         return usersQuery.getResultList();
     }
