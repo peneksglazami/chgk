@@ -56,6 +56,25 @@ public class Tournament implements DomainObject {
         }
     }
 
+    /**
+     * Типы дополнительных показателей, использующихся для
+     * подведения итогов по турнира.
+     */
+    public enum RankingMethod {
+        RATING("Рейтинг"),
+        PLACES_SUM("Сумма мест в турах");
+
+        private String title;
+
+        private RankingMethod(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -65,6 +84,8 @@ public class Tournament implements DomainObject {
     private Integer roundAmount;
     @Enumerated(EnumType.STRING)
     private QuestionNumberingType questionNumberingType;
+    @Enumerated(EnumType.STRING)
+    private RankingMethod rankingMethod;
     @OneToMany
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
@@ -129,6 +150,14 @@ public class Tournament implements DomainObject {
 
     public void setQuestionNumberingType(QuestionNumberingType questionNumberingType) {
         this.questionNumberingType = questionNumberingType;
+    }
+
+    public RankingMethod getRankingMethod() {
+        return rankingMethod;
+    }
+
+    public void setRankingMethod(RankingMethod rankingMethod) {
+        this.rankingMethod = rankingMethod;
     }
 
     public List<Team> getTeams() {

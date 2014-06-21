@@ -28,4 +28,8 @@ public class NewTournamentAction extends ActionSupport {
     public Tournament.QuestionNumberingType[] getQuestionNumberingTypes() {
         return Tournament.QuestionNumberingType.values();
     }
+
+    public Tournament.RankingMethod[] getRankingMethods() {
+        return Tournament.RankingMethod.values();
+    }
 }

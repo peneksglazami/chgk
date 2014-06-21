@@ -150,6 +150,19 @@
             </td>
         </tr>
         <tr>
+            <td align="right">Дополнительный показатель:</td>
+            <td>
+                <shiro:hasPermission name="tournament:edit:${tournament.id}">
+                    <s:select name="tournament.rankingMethod"
+                              listValue="title"
+                              list="rankingMethods"/>
+                </shiro:hasPermission>
+                <shiro:lacksPermission name="tournament:edit:${tournament.id}">
+                    <s:label name="tournament.rankingMethod.title"/>
+                </shiro:lacksPermission>
+            </td>
+        </tr>
+        <tr>
             <td align="right">Категории команд:</td>
             <td>
                 <div id="categoriesList">
