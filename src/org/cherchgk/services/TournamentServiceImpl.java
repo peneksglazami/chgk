@@ -15,7 +15,9 @@
  */
 package org.cherchgk.services;
 
+import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
+import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
 
 import javax.persistence.TypedQuery;
@@ -56,5 +58,22 @@ public class TournamentServiceImpl extends AbstractService<Tournament> implement
         Integer maxNumber = (Integer) entityManager.createQuery("select max(team.number) from Team team where team.tournament = :tournament")
                 .setParameter("tournament", tournament).getSingleResult();
         return maxNumber == null ? 1 : maxNumber + 1;
+    }
+
+    @Override
+    public List<RightAnswer> getAllRightAnswers(Tournament tournament, TeamCategory teamCategory) {
+        String hqlQuery = "select answer "
+                + "from RightAnswer answer, Tournament tournament "
+                + "where answer.team in elements(tournament.teams) and tournament = :tournament";
+        if (teamCategory != null) {
+            hqlQuery += " and answer.team.teamCategory = :teamCategory";
+        }
+        TypedQuery<RightAnswer> query = entityManager.createQuery(hqlQuery, RightAnswer.class)
+                .setParameter("tournament", tournament);
+        if (teamCategory != null) {
+            query.setParameter("teamCategory", teamCategory);
+        }
+        query.setHint("org.hibernate.cacheable", true);
+        return query.getResultList();
     }
 }

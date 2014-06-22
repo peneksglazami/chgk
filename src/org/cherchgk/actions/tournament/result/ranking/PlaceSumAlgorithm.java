@@ -39,7 +39,12 @@ public class PlaceSumAlgorithm implements RankingAlgorithm {
 
         @Override
         public int compareTo(PlaceSumPoint o) {
-            return o.compareTo(this);
+            if (placeSum.compareTo(o.placeSum) < 0) {
+                return 1;
+            } else if (placeSum.compareTo(o.placeSum) > 0) {
+                return -1;
+            }
+            return 0;
         }
 
         @Override
@@ -155,5 +160,10 @@ public class PlaceSumAlgorithm implements RankingAlgorithm {
             placeSumPointMap.put(teamPlaceSum.getKey(), new PlaceSumPoint(teamPlaceSum.getValue()));
         }
         return Collections.unmodifiableMap(placeSumPointMap);
+    }
+
+    @Override
+    public String getPointName() {
+        return "Сумма мест в турах";
     }
 }

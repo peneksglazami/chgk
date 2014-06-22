@@ -85,7 +85,7 @@ public class RatingAlgorithm implements RankingAlgorithm {
         }
         for (RightAnswer rightAnswer : rightAnswers) {
             Team team = rightAnswer.getTeam();
-            teamRating.put(team, teamRating.get(team) + questionsRanking[rightAnswer.getQuestionNumber()]);
+            teamRating.put(team, teamRating.get(team) + questionsRanking[rightAnswer.getQuestionNumber() - 1]);
         }
 
         Map<Team, RankingPoint> rankingPointMap = new HashMap<Team, RankingPoint>();
@@ -93,5 +93,10 @@ public class RatingAlgorithm implements RankingAlgorithm {
             rankingPointMap.put(team, new RatingPoint(teamRating.get(team)));
         }
         return Collections.unmodifiableMap(rankingPointMap);
+    }
+
+    @Override
+    public String getPointName() {
+        return "Рейтинг";
     }
 }

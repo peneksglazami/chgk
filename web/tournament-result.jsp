@@ -43,11 +43,12 @@
     </tr>
     <tr>
         <td align="center" width="350px" style="font-size: 14pt; font-weight: bold;" colspan="2">Команда</td>
-        <td align="center" width="80px" style="font-size: 14pt; font-weight: bold;">Очки</td>
-        <td align="center" width="80px" style="font-size: 14pt; font-weight: bold;">Рейтинг</td>
+        <s:iterator var="rankingAlgorithm" value="tournamentResult.rankingAlgorithms">
+            <td align="center" width="80px" style="font-size: 14pt; font-weight: bold;">${rankingAlgorithm.pointName}</td>
+        </s:iterator>
         <td align="center" width="80px" style="font-size: 14pt; font-weight: bold;">Место</td>
     </tr>
-    <s:iterator var="teamResult" value="teamResults">
+    <s:iterator var="teamResult" value="tournamentResult.teamResultList">
         <tr>
             <s:if test="teamCategory==null && tournament.teamCategories.size > 0">
                 <td align="left" style="padding: 5px; font-size: 14pt;" width="20px">
@@ -58,9 +59,10 @@
             <s:else>
                 <td align="left" style="padding: 5px; font-size: 14pt;" width="350px" colspan="2">${teamResult.team.name}</td>
             </s:else>
-            <td align="center" style="padding: 5px; font-size: 14pt;" width="80px">${teamResult.rightAnswers}</td>
-            <td align="center" style="padding: 5px; font-size: 14pt;" width="80px">${teamResult.ranking}</td>
-            <td align="center" style="padding: 5px; font-size: 14pt;" width="80px">${teamResult.rank}</td>
+            <s:iterator var="rankingPoints" value="tournamentResult.rankingPointsList">
+                <td align="center" style="padding: 5px; font-size: 14pt;" width="80px">${rankingPoints[teamResult.team]}</td>
+            </s:iterator>
+            <td align="center" style="padding: 5px; font-size: 14pt;" width="80px">${teamResult.place}</td>
         </tr>
     </s:iterator>
 </table>

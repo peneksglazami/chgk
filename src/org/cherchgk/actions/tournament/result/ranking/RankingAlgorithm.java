@@ -31,4 +31,14 @@ public interface RankingAlgorithm {
 
     Map<Team, RankingPoint> getRankingPoints(Tournament tournament, Collection<Team> teams,
                                              Collection<RightAnswer> rightAnswers);
+
+    /**
+     * Название игрового балла.
+     * В таблице результатов турнира данное название будет
+     * показываться в заголовке колонки с баллами,
+     * рассчитанными по данному алгоритму.
+     *
+     * @return Название игрового балла.
+     */
+    String getPointName();
 }

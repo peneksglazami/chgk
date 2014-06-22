@@ -86,4 +86,9 @@ public class RightAnswerAlgorithm implements RankingAlgorithm {
         }
         return Collections.unmodifiableMap(rankingPointMap);
     }
+
+    @Override
+    public String getPointName() {
+        return "Очки";
+    }
 }

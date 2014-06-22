@@ -15,7 +15,11 @@
  */
 package org.cherchgk.services;
 
+import org.cherchgk.domain.RightAnswer;
+import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
+
+import java.util.List;
 
 /**
  * @author Andrey Grigorov (peneksglazami@gmail.com)
@@ -23,4 +27,20 @@ import org.cherchgk.domain.Tournament;
 public interface TournamentService extends DataService<Tournament> {
 
     int getNextTeamNumber(long tournamentId);
+
+    /**
+     * Получить список всех правильных ответов, которые были
+     * даны на турнире командами указанной категории.
+     * Если категория команд не указана, то возвращается
+     * список всех правильных ответов, данных на турнире.
+     *
+     * @param tournament   Турнир, для которого следует получить список
+     *                     всех правильных ответов.
+     * @param teamCategory Категория команд.
+     * @return Список всех правильных ответов {@link org.cherchgk.domain.RightAnswer},
+     * которые были даны на турнире для указанной категории команд.
+     * Если категория команд не указана, то возвращается
+     * список всех правильных ответов, данных на турнире.
+     */
+    List<RightAnswer> getAllRightAnswers(Tournament tournament, TeamCategory teamCategory);
 }

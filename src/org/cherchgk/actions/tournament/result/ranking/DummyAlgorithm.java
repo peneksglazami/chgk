@@ -48,6 +48,11 @@ public class DummyAlgorithm implements RankingAlgorithm {
         public int hashCode() {
             return 0;
         }
+
+        @Override
+        public String toString() {
+            return "";
+        }
     }
 
     @Override
@@ -58,5 +63,10 @@ public class DummyAlgorithm implements RankingAlgorithm {
             rankingPointMap.put(team, new DummyPoint());
         }
         return Collections.unmodifiableMap(rankingPointMap);
+    }
+
+    @Override
+    public String getPointName() {
+        return "";
     }
 }

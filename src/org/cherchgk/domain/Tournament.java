@@ -15,6 +15,10 @@
  */
 package org.cherchgk.domain;
 
+import org.cherchgk.actions.tournament.result.ranking.DummyAlgorithm;
+import org.cherchgk.actions.tournament.result.ranking.PlaceSumAlgorithm;
+import org.cherchgk.actions.tournament.result.ranking.RankingAlgorithm;
+import org.cherchgk.actions.tournament.result.ranking.RatingAlgorithm;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -61,17 +65,24 @@ public class Tournament implements DomainObject {
      * подведения итогов по турнира.
      */
     public enum RankingMethod {
-        RATING("Рейтинг"),
-        PLACES_SUM("Сумма мест в турах");
+        NOTHING("не используется", new DummyAlgorithm()),
+        RATING("Рейтинг", new RatingAlgorithm()),
+        PLACES_SUM("Сумма мест в турах", new PlaceSumAlgorithm());
 
         private String title;
+        private RankingAlgorithm rankingAlgorithm;
 
-        private RankingMethod(String title) {
+        private RankingMethod(String title, RankingAlgorithm rankingAlgorithm) {
             this.title = title;
+            this.rankingAlgorithm = rankingAlgorithm;
         }
 
         public String getTitle() {
             return title;
+        }
+
+        public RankingAlgorithm getRankingAlgorithm() {
+            return rankingAlgorithm;
         }
     }
 
