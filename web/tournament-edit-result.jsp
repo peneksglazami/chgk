@@ -21,22 +21,22 @@
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/frameworks/atmosphere/atmosphere-min.js"></script>
 <script type="text/javascript">
-    var results = <s:property value="jsonResult" escape="false"/>;
+    var jsonRes = <s:property value="jsonResult" escape="false"/>;
     function changeVerdict(teamId, questionNumber) {
-        results[teamId][questionNumber - 1] = 1 - results[teamId][questionNumber - 1];
+        jsonRes[teamId][questionNumber - 1] = 1 - jsonRes[teamId][questionNumber - 1];
 
         dojo.io.bind({
             url: "edit-answer-verdict.action",
             content: {
                 "teamId": teamId,
                 "questionNumber": questionNumber,
-                "verdict": results[teamId][questionNumber - 1]
+                "verdict": jsonRes[teamId][questionNumber - 1]
             },
             sync: false,
             method: "post",
             transport: "XMLHTTPTransport",
             load: function (type, data, http, args) {
-                setRightAnswerImage(teamId, questionNumber, results[teamId][questionNumber - 1] == 1);
+                setRightAnswerImage(teamId, questionNumber, jsonRes[teamId][questionNumber - 1] == 1);
                 refreshTable();
             },
             error: function (type, error, http) {
@@ -44,8 +44,8 @@
         });
     }
     dojo.addOnLoad(function () {
-        /*refreshTable();
-        for (var teamId in results) {
+        refreshTable();
+        /*for (var teamId in results) {
             for (var i = 0; i < results[teamId].length; i++) {
                 if (results[teamId][i] == 1) {
                     setRightAnswerImage(teamId, i + 1, true);
@@ -55,90 +55,53 @@
     });
 
     function refreshTable() {
-        var questionRanking = [];
-        var teamSum = [];
         var teamAmount = 0;
-        for (var teamId in results) {
+        for (var teamId in jsonRes.result) {
             teamAmount++;
         }
-        for (var teamId in results) {
-            teamSum[teamId] = 0;
-            for (var i = 0; i < results[teamId].length; i++) {
-                teamSum[teamId] += results[teamId][i];
-                if ((questionRanking[i + 1] == undefined) || (questionRanking[i + 1] == null)) {
-                    questionRanking[i + 1] = teamAmount + 1;
-                }
-                questionRanking[i + 1] -= results[teamId][i];
+        var questionRanking = [];
+        for (var i = 1; i <= jsonRes.questionAmount; i++) {
+            questionRanking[i] = teamAmount + 1;
+        }
+        for (var teamId in jsonRes.result) {
+            for (var i = 0; i < jsonRes.result[teamId].rightAnswers.length; i++) {
+                var questionNumber = jsonRes.result[teamId].rightAnswers[i];
+                questionRanking[questionNumber] -= 1;
             }
         }
         var teamRanking = [];
-        for (var teamId in results) {
+        for (var teamId in jsonRes.result) {
             teamRanking[teamId] = 0;
-            for (var i = 0; i < results[teamId].length; i++) {
-                if (results[teamId][i] == 1) {
-                    teamRanking[teamId] += questionRanking[i + 1];
-                }
+            for (var i = 0; i < jsonRes.result[teamId].rightAnswers.length; i++) {
+                teamRanking[teamId] += questionRanking[jsonRes.result[teamId].rightAnswers[i]];
             }
-        }
-
-        for (var teamId in results) {
-            $('td[id^="sum_' + teamId + '"]').each(function (index, elem) {
-                elem.innerHTML = teamSum[teamId];
-            });
-            $('td[id^="ranking_' + teamId + '"]').each(function (index, elem) {
-                elem.innerHTML = teamRanking[teamId];
-            });
         }
 
         for (var questionNumber in questionRanking) {
             dojo.byId("question_ranking_" + questionNumber).innerHTML = questionRanking[questionNumber];
         }
 
-        var teamsInfo = [];
-        for (var teamId in results) {
-            var info = {
-                "teamId": teamId,
-                "sum": teamSum[teamId],
-                "ranking": teamRanking[teamId]
-            };
-            teamsInfo.push(info);
-        }
-        for (var i = 0; i < teamsInfo.length; i++) {
-            for (var j = i + 1; j < teamsInfo.length; j++) {
-                if ((teamsInfo[i].sum < teamsInfo[j].sum) ||
-                        ((teamsInfo[i].sum == teamsInfo[j].sum) && (teamsInfo[i].ranking < teamsInfo[j].ranking))) {
-                    var tmp = teamsInfo[i];
-                    teamsInfo[i] = teamsInfo[j];
-                    teamsInfo[j] = tmp;
-                }
+        for (var teamId in jsonRes.result) {
+            var place = jsonRes.result[teamId].place;
+            var firstPlace;
+            if (place.indexOf("-") >= 0) {
+                firstPlace = place.substr(0, place.indexOf("-"));
+            } else {
+                firstPlace = place;
             }
-        }
-        var i = 0;
-        while (i < teamsInfo.length) {
-            var j = i;
-            while ((j < teamsInfo.length) &&
-                    (teamsInfo[i].sum == teamsInfo[j].sum) &&
-                    (teamsInfo[i].ranking == teamsInfo[j].ranking)) {
-                j++;
+            if (firstPlace <= 3) {
+                place = "<span style='color: red;'>" + place + "</span>";
             }
-            j--;
-            for (var g = i; g <= j; g++) {
-                var rank = (i == j) ? i + 1 : (i + 1) + "-" + (j + 1);
-                if (i < 3) {
-                    rank = "<span style='color: red;'>" + rank + "</span>";
-                }
-                $('td[id^="rank_' + teamsInfo[g].teamId + '"]').each(function (index, elem) {
-                    elem.innerHTML = rank;
-                });
-            }
-            i = j + 1;
+            $('td[id^="rank_' + teamId + '"]').each(function (index, elem) {
+                elem.innerHTML = place;
+            });
         }
     }
 
     function refreshTeamSum(teamId) {
         var sum = 0;
-        for (var i = 0; i < results[teamId].length; i++) {
-            sum += results[teamId][i];
+        for (var i = 0; i < jsonRes[teamId].length; i++) {
+            sum += jsonRes[teamId][i];
         }
         $('td[id^="sum_' + teamId + '"]').each(function (index, elem) {
             elem.innerHTML = sum;
@@ -175,11 +138,11 @@
         onMessage: function (response) {
             var message = response.responseBody;
             try {
-                results = jQuery.parseJSON(message);
+                jsonRes = jQuery.parseJSON(message);
                 refreshTable();
-                for (var teamId in results) {
-                    for (var i = 0; i < results[teamId].length; i++) {
-                        setRightAnswerImage(teamId, i + 1, results[teamId][i] == 1);
+                for (var teamId in jsonRes) {
+                    for (var i = 0; i < jsonRes[teamId].length; i++) {
+                        setRightAnswerImage(teamId, i + 1, jsonRes[teamId][i] == 1);
                     }
                 }
             } catch (e) {

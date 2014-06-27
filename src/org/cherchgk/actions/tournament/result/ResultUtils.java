@@ -39,6 +39,7 @@ public class ResultUtils {
      * JSON имеет следующий вид
      * <pre>
      * {
+     *   "questionAmount": 36,
      *   "rankingPointNames": ["Очки", "Рейтинг"],
      *   "result" : {
      *       "1": {
@@ -65,7 +66,9 @@ public class ResultUtils {
     }
 
     public static String tournamentResultToJSON(TournamentResult tournamentResult) {
-        StringBuilder json = new StringBuilder("{\"rankingPointNames\":[");
+        StringBuilder json = new StringBuilder("{\"questionAmount\":")
+                .append(tournamentResult.getTournament().getQuestionAmount())
+                .append(",\"rankingPointNames\":[");
         boolean isFirst = true;
         for (RankingAlgorithm rankingAlgorithm : tournamentResult.getRankingAlgorithms()) {
             if (isFirst) {
