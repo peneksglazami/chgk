@@ -88,7 +88,6 @@
     <bean id="editTournamentResultAction" scope="prototype"
           class="org.cherchgk.actions.tournament.result.EditTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
-        <constructor-arg ref="teamService"/>
     </bean>
 
     <bean id="showTournamentResultAction" scope="prototype"
@@ -115,6 +114,7 @@
 
     <bean id="editAnswerVerdictAction" scope="prototype"
           class="org.cherchgk.actions.tournament.result.EditAnswerVerdictAction">
+        <constructor-arg ref="tournamentService"/>
         <constructor-arg ref="teamService"/>
     </bean>
 

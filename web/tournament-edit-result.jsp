@@ -15,6 +15,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <script type="text/javascript"
@@ -43,14 +44,14 @@
         });
     }
     dojo.addOnLoad(function () {
-        refreshTable();
+        /*refreshTable();
         for (var teamId in results) {
             for (var i = 0; i < results[teamId].length; i++) {
                 if (results[teamId][i] == 1) {
                     setRightAnswerImage(teamId, i + 1, true);
                 }
             }
-        }
+        }*/
     });
 
     function refreshTable() {
@@ -193,6 +194,7 @@
 Дата: <b><s:date name="tournament.date" format="dd.MM.yyyy"/></b><br/>
 <s:set var="questionAmount" value="tournament.questionAmount"/>
 <s:set var="roundAmount" value="tournament.roundAmount"/>
+<s:set var="tournamentResult" value="tournamentResult"/>
 <div class="tab-control">
     <ul class="tabs">
         <c:forEach var="roundNumber" begin="1" end="${roundAmount}">
@@ -242,8 +244,9 @@
                                 <td align="center">${questionNumber}</td>
                             </c:forEach>
                         </s:else>
-                        <td align="center">Сумма</td>
-                        <td align="center">Рейтинг</td>
+                        <c:forEach var="rankingAlgorithm" items="${tournamentResult.rankingAlgorithms}">
+                            <td align="center">${rankingAlgorithm.pointName}</td>
+                        </c:forEach>
                         <td align="center">Место</td>
                     </tr>
                     <s:iterator var="team" value="tournament.teams">
@@ -260,8 +263,9 @@
                                          style="display: none;"/>
                                 </td>
                             </c:forEach>
-                            <td id="sum_${team.id}_${roundNumber}" align="center"></td>
-                            <td id="ranking_${team.id}_${roundNumber}" align="center"></td>
+                            <c:forEach var="pointId" begin="1" end="${fn:length(tournamentResult.rankingAlgorithms)}">
+                                <td id="point_${pointId}_${team.id}_${roundNumber}" align="center"></td>
+                            </c:forEach>
                             <td id="rank_${team.id}_${roundNumber}" align="center"></td>
                         </tr>
                     </s:iterator>
@@ -272,7 +276,7 @@
                                    end="${roundNumber * (questionAmount div roundAmount)}">
                             <td id="question_ranking_${questionNumber}" align="center"></td>
                         </c:forEach>
-                        <td colspan="3" align="center">Что? Где? Когда?</td>
+                        <td colspan="${fn:length(tournamentResult.rankingAlgorithms) + 1}" align="center">Что? Где? Когда?</td>
                     </tr>
                 </table>
             </div>

@@ -21,6 +21,7 @@ import org.atmosphere.cpr.BroadcasterFactory;
 import org.cherchgk.domain.Team;
 import org.cherchgk.security.PermissionChecker;
 import org.cherchgk.services.TeamService;
+import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
 /**
@@ -30,9 +31,11 @@ import org.cherchgk.utils.ActionContextHelper;
  */
 public class EditAnswerVerdictAction extends ActionSupport {
 
+    private TournamentService tournamentService;
     private TeamService teamService;
 
-    public EditAnswerVerdictAction(TeamService teamService) {
+    public EditAnswerVerdictAction(TournamentService tournamentService, TeamService teamService) {
+        this.tournamentService = tournamentService;
         this.teamService = teamService;
     }
 
@@ -46,7 +49,7 @@ public class EditAnswerVerdictAction extends ActionSupport {
         int verdict = Integer.parseInt(ActionContextHelper.getRequestParameterValue("verdict"));
         teamService.setAnswerVerdict(teamId, questionNumber, verdict == 1);
         BroadcasterFactory.getDefault().lookup(tournamentId, true)
-                .broadcast(ResultUtils.getJSONResult(team.getTournament(), teamService));
+                .broadcast(ResultUtils.getJSONResult(team.getTournament(), tournamentService));
         return Action.SUCCESS;
     }
 }

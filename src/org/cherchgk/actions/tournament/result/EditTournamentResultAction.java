@@ -19,7 +19,6 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.domain.Tournament;
 import org.cherchgk.security.PermissionChecker;
-import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
@@ -31,12 +30,11 @@ import org.cherchgk.utils.ActionContextHelper;
 public class EditTournamentResultAction extends ActionSupport {
 
     private TournamentService tournamentService;
-    private TeamService teamService;
     private Tournament tournament;
+    private TournamentResult tournamentResult;
 
-    public EditTournamentResultAction(TournamentService tournamentService, TeamService teamService) {
+    public EditTournamentResultAction(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
-        this.teamService = teamService;
     }
 
     @Override
@@ -44,6 +42,7 @@ public class EditTournamentResultAction extends ActionSupport {
         long tournamentId = Long.parseLong(ActionContextHelper.getRequestParameterValue("tournamentId"));
         PermissionChecker.checkPermissions("tournament:edit:" + tournamentId);
         tournament = tournamentService.find(tournamentId);
+        tournamentResult = ResultUtils.getTournamentResult(tournament, null, tournamentService);
 
         return Action.SUCCESS;
     }
@@ -52,7 +51,11 @@ public class EditTournamentResultAction extends ActionSupport {
         return tournament;
     }
 
+    public TournamentResult getTournamentResult() {
+        return tournamentResult;
+    }
+
     public String getJsonResult() {
-        return ResultUtils.getJSONResult(tournament, teamService);
+        return ResultUtils.tournamentResultToJSON(tournamentResult);
     }
 }

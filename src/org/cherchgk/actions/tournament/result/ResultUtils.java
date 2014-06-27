@@ -22,7 +22,6 @@ import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
-import org.cherchgk.services.TeamService;
 import org.cherchgk.services.TournamentService;
 
 import java.util.*;
@@ -36,36 +35,92 @@ import java.util.*;
 public class ResultUtils {
 
     /**
-     * Подготовка информации о результатах турнира в формате JSON.
+     * Получение информации о результатах турнира в виде JSON сообщения.
+     * JSON имеет следующий вид
+     * <pre>
+     * {
+     *   "rankingPointNames": ["Очки", "Рейтинг"],
+     *   "result" : {
+     *       "1": {
+     *           "rightAnswers": [1, 12, 13],
+     *           "rankingPoints": ["3", "6"],
+     *           "place": "1"
+     *       },
+     *       "2": {
+     *           "rightAnswers": [2, 11],
+     *           "rankingPoints": ["2", "4"],
+     *           "place": "2"
+     *       }
+     *   }
+     * }
+     * </pre>
      *
-     * @param tournament  турнир
-     * @param teamService сервис работы с командами
+     * @param tournament        турнир
+     * @param tournamentService сервис потучения информации о турнирах
      * @return JSON-объект с результатами турнира
      */
-    public static String getJSONResult(Tournament tournament, TeamService teamService) {
-        StringBuilder array = new StringBuilder("{");
-        List<Team> teams = tournament.getTeams();
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = teams.get(i);
-            array.append("\"").append(team.getId()).append("\":[");
-            List<RightAnswer> rightAnswers = teamService.getTeamRightAnswers(team);
-            Set<Integer> rightAnswerNumbers = new HashSet<Integer>();
-            for (RightAnswer rightAnswer : rightAnswers) {
-                rightAnswerNumbers.add(rightAnswer.getQuestionNumber());
+    public static String getJSONResult(Tournament tournament, TournamentService tournamentService) {
+        TournamentResult tournamentResult = getTournamentResult(tournament, null, tournamentService);
+        return tournamentResultToJSON(tournamentResult);
+    }
+
+    public static String tournamentResultToJSON(TournamentResult tournamentResult) {
+        StringBuilder json = new StringBuilder("{\"rankingPointNames\":[");
+        boolean isFirst = true;
+        for (RankingAlgorithm rankingAlgorithm : tournamentResult.getRankingAlgorithms()) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                json.append(",");
             }
-            for (int j = 1; j <= tournament.getQuestionAmount(); j++) {
-                array.append(rightAnswerNumbers.contains(j) ? "1" : "0");
-                if (j != tournament.getQuestionAmount()) {
-                    array.append(",");
+            json.append("\"").append(rankingAlgorithm.getPointName()).append("\"");
+        }
+        json.append("],\"result\":{");
+
+        Map<Team, List<Integer>> teamRightAnswers = new HashMap<Team, List<Integer>>();
+        for (RightAnswer rightAnswer : tournamentResult.getRightAnswers()) {
+            List<Integer> rightAnswers = teamRightAnswers.get(rightAnswer.getTeam());
+            if (rightAnswers == null) {
+                rightAnswers = new ArrayList<Integer>();
+            }
+            rightAnswers.add(rightAnswer.getQuestionNumber());
+            teamRightAnswers.put(rightAnswer.getTeam(), rightAnswers);
+        }
+        isFirst = true;
+        for (TournamentResult.TeamResult teamResult : tournamentResult.getTeamResultList()) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                json.append(",");
+            }
+            json.append("\"").append(teamResult.getTeam().getId()).append("\": {\"rightAnswers\":[");
+            List<Integer> questionNumbers = teamRightAnswers.get(teamResult.getTeam());
+            if (questionNumbers != null) {
+                boolean isFirstRightAnswer = true;
+                for (Integer questionNumber : teamRightAnswers.get(teamResult.getTeam())) {
+                    if (isFirstRightAnswer) {
+                        isFirstRightAnswer = false;
+                    } else {
+                        json.append(",");
+                    }
+                    json.append(questionNumber);
                 }
             }
-            array.append("]");
-            if (i != (teams.size() - 1)) {
-                array.append(",");
+            json.append("],\"rankingPoints\":[");
+            boolean isFirstRankingPoint = true;
+            for (Map<Team, RankingPoint> teamRankingPointMap : tournamentResult.getRankingPointsList()) {
+                if (isFirstRankingPoint) {
+                    isFirstRankingPoint = false;
+                } else {
+                    json.append(",");
+                }
+                json.append("\"").append(teamRankingPointMap.get(teamResult.getTeam())).append("\"");
             }
+            json.append("],\"place\":\"").append(teamResult.getPlace()).append("\"}");
         }
-        array.append("}");
-        return array.toString();
+        json.append("}}");
+
+        return json.toString();
     }
 
     public static TournamentResult getTournamentResult(Tournament tournament, TeamCategory teamCategory,
