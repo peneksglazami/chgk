@@ -23,21 +23,17 @@
 <script type="text/javascript">
     var jsonRes = <s:property value="jsonResult" escape="false"/>;
     function changeVerdict(teamId, questionNumber) {
-        jsonRes[teamId][questionNumber - 1] = 1 - jsonRes[teamId][questionNumber - 1];
-
         dojo.io.bind({
             url: "edit-answer-verdict.action",
             content: {
                 "teamId": teamId,
                 "questionNumber": questionNumber,
-                "verdict": jsonRes[teamId][questionNumber - 1]
+                "verdict": (jsonRes.result[teamId].rightAnswers.indexOf(questionNumber) < 0) ? 1 : 0
             },
             sync: false,
             method: "post",
             transport: "XMLHTTPTransport",
             load: function (type, data, http, args) {
-                setRightAnswerImage(teamId, questionNumber, jsonRes[teamId][questionNumber - 1] == 1);
-                refreshTable();
             },
             error: function (type, error, http) {
             }
@@ -45,13 +41,6 @@
     }
     dojo.addOnLoad(function () {
         refreshTable();
-        /*for (var teamId in results) {
-            for (var i = 0; i < results[teamId].length; i++) {
-                if (results[teamId][i] == 1) {
-                    setRightAnswerImage(teamId, i + 1, true);
-                }
-            }
-        }*/
     });
 
     function refreshTable() {
@@ -63,17 +52,14 @@
         for (var i = 1; i <= jsonRes.questionAmount; i++) {
             questionRanking[i] = teamAmount + 1;
         }
+        $('img[id^="img_"]').each(function (index, elem) {
+            elem.style.display = 'none';
+        });
         for (var teamId in jsonRes.result) {
             for (var i = 0; i < jsonRes.result[teamId].rightAnswers.length; i++) {
                 var questionNumber = jsonRes.result[teamId].rightAnswers[i];
                 questionRanking[questionNumber] -= 1;
-            }
-        }
-        var teamRanking = [];
-        for (var teamId in jsonRes.result) {
-            teamRanking[teamId] = 0;
-            for (var i = 0; i < jsonRes.result[teamId].rightAnswers.length; i++) {
-                teamRanking[teamId] += questionRanking[jsonRes.result[teamId].rightAnswers[i]];
+                setRightAnswerImage(teamId, questionNumber, 1);
             }
         }
 
@@ -82,7 +68,8 @@
         }
 
         for (var teamId in jsonRes.result) {
-            var place = jsonRes.result[teamId].place;
+            var teamResult = jsonRes.result[teamId];
+            var place = teamResult.place;
             var firstPlace;
             if (place.indexOf("-") >= 0) {
                 firstPlace = place.substr(0, place.indexOf("-"));
@@ -95,17 +82,12 @@
             $('td[id^="rank_' + teamId + '"]').each(function (index, elem) {
                 elem.innerHTML = place;
             });
+            for (i = 0; i < teamResult.rankingPoints.length; i++) {
+                $('td[id^="point_' + (i + 1) + '_' + teamId + '"]').each(function (index, elem) {
+                    elem.innerHTML = teamResult.rankingPoints[i];
+                });
+            }
         }
-    }
-
-    function refreshTeamSum(teamId) {
-        var sum = 0;
-        for (var i = 0; i < jsonRes[teamId].length; i++) {
-            sum += jsonRes[teamId][i];
-        }
-        $('td[id^="sum_' + teamId + '"]').each(function (index, elem) {
-            elem.innerHTML = sum;
-        });
     }
 
     function setRightAnswerImage(teamId, questionNumber, verdict) {
@@ -140,11 +122,6 @@
             try {
                 jsonRes = jQuery.parseJSON(message);
                 refreshTable();
-                for (var teamId in jsonRes) {
-                    for (var i = 0; i < jsonRes[teamId].length; i++) {
-                        setRightAnswerImage(teamId, i + 1, jsonRes[teamId][i] == 1);
-                    }
-                }
             } catch (e) {
                 return;
             }

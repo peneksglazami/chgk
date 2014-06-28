@@ -138,7 +138,7 @@ public class ResultUtils {
                 }
             }
         } else {
-            teams = tournament.getTeams();
+            teams = new ArrayList<Team>(tournament.getTeams());
         }
 
         List<RightAnswer> rightAnswers = tournamentService.getAllRightAnswers(tournament, teamCategory);
