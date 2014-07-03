@@ -61,7 +61,10 @@
         </action>
         <action name="save-tournament" class="editTournamentAction" method="save">
             <result name="input" type="tiles">tournament</result>
-            <result type="redirectAction">tournament-list</result>
+            <result type="redirectAction">
+                <param name="actionName">tournament-info</param>
+                <param name="tournamentId">${tournament.id}</param>
+            </result>
         </action>
         <action name="delete-tournament" class="deleteTournamentAction">
             <result type="redirectAction">tournament-list</result>
