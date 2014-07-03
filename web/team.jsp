@@ -105,7 +105,10 @@
                                value="Удалить"/>
                     </shiro:hasPermission>
                 </s:else>
-                <input class="button" type="button" value="Назад" onclick="history.back()">
+                <s:url var="backToTournamentInfoUrl" action="tournament-info">
+                    <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+                </s:url>
+                <s:a href="%{backToTournamentInfoUrl}" cssClass="button">Назад</s:a>
             </td>
         </tr>
     </table>
