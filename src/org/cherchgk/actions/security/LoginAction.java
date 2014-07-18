@@ -23,12 +23,16 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.cherchgk.utils.ActionContextHelper;
 
+import java.net.URLDecoder;
+
 /**
- * Действие аутентификации по логину и паролю
+ * Действие аутентификации по логину и паролю.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 public class LoginAction extends ActionSupport {
+
+    private String currentPage;
 
     @Override
     public String execute() throws Exception {
@@ -42,6 +46,11 @@ public class LoginAction extends ActionSupport {
         } catch (AuthenticationException ex) {
             return Action.ERROR;
         }
+        currentPage = URLDecoder.decode(ActionContextHelper.getRequestParameterValue("currentPage"), "UTF-8");
         return Action.SUCCESS;
+    }
+
+    public String getCurrentPage() {
+        return currentPage;
     }
 }
