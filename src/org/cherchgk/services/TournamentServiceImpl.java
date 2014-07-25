@@ -16,7 +16,6 @@
 package org.cherchgk.services;
 
 import org.cherchgk.domain.RightAnswer;
-import org.cherchgk.domain.Team;
 import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
 
@@ -24,15 +23,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Сервис для работы с турнирами.
+ *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 public class TournamentServiceImpl extends AbstractService<Tournament> implements TournamentService {
-
-    private TeamService teamService;
-
-    public TournamentServiceImpl(TeamService teamService) {
-        this.teamService = teamService;
-    }
 
     public Tournament find(Long id) {
         return entityManager.find(Tournament.class, id);
@@ -46,9 +41,6 @@ public class TournamentServiceImpl extends AbstractService<Tournament> implement
     }
 
     public void delete(Tournament tournament) {
-        for (Team team : tournament.getTeams()) {
-            teamService.delete(team);
-        }
         entityManager.remove(tournament);
     }
 

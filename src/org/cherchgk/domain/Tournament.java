@@ -97,7 +97,7 @@ public class Tournament implements DomainObject {
     private QuestionNumberingType questionNumberingType;
     @Enumerated(EnumType.STRING)
     private RankingMethod rankingMethod;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "tournament_id")
     @OrderBy("number")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

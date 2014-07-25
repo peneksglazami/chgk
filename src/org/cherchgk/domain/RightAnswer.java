@@ -17,6 +17,8 @@ package org.cherchgk.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +39,7 @@ public class RightAnswer {
     private Long id;
     private Integer questionNumber;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
 
     public Long getId() {

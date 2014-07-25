@@ -23,9 +23,7 @@
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl">
-        <constructor-arg ref="teamService"/>
-    </bean>
+    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl"/>
     <bean id="teamService" class="org.cherchgk.services.TeamServiceImpl"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

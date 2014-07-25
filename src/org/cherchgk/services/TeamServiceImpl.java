@@ -17,11 +17,14 @@ package org.cherchgk.services;
 
 import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
+import org.cherchgk.domain.Tournament;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Сервис для работы с командами.
+ *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 public class TeamServiceImpl extends AbstractService<Team> implements TeamService {
@@ -38,15 +41,9 @@ public class TeamServiceImpl extends AbstractService<Team> implements TeamServic
 
     @Override
     public void delete(Team team) {
-        TypedQuery<RightAnswer> query = entityManager.createQuery("select answer "
-                + "from RightAnswer answer "
-                + "where answer.team.id = :teamId", RightAnswer.class)
-                .setParameter("teamId", team.getId());
-        query.setHint("org.hibernate.cacheable", true);
-        for (RightAnswer rightAnswer : query.getResultList()) {
-            entityManager.remove(rightAnswer);
-        }
-        entityManager.remove(team);
+        Tournament tournament = team.getTournament();
+        tournament.getTeams().remove(team);
+        entityManager.merge(tournament);
     }
 
     public List<RightAnswer> getTeamRightAnswers(Team team) {
