@@ -22,10 +22,19 @@ import org.cherchgk.domain.Tournament;
 import java.util.List;
 
 /**
+ * Интерфейс сервиса для работы с хранилищем данных по
+ * турнирам.
+ *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
 public interface TournamentService extends DataService<Tournament> {
 
+    /**
+     * Получение порядкового номера для создаваемой команды.
+     *
+     * @param tournamentId Идентификатор турнира.
+     * @return Порядковый номер команды.
+     */
     int getNextTeamNumber(long tournamentId);
 
     /**
