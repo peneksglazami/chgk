@@ -89,7 +89,12 @@
     </bean>
 
     <bean id="showTournamentResultAction" scope="prototype"
-          class="org.cherchgk.actions.tournament.result.ShowTournamentResultAction">
+          class="org.cherchgk.actions.tournament.result.show.ShowTournamentResultAction">
+        <constructor-arg ref="tournamentService"/>
+    </bean>
+
+    <bean id="getPDFTournamentResultAction" scope="prototype"
+          class="org.cherchgk.actions.tournament.result.show.GetPDFTournamentResultAction">
         <constructor-arg ref="tournamentService"/>
     </bean>
 

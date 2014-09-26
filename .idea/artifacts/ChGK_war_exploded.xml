@@ -18,6 +18,8 @@
           <element id="file-copy" path="$PROJECT_DIR$/lib/servlet-api.jar" />
           <element id="library" level="project" name="ehcache-2.2.0" />
           <element id="library" level="project" name="atmosphere-2.1.5" />
+          <element id="library" level="project" name="itextpdf-5.5.3" />
+          <element id="library" level="project" name="javax.mail" />
         </element>
       </element>
     </root>

@@ -80,6 +80,15 @@
         <action name="show-tournament-result" class="showTournamentResultAction">
             <result>/tournament-result.jsp</result>
         </action>
+        <action name="get-pdf-tournament-result" class="getPDFTournamentResultAction">
+            <result name="success" type="stream">
+                <param name="contentType">application/pdf</param>
+                <param name="inputName">document</param>
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="bufferSize">1024</param>
+                <param name="allowCaching">false</param>
+            </result>
+        </action>
 
         <action name="new-team" class="newTeamAction">
             <result type="tiles">team</result>
