@@ -13,28 +13,33 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.cherchgk.actions.tournament.result;
+package org.cherchgk.actions.tournament.result.show;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import org.cherchgk.actions.tournament.result.ResultUtils;
+import org.cherchgk.actions.tournament.result.TournamentResult;
 import org.cherchgk.domain.TeamCategory;
 import org.cherchgk.domain.Tournament;
 import org.cherchgk.services.TournamentService;
 import org.cherchgk.utils.ActionContextHelper;
 
 /**
- * Показать результаты турнира
+ * Базовый класс для действий отображения результатов турниров.
+ * Классы наследники должны использовать результаты турнира,
+ * которые сохраняются в методе {@link BaseShowTournamentResultAction#execute()}
+ * в свойство {@link BaseShowTournamentResultAction#tournamentResult}.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class ShowTournamentResultAction extends ActionSupport {
+public abstract class BaseShowTournamentResultAction extends ActionSupport {
 
-    private TournamentService tournamentService;
-    private Tournament tournament;
-    private TeamCategory teamCategory;
-    private TournamentResult tournamentResult;
+    protected TournamentService tournamentService;
+    protected Tournament tournament;
+    protected TeamCategory teamCategory;
+    protected TournamentResult tournamentResult;
 
-    public ShowTournamentResultAction(TournamentService tournamentService) {
+    protected BaseShowTournamentResultAction(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
 
@@ -54,17 +59,5 @@ public class ShowTournamentResultAction extends ActionSupport {
 
         tournamentResult = ResultUtils.getTournamentResult(tournament, teamCategory, tournamentService);
         return Action.SUCCESS;
-    }
-
-    public TournamentResult getTournamentResult() {
-        return tournamentResult;
-    }
-
-    public Tournament getTournament() {
-        return tournament;
-    }
-
-    public TeamCategory getTeamCategory() {
-        return teamCategory;
     }
 }

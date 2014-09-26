@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class ActionContextHelper {
 
-    private static HttpServletRequest getRequest() {
+    public static HttpServletRequest getRequest() {
         return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
     }
 

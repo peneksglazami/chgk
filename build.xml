@@ -111,11 +111,19 @@
     <pathelement location="${basedir}/lib/slf4j-api-1.6.1.jar"/>
   </path>
   
+  <path id="library.itextpdf-5.5.3.classpath">
+    <pathelement location="${basedir}/lib/itextpdf-5.5.3.jar"/>
+  </path>
+  
   <path id="library.java-ee.classpath">
     <pathelement location="${basedir}/lib/jsp-api.jar"/>
     <pathelement location="${basedir}/lib/jstl.jar"/>
     <pathelement location="${basedir}/lib/servlet-api.jar"/>
     <pathelement location="${basedir}/lib/standard.jar"/>
+  </path>
+  
+  <path id="library.javax.mail.classpath">
+    <pathelement location="${basedir}/lib/javax.mail.jar"/>
   </path>
   
   <path id="library.shiro-1.2.2.classpath">
@@ -191,6 +199,8 @@
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
     <path refid="library.atmosphere-2.1.5.classpath"/>
+    <path refid="library.itextpdf-5.5.3.classpath"/>
+    <path refid="library.javax.mail.classpath"/>
   </path>
   
   <path id="chgk.runtime.production.module.classpath">
@@ -205,6 +215,8 @@
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
     <path refid="library.atmosphere-2.1.5.classpath"/>
+    <path refid="library.itextpdf-5.5.3.classpath"/>
+    <path refid="library.javax.mail.classpath"/>
   </path>
   
   <path id="chgk.module.classpath">
@@ -219,6 +231,8 @@
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
     <path refid="library.atmosphere-2.1.5.classpath"/>
+    <path refid="library.itextpdf-5.5.3.classpath"/>
+    <path refid="library.javax.mail.classpath"/>
   </path>
   
   <path id="chgk.runtime.module.classpath">
@@ -234,6 +248,8 @@
     <path refid="library.cglib-nodep-2.2.3.classpath"/>
     <path refid="library.ehcache-2.2.0.classpath"/>
     <path refid="library.atmosphere-2.1.5.classpath"/>
+    <path refid="library.itextpdf-5.5.3.classpath"/>
+    <path refid="library.javax.mail.classpath"/>
   </path>
   
   
@@ -385,6 +401,8 @@
     <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
     <copy file="${basedir}/lib/ehcache-core-2.2.0.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/ehcache-core-2.2.0.jar"/>
     <copy file="${basedir}/lib/atmosphere-runtime-2.1.5.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/atmosphere-runtime-2.1.5.jar"/>
+    <copy file="${basedir}/lib/itextpdf-5.5.3.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/itextpdf-5.5.3.jar"/>
+    <copy file="${basedir}/lib/javax.mail.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/javax.mail.jar"/>
   </target>
   
   <target name="build.all.artifacts" depends="artifact.chgk, artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">

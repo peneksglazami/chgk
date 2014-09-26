@@ -64,6 +64,35 @@
         <s:a href="%{showTournamentResultUrl}" cssClass="button bg-color-blue fg-color-white">Просмотр результатов турнира</s:a>
     </s:else>
 
+    <s:if test="tournament.teamCategories.size > 0">
+        <div class="button bg-color-blue fg-color-white" data-role="dropdown">
+            <div>Результаты турнира в PDF</div>
+            <ul class="dropdown-menu">
+                <li>
+                    <s:url var="getPDFTournamentResultUrl" action="get-pdf-tournament-result">
+                        <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+                    </s:url>
+                    <s:a href="%{getPDFTournamentResultUrl}">Общий зачёт</s:a>
+                </li>
+                <s:iterator var="teamCategory" value="tournament.teamCategories">
+                    <li>
+                        <s:url var="getPDFTeamCategoryTournamentResultUrl" action="get-pdf-tournament-result">
+                            <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+                            <s:param name="teamCategoryId">${teamCategory.id}</s:param>
+                        </s:url>
+                        <s:a href="%{getPDFTeamCategoryTournamentResultUrl}">${teamCategory.title}</s:a>
+                    </li>
+                </s:iterator>
+            </ul>
+        </div>
+    </s:if>
+    <s:else>
+        <s:url var="getPDFTournamentResultUrl" action="get-pdf-tournament-result">
+            <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
+        </s:url>
+        <s:a href="%{getPDFTournamentResultUrl}" cssClass="button bg-color-blue fg-color-white">Результаты турнира в PDF</s:a>
+    </s:else>
+
     <shiro:hasPermission name="tournament:edit:${tournament.id}">
         <s:url var="createTeamUrl" action="new-team">
             <s:param name="tournamentId"><s:property value="tournament.id"/></s:param>
