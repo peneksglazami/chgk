@@ -67,6 +67,38 @@
                     $("#loginInput").focus();
                 });
             });
+
+            $(document).ready(function () {
+                $('#singUpAction').click(function (e) {
+                    $.Dialog({
+                        'title': 'Регистрация',
+                        'content': '<form id="singUpForm">' +
+                                '<input type="hidden" name="action:singUp">' +
+                                '<table>' +
+                                '<tr><td>Логин:</td><td><input id="loginInput" name="login" type="text"></td></tr>' +
+                                '<tr><td>e-mail:</td><td><input id="email" name="login" type="text"></td></tr>' +
+                                '<tr><td>Пароль:</td><td><input name="password" type="password"></td></tr>' +
+                                '<tr><td>Повторите пароль:</td><td><input name="password2" type="password"></td></tr>' +
+                                '</table>' +
+                                '<input name="currentPage" type="hidden" value="' + encodeURIComponent(document.URL) + '">' +
+                                '<form>',
+                        'overlay': true,
+                        'buttonsAlign': 'right',
+                        'buttons': {
+                            'Да': {
+                                'action': function () {
+                                    $('#singUpForm').submit();
+                                }
+                            },
+                            'Отмена': {
+                                'action': function () {
+                                }
+                            }
+                        }
+                    });
+                    $("#loginInput").focus();
+                });
+            });
         </script>
     </shiro:notAuthenticated>
 </head>
@@ -80,6 +112,13 @@
             <shiro:guest>
                 <div id="loginAction" class="fg-color-white" style="cursor: pointer">Войти</div>
             </shiro:guest>
+        </div>
+        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
+            <shiro:guest>
+                <div id="singUpAction" class="fg-color-white" style="cursor: pointer">Регистрация</div>
+            </shiro:guest>
+        </div>
+        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
             <shiro:user>
                 <shiro:principal/>
                 <s:a action="logout" namespace="/" cssClass="fg-color-white">Выход</s:a>
