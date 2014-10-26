@@ -160,6 +160,7 @@
     <pathelement location="${basedir}/lib/ognl.jar"/>
     <pathelement location="${basedir}/lib/struts2-core.jar"/>
     <pathelement location="${basedir}/lib/struts2-dojo-plugin-2.2.1.1.jar"/>
+    <pathelement location="${basedir}/lib/struts2-json-plugin-2.2.1.1.jar"/>
     <pathelement location="${basedir}/lib/struts2-spring-plugin-2.2.1.1.jar"/>
     <pathelement location="${basedir}/lib/struts2-tiles-plugin-2.2.1.1.jar"/>
     <pathelement location="${basedir}/lib/tiles-api-2.0.6.jar"/>
@@ -356,6 +357,7 @@
     <copy file="${basedir}/lib/tiles-jsp-2.0.6.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/tiles-jsp-2.0.6.jar"/>
     <copy file="${basedir}/lib/struts2-tiles-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-tiles-plugin-2.2.1.1.jar"/>
     <copy file="${basedir}/lib/struts2-dojo-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-dojo-plugin-2.2.1.1.jar"/>
+    <copy file="${basedir}/lib/struts2-json-plugin-2.2.1.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/struts2-json-plugin-2.2.1.1.jar"/>
     <copy file="${basedir}/lib/aopalliance.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/aopalliance.jar"/>
     <copy file="${basedir}/lib/org.springframework.beans-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.beans-3.0.2.RELEASE.jar"/>
     <copy file="${basedir}/lib/org.springframework.core-3.0.2.RELEASE.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/org.springframework.core-3.0.2.RELEASE.jar"/>
