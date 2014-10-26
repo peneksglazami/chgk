@@ -33,7 +33,7 @@ import javax.persistence.*;
 public class Token {
 
     public enum Type {
-        SING_UP
+        SIGN_UP
     }
 
     @Id
@@ -47,4 +47,35 @@ public class Token {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -11,6 +11,7 @@
       <root url="jar://$PROJECT_DIR$/lib/tiles-jsp-2.0.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/struts2-tiles-plugin-2.2.1.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/struts2-dojo-plugin-2.2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts2-json-plugin-2.2.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

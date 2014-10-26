@@ -71,16 +71,18 @@ public class SecurityService {
     public void createUserIfNotExist(String username, String password, String roleName) {
         User user = getUserByName(username);
         if (user == null) {
-            createUser(username, password, getRoleByName(roleName));
+            createUser(username, password, null, getRoleByName(roleName));
         }
     }
 
-    private void createUser(String username, String password, Role role) {
+    public User createUser(String username, String password, String email, Role role) {
         User user = new User();
         user.setUsername(username);
         setUserPassword(user, password);
+        user.setEmail(email);
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         entityManager.persist(user);
+        return user;
     }
 
     public void setUserPassword(User user, String password) {

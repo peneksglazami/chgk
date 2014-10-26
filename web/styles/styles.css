@@ -34,8 +34,8 @@
 .main-table {
     width: 100%;
     height: 100%;
-    border-width: 0px;
-    border-spacing: 0px;
+    border-width: 0;
+    border-spacing: 0;
 }
 
 .main-table-header {
@@ -48,7 +48,7 @@
 }
 
 .main-table-header td {
-    padding: 0px 15px;
+    padding: 0 15px;
 }
 
 .main-table-body {
@@ -99,14 +99,14 @@
 }
 
 .edit-result-table {
-    margin: 0px;
+    margin: 0;
     border-collapse: collapse;
 }
 
 .edit-result-table td {
-    padding: 0px;
+    padding: 0;
     border-width: 1px;
-    border-spacing: 0px;
+    border-spacing: 0;
     border-color: #646464;
     border-style: solid;
     empty-cells: show;
@@ -235,4 +235,18 @@ table.row-hovered tbody tr:hover {
 
 .tab-control .frame {
     padding: 20px;
+}
+
+.dialog .error {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 1px;
+    color: red;
+    background-color: #FFFFFF;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.dialog .error ul:nth-child(1) {
+    margin-left: 10px;
 }

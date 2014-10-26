@@ -59,11 +59,15 @@
 
     <context:annotation-config/>
 
-    <bean class="org.cherchgk.utils.EntityManagerProvider" scope="singleton" lazy-init="false"/>
+    <bean class="org.cherchgk.utils.EntityManagerProvider" lazy-init="false"/>
 
-    <bean class="org.cherchgk.services.SecurityService" scope="singleton"/>
+    <bean id="securityService" class="org.cherchgk.services.SecurityService" />
 
-    <bean class="org.cherchgk.security.InitSecurityBean" scope="singleton"/>
+    <bean class="org.cherchgk.security.InitSecurityBean"/>
+
+    <bean id="signUpAction" scope="prototype" class="org.cherchgk.actions.security.SignUpAction">
+        <constructor-arg ref="securityService"/>
+    </bean>
 
     <bean id="tournamentListAction" scope="prototype" class="org.cherchgk.actions.tournament.TournamentListAction">
         <constructor-arg ref="tournamentService"/>
@@ -122,20 +126,20 @@
     </bean>
 
     <bean id="userListAction" class="org.cherchgk.actions.user.UserListAction">
-        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+        <constructor-arg ref="securityService"/>
     </bean>
 
     <bean id="newUserAction" scope="prototype" class="org.cherchgk.actions.user.NewUserAction"/>
 
     <bean id="editUserAction" scope="prototype" class="org.cherchgk.actions.user.EditUserAction">
-        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+        <constructor-arg ref="securityService"/>
     </bean>
 
     <bean id="deleteUserAction" scope="prototype" class="org.cherchgk.actions.user.DeleteUserAction">
-        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+        <constructor-arg ref="securityService"/>
     </bean>
 
     <bean id="userInfoAction" scope="prototype" class="org.cherchgk.actions.user.UserInfoAction">
-        <constructor-arg ref="org.cherchgk.services.SecurityService"/>
+        <constructor-arg ref="securityService"/>
     </bean>
 </beans>

@@ -35,6 +35,7 @@ public class User {
     private String username;
     private String password;
     private String passwordSalt;
+    private String email;
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "USER_ID"),
@@ -80,6 +81,14 @@ public class User {
 
     public void setPasswordSalt(String passwordSalt) {
         this.passwordSalt = passwordSalt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Role> getRoles() {

@@ -32,6 +32,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.core.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.datepicker.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.ui.datepicker-ru.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/jquery/jquery.form.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/metro-ui/javascript/dialog.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/frameworks/metro-ui/javascript/dropdown.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/utils.js"></script>
@@ -39,7 +40,7 @@
     <shiro:notAuthenticated>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#loginAction').click(function (e) {
+                $('#loginAction').click(function () {
                     $.Dialog({
                         'title': 'Вход',
                         'content': '<form id="loginForm">' +
@@ -69,30 +70,53 @@
             });
 
             $(document).ready(function () {
-                $('#singUpAction').click(function (e) {
-                    $.Dialog({
+                $('#signUpAction').click(function () {
+                    $.ExtDialog({
                         'title': 'Регистрация',
-                        'content': '<form id="singUpForm">' +
-                                '<input type="hidden" name="action:singUp">' +
+                        'content': '<form id="signUpForm">' +
+                                '<input type="hidden" name="action:sign-up">' +
                                 '<table>' +
                                 '<tr><td>Логин:</td><td><input id="loginInput" name="login" type="text"></td></tr>' +
-                                '<tr><td>e-mail:</td><td><input id="email" name="login" type="text"></td></tr>' +
+                                '<tr><td>e-mail:</td><td><input id="email" name="email" type="text"></td></tr>' +
                                 '<tr><td>Пароль:</td><td><input name="password" type="password"></td></tr>' +
                                 '<tr><td>Повторите пароль:</td><td><input name="password2" type="password"></td></tr>' +
                                 '</table>' +
-                                '<input name="currentPage" type="hidden" value="' + encodeURIComponent(document.URL) + '">' +
                                 '<form>',
                         'overlay': true,
                         'buttonsAlign': 'right',
                         'buttons': {
                             'Да': {
                                 'action': function () {
-                                    $('#singUpForm').submit();
+                                    $('#signUpForm').ajaxSubmit({
+                                        type: 'post',
+                                        success: function (response) {
+                                            if (response.actionErrors != null) {
+                                                var content = '<ul>';
+                                                for (var i = 0; i < response.actionErrors.length; i++) {
+                                                    content += '<li>' + response.actionErrors[i] + '</li>';
+                                                }
+                                                content += '</ul>';
+                                                $("#dialogBox").find("div.error").html(content);
+                                            } else {
+                                                $.ExtDialog.hide();
+                                                $.ExtDialog({
+                                                    'title': 'Регистрация',
+                                                    'content': response.actionMessages[0],
+                                                    'overlay': true,
+                                                    'buttonsAlign': 'right',
+                                                    'buttons': {
+                                                        'OK': {
+                                                            'closeAfterAction': true
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
                                 }
                             },
                             'Отмена': {
-                                'action': function () {
-                                }
+                                'closeAfterAction': true
                             }
                         }
                     });
@@ -115,7 +139,7 @@
         </div>
         <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
             <shiro:guest>
-                <div id="singUpAction" class="fg-color-white" style="cursor: pointer">Регистрация</div>
+                <div id="signUpAction" class="fg-color-white" style="cursor: pointer">Регистрация</div>
             </shiro:guest>
         </div>
         <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">

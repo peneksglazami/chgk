@@ -23,7 +23,7 @@
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.action.excludePattern" value=".*meteor.*"/>
 
-    <package name="chgk" extends="struts-default">
+    <package name="chgk" extends="struts-default, json-default">
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
@@ -50,6 +50,22 @@
         </action>
         <action name="logout" class="org.cherchgk.actions.security.LogoutAction">
             <result type="redirectAction">main</result>
+        </action>
+        <action name="sign-up" class="signUpAction">
+            <result type="json" name="error">
+                <param name="includeProperties">
+                    actionErrors.*
+                </param>
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
+            <result type="json" name="success">
+                <param name="includeProperties">
+                    actionMessages.*
+                </param>
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
         </action>
 
         <action name="tournament-list" class="tournamentListAction" method="execute">
