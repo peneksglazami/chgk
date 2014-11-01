@@ -61,6 +61,17 @@
         </div>
     </a>
 </shiro:hasAnyRoles>
+<shiro:hasAnyRoles name="administrator">
+    <a href="<s:url action="settings/settings"/>">
+        <div class="tile double bg-color-orange">
+            <div class="tile-content">
+                <h4>Настройки приложения</h4>
+
+                <p>Переходите к редактированию настроек приложения</p>
+            </div>
+        </div>
+    </a>
+</shiro:hasAnyRoles>
 <chgk:isDemoMode>
     <div class="demo-users">
         <h4>Демо-пользователи</h4>

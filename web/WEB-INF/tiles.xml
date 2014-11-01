@@ -60,9 +60,19 @@
         <put-attribute name="title" value="Что? Где? Когда? - Редактирование пользователя"/>
         <put-attribute name="body" value="/user.jsp"/>
     </definition>
+
+    <definition name="settings" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Настройки"/>
+        <put-attribute name="body" value="/settings.jsp"/>
+    </definition>
     
     <definition name="securityViolation" extends="baseLayout">
         <put-attribute name="title" value="Что? Где? Когда? - Не надо так"/>
         <put-attribute name="body" value="/security-violation.jsp"/>
+    </definition>
+
+    <definition name="confirmSignUpResult" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Результат подтверждения регистрации"/>
+        <put-attribute name="body" value="/confirm-sign-up-result.jsp"/>
     </definition>
 </tiles-definitions>

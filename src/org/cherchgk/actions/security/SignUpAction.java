@@ -18,17 +18,10 @@ package org.cherchgk.actions.security;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.cherchgk.domain.security.Role;
-import org.cherchgk.domain.security.Token;
-import org.cherchgk.domain.security.User;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
-import org.cherchgk.utils.EntityManagerProvider;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * Действие регистрации нового пользователя.
@@ -44,7 +37,6 @@ public class SignUpAction extends ActionSupport {
     }
 
     @Override
-    @Transactional
     public String execute() throws Exception {
         String login = ActionContextHelper.getRequestParameterValue("login");
         String email = ActionContextHelper.getRequestParameterValue("email");
@@ -82,21 +74,11 @@ public class SignUpAction extends ActionSupport {
             return Action.ERROR;
         }
 
-        EntityManager entityManager = EntityManagerProvider.getEntityManager();
         try {
-            Role role = securityService.getRoleByName("organizer");
-            User user = securityService.createUser(login, password, email, role);
-            Token token = new Token();
-            token.setType(Token.Type.SIGN_UP);
-            token.setUuid(UUID.randomUUID().toString());
-            token.setUser(user);
-            entityManager.persist(token);
-
-            // TODO: send email
+            securityService.registerNewUser(login, password, email);
             addActionMessage("На ящик вашей электронной почты отправлено письмо для подтверждения активации.");
         } catch (Exception ex) {
-            entityManager.getTransaction().setRollbackOnly();
-            addActionError("Регистрация временно не доступна");
+            addActionError("Регистрация временно недоступна.");
             return Action.ERROR;
         }
 

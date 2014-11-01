@@ -65,7 +65,17 @@
 
     <bean class="org.cherchgk.security.InitSecurityBean"/>
 
+    <bean id="settingsService" class="org.cherchgk.services.SettingsService" />
+
+    <bean id="mailService" class="org.cherchgk.services.MailService">
+        <constructor-arg ref="settingsService"/>
+    </bean>
+
     <bean id="signUpAction" scope="prototype" class="org.cherchgk.actions.security.SignUpAction">
+        <constructor-arg ref="securityService"/>
+    </bean>
+
+    <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
         <constructor-arg ref="securityService"/>
     </bean>
 
@@ -141,5 +151,13 @@
 
     <bean id="userInfoAction" scope="prototype" class="org.cherchgk.actions.user.UserInfoAction">
         <constructor-arg ref="securityService"/>
+    </bean>
+
+    <bean id="settingsAction" scope="prototype" class="org.cherchgk.actions.settings.SettingsAction">
+        <constructor-arg ref="settingsService"/>
+    </bean>
+
+    <bean id="saveSettingsAction" scope="prototype" class="org.cherchgk.actions.settings.SaveSettingsAction">
+        <constructor-arg ref="settingsService"/>
     </bean>
 </beans>

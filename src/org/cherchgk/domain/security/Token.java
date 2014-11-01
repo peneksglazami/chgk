@@ -21,6 +21,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Верификационный токен, использующийся при самостоятельной
@@ -39,13 +40,16 @@ public class Token {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String uuid;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Type type;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    @Column(nullable = false)
+    private Date createDate;
 
     public Long getId() {
         return id;
@@ -77,5 +81,13 @@ public class Token {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

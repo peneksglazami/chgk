@@ -36,6 +36,7 @@ public class User {
     private String password;
     private String passwordSalt;
     private String email;
+    private boolean blocked;
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "USER_ID"),
@@ -89,6 +90,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
     }
 
     public Set<Role> getRoles() {

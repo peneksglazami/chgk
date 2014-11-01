@@ -21,19 +21,19 @@ import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.util.ByteSource;
 import org.cherchgk.domain.security.Permission;
 import org.cherchgk.domain.security.Role;
+import org.cherchgk.domain.security.Token;
 import org.cherchgk.domain.security.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Сервис по работе с подсистемой безопасности
+ * Сервис по работе с подсистемой безопасности.
  *
  * @author Andrey Grigorov
  */
@@ -48,6 +48,10 @@ public class SecurityService {
     private static final int hashIterations = 1024;
 
     private EntityManager entityManager;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private SettingsService settingsService;
 
     @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
@@ -71,18 +75,59 @@ public class SecurityService {
     public void createUserIfNotExist(String username, String password, String roleName) {
         User user = getUserByName(username);
         if (user == null) {
-            createUser(username, password, null, getRoleByName(roleName));
+            createUser(username, password, null, getRoleByName(roleName), false);
         }
     }
 
-    public User createUser(String username, String password, String email, Role role) {
+    public User createUser(String username, String password, String email, Role role, boolean blocked) {
         User user = new User();
         user.setUsername(username);
         setUserPassword(user, password);
         user.setEmail(email);
+        user.setBlocked(blocked);
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         entityManager.persist(user);
         return user;
+    }
+
+    public void registerNewUser(String username, String password, String email) throws MessagingException {
+        Role role = getRoleByName("organizer");
+        User user = createUser(username, password, email, role, true);
+        Token token = new Token();
+        token.setType(Token.Type.SIGN_UP);
+        token.setUuid(UUID.randomUUID().toString());
+        token.setUser(user);
+        token.setCreateDate(new Date());
+        entityManager.persist(token);
+        mailService.sendMail(email, "Регистрация в системе ведения турниров \"Что? Где? Когда?\"",
+                "Для подтвержения регистрации пройдите по <a href=\"" +
+                        settingsService.getHostName() + "/confirm-sign-up?token=" +
+                        token.getUuid() + "\">ссылке</a>.");
+    }
+
+    public boolean confirmRegistration(String tokenUUID) {
+        TypedQuery<Token> tokenQuery = entityManager.createQuery("select token " +
+                "from Token token " +
+                "where uuid = :tokenUuid and type = :tokenType", Token.class)
+                .setParameter("tokenUuid", tokenUUID)
+                .setParameter("tokenType", Token.Type.SIGN_UP);
+        tokenQuery.setHint("org.hibernate.cacheable", true);
+        List<Token> tokens = tokenQuery.getResultList();
+
+        if (tokens.isEmpty()) {
+            return false;
+        }
+
+        Token token = tokens.get(0);
+        User user = token.getUser();
+        if (!user.getBlocked()) {
+            return true;
+        }
+
+        user.setBlocked(false);
+        entityManager.merge(user);
+
+        return true;
     }
 
     public void setUserPassword(User user, String password) {
