@@ -48,6 +48,7 @@
                                 '<table>' +
                                 '<tr><td>Логин:</td><td><input id="loginInput" name="login" type="text"></td></tr>' +
                                 '<tr><td>Пароль:</td><td><input name="password" type="password"></td></tr>' +
+                                '<tr><td colspan="2" style="text-align: right;"><a href="<s:url action="show-restore-password-page"/>">Забыли пароль?</a></td></tr>' +
                                 '</table>' +
                                 '<input name="currentPage" type="hidden" value="' + encodeURIComponent(document.URL) + '">' +
                                 '<form>',

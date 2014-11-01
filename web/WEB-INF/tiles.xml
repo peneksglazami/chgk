@@ -75,4 +75,9 @@
         <put-attribute name="title" value="Что? Где? Когда? - Результат подтверждения регистрации"/>
         <put-attribute name="body" value="/confirm-sign-up-result.jsp"/>
     </definition>
+
+    <definition name="restorePassword" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Восстановление пароля"/>
+        <put-attribute name="body" value="/restore-password.jsp"/>
+    </definition>
 </tiles-definitions>

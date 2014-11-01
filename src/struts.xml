@@ -75,6 +75,9 @@
                 <param name="location">confirmSignUpResult</param>
             </result>
         </action>
+        <action name="show-restore-password-page" class="showRestorePasswordPageAction">
+            <result type="tiles">restorePassword</result>
+        </action>
 
         <action name="tournament-list" class="tournamentListAction" method="execute">
             <result type="tiles">tournamentList</result>

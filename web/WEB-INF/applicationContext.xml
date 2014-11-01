@@ -75,6 +75,8 @@
         <constructor-arg ref="securityService"/>
     </bean>
 
+    <bean id="showRestorePasswordPageAction" scope="prototype" class="com.opensymphony.xwork2.ActionSupport"/>
+
     <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
         <constructor-arg ref="securityService"/>
     </bean>
