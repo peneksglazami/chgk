@@ -58,6 +58,11 @@ public class SignUpAction extends ActionSupport {
         if (!EmailValidator.getInstance().isValid(email)) {
             addActionError("Указан некорректный адрес электронной почты");
             validationResult = false;
+        } else {
+            if (securityService.getUserByEmail(email) != null) {
+                addActionError("Пользователь с таким адресом электронной почты уже зарегистрирован");
+                validationResult = false;
+            }
         }
 
         if ((password == null) || "".equals(password)) {
