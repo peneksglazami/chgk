@@ -83,7 +83,9 @@ public class SecurityService {
         User user = new User();
         user.setUsername(username);
         setUserPassword(user, password);
-        user.setEmail(email);
+        if (email != null) {
+            user.setEmail(email.trim().toLowerCase());
+        }
         user.setBlocked(blocked);
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         entityManager.persist(user);
@@ -130,6 +132,19 @@ public class SecurityService {
         return true;
     }
 
+    public void restorePassword(User user) throws MessagingException {
+        Token token = new Token();
+        token.setType(Token.Type.RESTORE_PASSWORD);
+        token.setUuid(UUID.randomUUID().toString());
+        token.setUser(user);
+        token.setCreateDate(new Date());
+        entityManager.persist(token);
+        mailService.sendMail(user.getEmail(), "Восстановление пароля в системе ведения турниров \"Что? Где? Когда?\"",
+                "Для установки нового пароля пройдите по <a href=\"" +
+                        settingsService.getHostName() + "/set-new-password?token=" +
+                        token.getUuid() + "\">ссылке</a>.");
+    }
+
     public void setUserPassword(User user, String password) {
         RandomNumberGenerator rng = new SecureRandomNumberGenerator();
         ByteSource salt = rng.nextBytes();
@@ -162,6 +177,16 @@ public class SecurityService {
                 + "from User user "
                 + "where user.username = :username", User.class)
                 .setParameter("username", username);
+        userQuery.setHint("org.hibernate.cacheable", true);
+        List<User> users = userQuery.getResultList();
+        return users.isEmpty() ? null : users.get(0);
+    }
+
+    public User getUserByEmail(String email) {
+        TypedQuery<User> userQuery = entityManager.createQuery("select user "
+                + "from User user "
+                + "where user.email = :email", User.class)
+                .setParameter("email", email.trim().toLowerCase());
         userQuery.setHint("org.hibernate.cacheable", true);
         List<User> users = userQuery.getResultList();
         return users.isEmpty() ? null : users.get(0);

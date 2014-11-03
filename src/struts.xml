@@ -78,6 +78,9 @@
         <action name="show-restore-password-page" class="showRestorePasswordPageAction">
             <result type="tiles">restorePassword</result>
         </action>
+        <action name="restore-password" class="restorePasswordAction">
+            <result type="tiles">restorePasswordResult</result>
+        </action>
 
         <action name="tournament-list" class="tournamentListAction" method="execute">
             <result type="tiles">tournamentList</result>

@@ -80,4 +80,9 @@
         <put-attribute name="title" value="Что? Где? Когда? - Восстановление пароля"/>
         <put-attribute name="body" value="/restore-password.jsp"/>
     </definition>
+
+    <definition name="restorePasswordResult" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Восстановление пароля"/>
+        <put-attribute name="body" value="/restore-password-result.jsp"/>
+    </definition>
 </tiles-definitions>

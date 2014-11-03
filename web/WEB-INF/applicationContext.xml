@@ -61,11 +61,11 @@
 
     <bean class="org.cherchgk.utils.EntityManagerProvider" lazy-init="false"/>
 
-    <bean id="securityService" class="org.cherchgk.services.SecurityService" />
+    <bean id="securityService" class="org.cherchgk.services.SecurityService"/>
 
     <bean class="org.cherchgk.security.InitSecurityBean"/>
 
-    <bean id="settingsService" class="org.cherchgk.services.SettingsService" />
+    <bean id="settingsService" class="org.cherchgk.services.SettingsService"/>
 
     <bean id="mailService" class="org.cherchgk.services.MailService">
         <constructor-arg ref="settingsService"/>
@@ -76,6 +76,10 @@
     </bean>
 
     <bean id="showRestorePasswordPageAction" scope="prototype" class="com.opensymphony.xwork2.ActionSupport"/>
+
+    <bean id="restorePasswordAction" scope="prototype" class="org.cherchgk.actions.security.RestorePasswordAction">
+        <constructor-arg ref="securityService"/>
+    </bean>
 
     <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
         <constructor-arg ref="securityService"/>

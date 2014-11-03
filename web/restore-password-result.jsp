@@ -19,5 +19,10 @@
     <s:property value="message"/>
 </div>
 <div style="padding-top: 5px;">
+    <s:if test="!restoreResult">
+        <s:url var="showRestorePasswordPageUrl" action="show-restore-password-page"/>
+        <s:a href="%{showRestorePasswordPageUrl}"
+             cssClass="button bg-color-blue fg-color-white">Попробовать ещё раз</s:a>
+    </s:if>
     <a href="<s:url action='main'/>" class="button">Возвратиться на главную страницу</a>
 </div>

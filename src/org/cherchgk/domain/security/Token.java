@@ -34,7 +34,8 @@ import java.util.Date;
 public class Token {
 
     public enum Type {
-        SIGN_UP
+        SIGN_UP,
+        RESTORE_PASSWORD
     }
 
     @Id
