@@ -75,13 +75,22 @@
         <constructor-arg ref="securityService"/>
     </bean>
 
+    <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
+        <constructor-arg ref="securityService"/>
+    </bean>
+
     <bean id="showRestorePasswordPageAction" scope="prototype" class="com.opensymphony.xwork2.ActionSupport"/>
 
     <bean id="restorePasswordAction" scope="prototype" class="org.cherchgk.actions.security.RestorePasswordAction">
         <constructor-arg ref="securityService"/>
     </bean>
 
-    <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
+    <bean id="showSetNewPasswordPageAction" scope="prototype"
+          class="org.cherchgk.actions.security.ShowSetNewPasswordPageAction">
+        <constructor-arg ref="securityService"/>
+    </bean>
+
+    <bean id="setNewPasswordAction" scope="prototype" class="org.cherchgk.actions.security.SetNewPasswordAction">
         <constructor-arg ref="securityService"/>
     </bean>
 

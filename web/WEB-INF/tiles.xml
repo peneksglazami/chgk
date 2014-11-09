@@ -85,4 +85,14 @@
         <put-attribute name="title" value="Что? Где? Когда? - Восстановление пароля"/>
         <put-attribute name="body" value="/restore-password-result.jsp"/>
     </definition>
+
+    <definition name="setNewPassword" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Установка нового пароля"/>
+        <put-attribute name="body" value="/set-new-password.jsp"/>
+    </definition>
+
+    <definition name="setNewPasswordResult" extends="baseLayout">
+        <put-attribute name="title" value="Что? Где? Когда? - Восстановление пароля"/>
+        <put-attribute name="body" value="/set-new-password-result.jsp"/>
+    </definition>
 </tiles-definitions>

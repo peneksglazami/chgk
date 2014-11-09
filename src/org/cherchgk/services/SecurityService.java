@@ -103,24 +103,17 @@ public class SecurityService {
         entityManager.persist(token);
         mailService.sendMail(email, "Регистрация в системе ведения турниров \"Что? Где? Когда?\"",
                 "Для подтвержения регистрации пройдите по <a href=\"" +
-                        settingsService.getHostName() + "/confirm-sign-up?token=" +
+                        settingsService.getHostName() + "/confirm-sign-up?tokenUUID=" +
                         token.getUuid() + "\">ссылке</a>.");
     }
 
     public boolean confirmRegistration(String tokenUUID) {
-        TypedQuery<Token> tokenQuery = entityManager.createQuery("select token " +
-                "from Token token " +
-                "where uuid = :tokenUuid and type = :tokenType", Token.class)
-                .setParameter("tokenUuid", tokenUUID)
-                .setParameter("tokenType", Token.Type.SIGN_UP);
-        tokenQuery.setHint("org.hibernate.cacheable", true);
-        List<Token> tokens = tokenQuery.getResultList();
+        Token token = getTokenByUUID(tokenUUID);
 
-        if (tokens.isEmpty()) {
+        if ((token == null) || !Token.Type.SIGN_UP.equals(token.getType())) {
             return false;
         }
 
-        Token token = tokens.get(0);
         User user = token.getUser();
         if (!user.getBlocked()) {
             return true;
@@ -132,6 +125,26 @@ public class SecurityService {
         return true;
     }
 
+    private Token getTokenByUUID(String tokenUUID) {
+        TypedQuery<Token> tokenQuery = entityManager.createQuery("select token " +
+                "from Token token " +
+                "where uuid = :tokenUUID", Token.class)
+                .setParameter("tokenUUID", tokenUUID);
+        tokenQuery.setHint("org.hibernate.cacheable", true);
+        List<Token> tokens = tokenQuery.getResultList();
+
+        if (tokens.isEmpty()) {
+            return null;
+        }
+
+        return tokens.get(0);
+    }
+
+    public boolean isValidToken(String tokenUUID, Token.Type tokenType) {
+        Token token = getTokenByUUID(tokenUUID);
+        return (token != null) && token.getType().equals(tokenType);
+    }
+
     public void restorePassword(User user) throws MessagingException {
         Token token = new Token();
         token.setType(Token.Type.RESTORE_PASSWORD);
@@ -141,8 +154,20 @@ public class SecurityService {
         entityManager.persist(token);
         mailService.sendMail(user.getEmail(), "Восстановление пароля в системе ведения турниров \"Что? Где? Когда?\"",
                 "Для установки нового пароля пройдите по <a href=\"" +
-                        settingsService.getHostName() + "/set-new-password?token=" +
+                        settingsService.getHostName() + "/show-set-new-password-page?tokenUUID=" +
                         token.getUuid() + "\">ссылке</a>.");
+    }
+
+    public boolean setNewPassword(String tokenUUID, String password) {
+        Token token = getTokenByUUID(tokenUUID);
+
+        if ((token == null) || !Token.Type.RESTORE_PASSWORD.equals(token.getType())) {
+            return false;
+        }
+
+        setUserPassword(token.getUser(), password);
+        entityManager.remove(token);
+        return true;
     }
 
     public void setUserPassword(User user, String password) {

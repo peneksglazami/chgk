@@ -36,7 +36,7 @@ public class ConfirmSignUpAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        String tokenUUID = ActionContextHelper.getRequestParameterValue("token");
+        String tokenUUID = ActionContextHelper.getRequestParameterValue("tokenUUID");
 
         if ((tokenUUID == null) || !securityService.confirmRegistration(tokenUUID)) {
             message = "Подтверждение регистрации учётной записи не выполнено.";

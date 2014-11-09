@@ -81,6 +81,15 @@
         <action name="restore-password" class="restorePasswordAction">
             <result type="tiles">restorePasswordResult</result>
         </action>
+        <action name="show-set-new-password-page" class="showSetNewPasswordPageAction">
+            <result type="tiles" name="success">setNewPassword</result>
+            <result type="tiles" name="error">setNewPasswordResult</result>
+        </action>
+        <action name="set-new-password" class="setNewPasswordAction">
+            <result type="tiles" name="input">setNewPassword</result>
+            <result type="tiles" name="error">setNewPasswordResult</result>
+            <result type="tiles" name="success">setNewPasswordResult</result>
+        </action>
 
         <action name="tournament-list" class="tournamentListAction" method="execute">
             <result type="tiles">tournamentList</result>
