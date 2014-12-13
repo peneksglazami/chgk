@@ -15,6 +15,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <s:form theme="simple" id="edit-settings">
     Настройки связи с почтовым сервером
@@ -40,6 +41,44 @@
         <tr>
             <td align="right">Пароль</td>
             <td><s:password name="mailServerPassword" size="50" maxlength="250" showPassword="true"/></td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2">
+                <div id="check-mail-server-settings-result" style="display: inline-block"></div>
+                <div style="display: inline-block">
+                    <script type="text/javascript">
+                        dojo.event.topic.subscribe("/beforeCheckServerSettings", function () {
+                            $("#check-mail-server-settings-button").prop('disabled', true);
+                            var resultDiv = $("#check-mail-server-settings-result");
+                            resultDiv.css("color", "black");
+                            resultDiv.text("Пожалуйста, ждите. Выполняется подключение...");
+                        });
+
+                        dojo.event.topic.subscribe("/checkMailServerSettingsResult", function (response) {
+                            $("#check-mail-server-settings-button").prop('disabled', false);
+                            var resultDiv = $("#check-mail-server-settings-result");
+                            var result = jQuery.parseJSON(response);
+                            if (result.canSendEmail) {
+                                resultDiv.css("color", "green");
+                                resultDiv.text("Подключение выполнено успешно");
+                            } else {
+                                resultDiv.css("color", "red");
+                                resultDiv.text("Подключиться не удалось");
+                            }
+                        });
+
+                        checkMailServerSettingsFormFilter = function (field) {
+                            return (field.name != null) && (field.name.indexOf('mailServer') == 0);
+                        }
+                    </script>
+                    <s:url id="mailSendingTest" action="check-mail-server-settings"/>
+                    <sx:submit id="check-mail-server-settings-button" type="button" label="Проверить соединение"
+                               formId="edit-settings" formFilter="checkMailServerSettingsFormFilter"
+                               href="%{mailSendingTest}"
+                               beforeNotifyTopics="/beforeCheckServerSettings"
+                               afterNotifyTopics="/checkMailServerSettingsResult"/>
+                </div>
+            </td>
         </tr>
     </table>
     Общие настройки

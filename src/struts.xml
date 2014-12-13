@@ -180,5 +180,11 @@
                 <param name="actionName">main</param>
             </result>
         </action>
+        <action name="check-mail-server-settings" class="checkMailServerSettingsAction">
+            <result type="json" name="success">
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
+        </action>
     </package>
 </struts>

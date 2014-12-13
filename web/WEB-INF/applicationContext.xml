@@ -175,4 +175,8 @@
     <bean id="saveSettingsAction" scope="prototype" class="org.cherchgk.actions.settings.SaveSettingsAction">
         <constructor-arg ref="settingsService"/>
     </bean>
+
+    <bean id="checkMailServerSettingsAction" scope="prototype" class="org.cherchgk.actions.settings.CheckMailServerSettings">
+        <constructor-arg ref="mailService"/>
+    </bean>
 </beans>
