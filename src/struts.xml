@@ -45,7 +45,7 @@
             </result>
             <result type="redirectAction" name="error">
                 <param name="actionName">main</param>
-                <param name="loginResult">FAILED</param>
+                <param name="loginError">${loginError}</param>
             </result>
         </action>
         <action name="logout" class="org.cherchgk.actions.security.LogoutAction">

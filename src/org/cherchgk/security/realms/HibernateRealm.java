@@ -68,6 +68,10 @@ public class HibernateRealm extends AuthorizingRealm {
             throw new UnknownAccountException("No account found for user [" + username + "]");
         }
 
+        if (user.getBlocked()) {
+            throw new DisabledAccountException("Account for user [" + username + "] is locked");
+        }
+
         return new SimpleAuthenticationInfo(username, ByteSource.Util.bytes(Hex.decode(user.getPassword())),
                 ByteSource.Util.bytes(Hex.decode(user.getPasswordSalt())), getName());
     }

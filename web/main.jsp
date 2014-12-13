@@ -18,18 +18,20 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="chgk" uri="http://code.google.com/p/chgk/tags" %>
-<c:if test="${param.loginResult eq 'FAILED'}">
+<c:if test="${(param.loginError eq 'FAILED') or (param.loginError eq 'LOCKED')}">
     <script type="text/javascript">
         $(document).ready(function () {
             $.Dialog({
                 'title': 'Вход',
-                'content': 'Введены неправильные логин или пароль.',
+                'content': (window.location.href.indexOf('loginError=FAILED') >= 0) ?
+                        'Введены неправильные логин или пароль.' : 'Учётная запись заблокирована.',
                 'overlay': true,
                 'buttonsAlign': 'right',
                 'buttons': {
                     'OK': {
                         'action': function () {
-                            var url = window.location.href.replace('loginResult=FAILED', '');
+                            var url = window.location.href.replace('loginError=FAILED', '')
+                                    .replace('loginError=LOCKED', '');
                             if (url.indexOf('?') == url.length - 1) {
                                 url = url.substr(0, url.length - 1);
                             }
