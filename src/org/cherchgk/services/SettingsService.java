@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-@Transactional
+@Transactional(rollbackFor = Throwable.class)
 public class SettingsService {
 
     private final static String mailServerHostNameOption = "mail.server.host.name";

@@ -37,7 +37,7 @@ import java.util.*;
  *
  * @author Andrey Grigorov
  */
-@Transactional
+@Transactional(rollbackFor = Throwable.class)
 public class SecurityService {
 
     /**

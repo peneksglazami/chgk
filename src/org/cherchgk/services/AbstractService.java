@@ -24,7 +24,7 @@ import javax.persistence.PersistenceContext;
 /**
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-@Transactional
+@Transactional(rollbackFor = Throwable.class)
 public abstract class AbstractService<T extends DomainObject> implements DataService<T> {
 
     protected EntityManager entityManager;
