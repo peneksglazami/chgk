@@ -133,22 +133,20 @@
         <div style="display: inline-block;" class="nav-bar-inner padding10 fg-color-white">
             <b><tiles:getAsString name="title" ignore="true"/></b>
         </div>
-        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
-            <shiro:guest>
+        <shiro:guest>
+            <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
                 <div id="loginAction" class="fg-color-white" style="cursor: pointer">Войти</div>
-            </shiro:guest>
-        </div>
-        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
-            <shiro:guest>
+            </div>
+            <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
                 <div id="signUpAction" class="fg-color-white" style="cursor: pointer">Регистрация</div>
-            </shiro:guest>
-        </div>
-        <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
-            <shiro:user>
+            </div>
+        </shiro:guest>
+        <shiro:user>
+            <div style="display: inline-block; float: right" class="nav-bar-inner padding10 fg-color-white">
                 <shiro:principal/>
                 <s:a action="logout" namespace="/" cssClass="fg-color-white">Выход</s:a>
-            </shiro:user>
-        </div>
+            </div>
+        </shiro:user>
     </div>
 </div>
 <div class="page secondary">
