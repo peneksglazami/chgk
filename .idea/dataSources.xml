@@ -6,10 +6,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:~/chgktournaments</jdbc-url>
-      <user-name>chgk</user-name>
-      <user-password>dfc9dfc2dfcddfc1</user-password>
-      <schema-pattern>*</schema-pattern>
-      <default-schemas>CHGKTOURNAMENTS.*</default-schemas>
       <libraries>
         <library>
           <url>jar://$PROJECT_DIR$/lib/mysql-connector-java-5.0.4-bin.jar!/</url>
@@ -21,4 +17,3 @@
     </data-source>
   </component>
 </project>
-
