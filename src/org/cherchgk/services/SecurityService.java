@@ -140,12 +140,27 @@ public class SecurityService {
         return tokens.get(0);
     }
 
+    /**
+     * Удалить все верификационный токены, относящиеся к указанному пользователю
+     * и имеющие указанный тип.
+     *
+     * @param user Пользователь, верификационные токены которого необходимо удалить.
+     * @param tokenType Тип токенов, которые надо удалить.
+     */
+    private void deleteTokens(User user, Token.Type tokenType) {
+        entityManager.createQuery("delete from Token where user = :user and type = :tokenType")
+                .setParameter("user", user)
+                .setParameter("tokenType", tokenType)
+                .executeUpdate();
+    }
+
     public boolean isValidToken(String tokenUUID, Token.Type tokenType) {
         Token token = getTokenByUUID(tokenUUID);
         return (token != null) && token.getType().equals(tokenType);
     }
 
     public void restorePassword(User user) throws MessagingException {
+        deleteTokens(user, Token.Type.RESTORE_PASSWORD);
         Token token = new Token();
         token.setType(Token.Type.RESTORE_PASSWORD);
         token.setUuid(UUID.randomUUID().toString());
