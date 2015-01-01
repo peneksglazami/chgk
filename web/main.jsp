@@ -18,18 +18,20 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="chgk" uri="http://code.google.com/p/chgk/tags" %>
-<c:if test="${param.loginResult eq 'FAILED'}">
+<c:if test="${(param.loginError eq 'FAILED') or (param.loginError eq 'LOCKED')}">
     <script type="text/javascript">
         $(document).ready(function () {
             $.Dialog({
                 'title': 'Вход',
-                'content': 'Введены неправильные логин или пароль.',
+                'content': (window.location.href.indexOf('loginError=FAILED') >= 0) ?
+                        'Введены неправильные логин или пароль.' : 'Учётная запись заблокирована.',
                 'overlay': true,
                 'buttonsAlign': 'right',
                 'buttons': {
                     'OK': {
                         'action': function () {
-                            var url = window.location.href.replace('loginResult=FAILED', '');
+                            var url = window.location.href.replace('loginError=FAILED', '')
+                                    .replace('loginError=LOCKED', '');
                             if (url.indexOf('?') == url.length - 1) {
                                 url = url.substr(0, url.length - 1);
                             }
@@ -57,6 +59,17 @@
                 <h4>Список пользователей</h4>
 
                 <p>Переходите к просмотру списка пользователей</p>
+            </div>
+        </div>
+    </a>
+</shiro:hasAnyRoles>
+<shiro:hasAnyRoles name="administrator">
+    <a href="<s:url action="settings/settings"/>">
+        <div class="tile double bg-color-orange">
+            <div class="tile-content">
+                <h4>Настройки приложения</h4>
+
+                <p>Переходите к редактированию настроек приложения</p>
             </div>
         </div>
     </a>

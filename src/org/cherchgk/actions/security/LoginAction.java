@@ -19,6 +19,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.cherchgk.utils.ActionContextHelper;
@@ -33,6 +34,7 @@ import java.net.URLDecoder;
 public class LoginAction extends ActionSupport {
 
     private String currentPage;
+    private String loginError;
 
     @Override
     public String execute() throws Exception {
@@ -43,7 +45,11 @@ public class LoginAction extends ActionSupport {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             currentUser.login(token);
+        } catch (DisabledAccountException ex) {
+            loginError = "LOCKED";
+            return Action.ERROR;
         } catch (AuthenticationException ex) {
+            loginError = "FAILED";
             return Action.ERROR;
         }
         currentPage = URLDecoder.decode(ActionContextHelper.getRequestParameterValue("currentPage"), "UTF-8");
@@ -52,5 +58,9 @@ public class LoginAction extends ActionSupport {
 
     public String getCurrentPage() {
         return currentPage;
+    }
+
+    public String getLoginError() {
+        return loginError;
     }
 }

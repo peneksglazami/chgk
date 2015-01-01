@@ -23,7 +23,7 @@
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.action.excludePattern" value=".*meteor.*"/>
 
-    <package name="chgk" extends="struts-default">
+    <package name="chgk" extends="struts-default, json-default">
         <result-types>
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
@@ -45,11 +45,50 @@
             </result>
             <result type="redirectAction" name="error">
                 <param name="actionName">main</param>
-                <param name="loginResult">FAILED</param>
+                <param name="loginError">${loginError}</param>
             </result>
         </action>
         <action name="logout" class="org.cherchgk.actions.security.LogoutAction">
             <result type="redirectAction">main</result>
+        </action>
+        <action name="sign-up" class="signUpAction">
+            <result type="json" name="error">
+                <param name="includeProperties">
+                    actionErrors.*
+                </param>
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
+            <result type="json" name="success">
+                <param name="includeProperties">
+                    actionMessages.*
+                </param>
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
+        </action>
+        <action name="confirm-sign-up" class="confirmSignUpAction">
+            <result type="tiles" name="success">
+                <param name="location">confirmSignUpResult</param>
+            </result>
+            <result type="tiles" name="error">
+                <param name="location">confirmSignUpResult</param>
+            </result>
+        </action>
+        <action name="show-restore-password-page" class="showRestorePasswordPageAction">
+            <result type="tiles">restorePassword</result>
+        </action>
+        <action name="restore-password" class="restorePasswordAction">
+            <result type="tiles">restorePasswordResult</result>
+        </action>
+        <action name="show-set-new-password-page" class="showSetNewPasswordPageAction">
+            <result type="tiles" name="success">setNewPassword</result>
+            <result type="tiles" name="error">setNewPasswordResult</result>
+        </action>
+        <action name="set-new-password" class="setNewPasswordAction">
+            <result type="tiles" name="input">setNewPassword</result>
+            <result type="tiles" name="error">setNewPasswordResult</result>
+            <result type="tiles" name="success">setNewPasswordResult</result>
         </action>
 
         <action name="tournament-list" class="tournamentListAction" method="execute">
@@ -131,6 +170,21 @@
         </action>
         <action name="delete-user" class="deleteUserAction">
             <result type="redirectAction">user-list</result>
+        </action>
+        <action name="settings" class="settingsAction">
+            <result type="tiles">settings</result>
+        </action>
+        <action name="save-settings" class="saveSettingsAction">
+            <result type="redirectAction">
+                <param name="namespace">/</param>
+                <param name="actionName">main</param>
+            </result>
+        </action>
+        <action name="check-mail-server-settings" class="checkMailServerSettingsAction">
+            <result type="json" name="success">
+                <param name="noCache">true</param>
+                <param name="encoding">UTF-8</param>
+            </result>
         </action>
     </package>
 </struts>
