@@ -34,6 +34,9 @@ import java.util.*;
 
 /**
  * Сервис по работе с подсистемой безопасности.
+ * <p/>
+ * Все методы данного сервиса вызываются в транзакции, которая
+ * откатывается в случае бросания методом исключения.
  *
  * @author Andrey Grigorov
  */
@@ -58,6 +61,15 @@ public class SecurityService {
         this.entityManager = entityManager;
     }
 
+    /**
+     * Назначить указанной роли набор разрешений.
+     * Если роли с указанным названием не существовало, то такая роль
+     * будет создана. Если роль с указанным названием сущеставала, то
+     * ранее назначенные разрешения будут заменены на новые.
+     *
+     * @param roleName    Название роли.
+     * @param permissions Множество разрешений.
+     */
     public void setRolePermissions(String roleName, Set<Permission> permissions) {
         Role role = getRoleByName(roleName);
         if (role == null) {
@@ -72,6 +84,13 @@ public class SecurityService {
         }
     }
 
+    /**
+     * Создать пользователя, если он ещё не существует.
+     *
+     * @param username Имя пользователя.
+     * @param password Пароль.
+     * @param roleName Название роли.
+     */
     public void createUserIfNotExist(String username, String password, String roleName) {
         User user = getUserByName(username);
         if (user == null) {
@@ -79,6 +98,17 @@ public class SecurityService {
         }
     }
 
+    /**
+     * Создать пользователя.
+     *
+     * @param username Имя пользователя.
+     * @param password Пароль.
+     * @param email    Адрес электронной почты.
+     * @param role     Роль.
+     * @param blocked  Признак заблокированности пользователя. true - пользователь заблокирован,
+     *                 false - пользователь не заблокирован.
+     * @return Созданный пользователь.
+     */
     public User createUser(String username, String password, String email, Role role, boolean blocked) {
         User user = new User();
         user.setUsername(username);
@@ -92,6 +122,20 @@ public class SecurityService {
         return user;
     }
 
+    /**
+     * Зарегистрировать в системе нового пользователя и отправить на
+     * электронный адрес пользователя письмо с ссылкой для подтверждения
+     * регистрации.
+     * Созданному пользователю назначается роль "organizer".
+     * В случае, если не при отправке письма произошла ошибка,
+     * то созданный новый пользователь удаляется из БД приложения.
+     *
+     * @param username Имя пользователя.
+     * @param password Пароль.
+     * @param email    Адрес электронной почты.
+     * @throws MessagingException в случае невозможности отправить письма с
+     *                            ссылкой на подтверждение регистрации.
+     */
     public void registerNewUser(String username, String password, String email) throws MessagingException {
         Role role = getRoleByName("organizer");
         User user = createUser(username, password, email, role, true);
@@ -107,6 +151,16 @@ public class SecurityService {
                         token.getUuid() + "\">ссылке</a>.");
     }
 
+    /**
+     * Выполняется верификация токена регистрации.
+     * В случае, если найден регистрационный токен с указанным
+     * идентификатором, то производится разблокировка пользователя
+     * и удаление токена.
+     *
+     * @param tokenUUID Идентификатор токена.
+     * @return true - регистрация пользователя подтверждена,
+     * false - токен не найден.
+     */
     public boolean confirmRegistration(String tokenUUID) {
         Token token = getTokenByUUID(tokenUUID);
 
@@ -115,6 +169,9 @@ public class SecurityService {
         }
 
         User user = token.getUser();
+
+        entityManager.remove(token);
+
         if (!user.getBlocked()) {
             return true;
         }
@@ -125,6 +182,12 @@ public class SecurityService {
         return true;
     }
 
+    /**
+     * Поиск верификационного токена по идентификатору.
+     *
+     * @param tokenUUID Идентификатор токена.
+     * @return Найденный токен или null.
+     */
     private Token getTokenByUUID(String tokenUUID) {
         TypedQuery<Token> tokenQuery = entityManager.createQuery("select token " +
                 "from Token token " +
@@ -144,7 +207,7 @@ public class SecurityService {
      * Удалить все верификационный токены, относящиеся к указанному пользователю
      * и имеющие указанный тип.
      *
-     * @param user Пользователь, верификационные токены которого необходимо удалить.
+     * @param user      Пользователь, верификационные токены которого необходимо удалить.
      * @param tokenType Тип токенов, которые надо удалить.
      */
     private void deleteTokens(User user, Token.Type tokenType) {
@@ -154,11 +217,26 @@ public class SecurityService {
                 .executeUpdate();
     }
 
+    /**
+     * Проверка существования верификационного токена с указанными
+     * идентификатором и типом.
+     *
+     * @param tokenUUID Идентификатор токена.
+     * @param tokenType Тип токена.
+     * @return true - токен существует, false - токен не найден.
+     */
     public boolean isValidToken(String tokenUUID, Token.Type tokenType) {
         Token token = getTokenByUUID(tokenUUID);
         return (token != null) && token.getType().equals(tokenType);
     }
 
+    /**
+     * Отправить пользователю электронное письмо с инструкцией по восстановлению пароля.
+     *
+     * @param user Пользователь.
+     * @throws MessagingException в случае невозможности отправить письма с
+     *                            инструкцией по восстановлению пароля.
+     */
     public void restorePassword(User user) throws MessagingException {
         deleteTokens(user, Token.Type.RESTORE_PASSWORD);
         Token token = new Token();
@@ -173,6 +251,14 @@ public class SecurityService {
                         token.getUuid() + "\">ссылке</a>.");
     }
 
+    /**
+     * Установка нового пароля пользователю.
+     *
+     * @param tokenUUID Идентификатор токена, связанного с операцией восстановления пароля.
+     * @param password  Новый пароль.
+     * @return true - смена пароля произошла успешно, false - смена пароля не произведена
+     * по причиние недействительности пароля.
+     */
     public boolean setNewPassword(String tokenUUID, String password) {
         Token token = getTokenByUUID(tokenUUID);
 
