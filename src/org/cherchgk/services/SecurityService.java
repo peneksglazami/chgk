@@ -271,6 +271,12 @@ public class SecurityService {
         return true;
     }
 
+    /**
+     * Установка пользователю нового пароля.
+     *
+     * @param user     Пользователь
+     * @param password Пароль.
+     */
     public void setUserPassword(User user, String password) {
         RandomNumberGenerator rng = new SecureRandomNumberGenerator();
         ByteSource salt = rng.nextBytes();
@@ -279,15 +285,31 @@ public class SecurityService {
         user.setPasswordSalt(salt.toHex());
     }
 
+    /**
+     * Удаление пользователя, имеющего указанный индентификатор.
+     *
+     * @param userId Идентификатор пользоваетеля, которого необходимо удалить.
+     */
     public void deleteUser(Long userId) {
         User user = getUserById(userId);
         entityManager.remove(user);
     }
 
+    /**
+     * Сохранение изменений в сущности "Пользователей".
+     *
+     * @param user Пользователь.
+     */
     public void updateUser(User user) {
         entityManager.merge(user);
     }
 
+    /**
+     * Получить роль по её названию.
+     *
+     * @param roleName Название роли.
+     * @return Роль или null, если роль с указанным названием не существует.
+     */
     public Role getRoleByName(String roleName) {
         TypedQuery<Role> roleQuery = entityManager.createQuery("select role "
                 + "from Role role "
@@ -298,6 +320,13 @@ public class SecurityService {
         return roles.isEmpty() ? null : roles.get(0);
     }
 
+    /**
+     * Получить пользователя (объект класса {@link org.cherchgk.domain.security.User})
+     * по его имени (логину).
+     *
+     * @param username Имя (логин) пользователя.
+     * @return Пользователь или null, если пользователя с таким именем не найдено.
+     */
     public User getUserByName(String username) {
         TypedQuery<User> userQuery = entityManager.createQuery("select user "
                 + "from User user "
@@ -308,6 +337,14 @@ public class SecurityService {
         return users.isEmpty() ? null : users.get(0);
     }
 
+    /**
+     * Получить пользователя (объект класса {@link org.cherchgk.domain.security.User}
+     * по адресу электронной почты.
+     *
+     * @param email Адрес электронной почты.
+     * @return Пользователь или null, если пользователь с указанным адресом
+     * электронной почты не найден.
+     */
     public User getUserByEmail(String email) {
         TypedQuery<User> userQuery = entityManager.createQuery("select user "
                 + "from User user "
@@ -318,6 +355,14 @@ public class SecurityService {
         return users.isEmpty() ? null : users.get(0);
     }
 
+    /**
+     * Получить пользователя (обеъкт класса {@link org.cherchgk.domain.security.User})
+     * по идентификатору.
+     *
+     * @param userId Идентификатор пользователя.
+     * @return Пользователь или null, если пользователь с указанным идентификатором
+     * не найден.
+     */
     public User getUserById(Long userId) {
         TypedQuery<User> userQuery = entityManager.createQuery("select user "
                 + "from User user "
@@ -328,6 +373,11 @@ public class SecurityService {
         return users.isEmpty() ? null : users.get(0);
     }
 
+    /**
+     * Получить список всех зарегистрированных в системе пользователей.
+     *
+     * @return Список всех зарегистрированных в системе пользователей.
+     */
     public List<User> getAllUsers() {
         TypedQuery<User> usersQuery = entityManager.createQuery("select user "
                 + "from User user "
