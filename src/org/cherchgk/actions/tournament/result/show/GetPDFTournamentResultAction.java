@@ -30,6 +30,8 @@ import org.cherchgk.utils.HttpUtils;
 
 import java.io.*;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Действие выгрузки результатов турнира в формате PDF.
@@ -38,6 +40,7 @@ import java.util.Map;
  */
 public class GetPDFTournamentResultAction extends BaseShowTournamentResultAction {
 
+    private static final Logger log = Logger.getLogger(GetPDFTournamentResultAction.class.getName());
     private static final float defaultFontSize = 10f;
 
     public GetPDFTournamentResultAction(TournamentService tournamentService) {
@@ -143,12 +146,15 @@ public class GetPDFTournamentResultAction extends BaseShowTournamentResultAction
 
     private BaseFont getBaseFont(String fontFileName) {
         String realPath = ActionContextHelper.getRequest().getSession().getServletContext().getRealPath("");
+        String realFontFileName = realPath + File.separator + "WEB-INF" + File.separator + "fonts"
+                + File.separator + fontFileName;
         try {
-            return BaseFont.createFont(realPath + File.separator + "WEB-INF" + File.separator + "fonts"
-                    + File.separator + fontFileName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            return BaseFont.createFont(realFontFileName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         } catch (DocumentException e) {
+            log.log(Level.SEVERE, "Can't read " + realFontFileName, e);
             return null;
         } catch (IOException e) {
+            log.log(Level.SEVERE, "Can't read " + realFontFileName, e);
             return null;
         }
     }
