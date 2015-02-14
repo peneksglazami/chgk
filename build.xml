@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright 2012-2015 Andrey Grigorov, Anton Grigorov
-
-   Licensed under the Apache License, Version 2.0 (the "License"); you may not
-   use this file except in compliance with the License. You may obtain a copy of
-   the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-   License for the specific language governing permissions and limitations under
-   the License.
--->
 <project name="chgk" default="all">
   
 
@@ -26,8 +11,8 @@
   
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
-  <property name="compiler.args" value=""/>
-  <property name="compiler.max.memory" value="128m"/>
+  <property name="compiler.args" value="-encoding UTF-8"/>
+  <property name="compiler.max.memory" value="700m"/>
   <patternset id="ignored.files">
     <exclude name="**/CVS/**"/>
     <exclude name="**/SCCS/**"/>
@@ -119,12 +104,18 @@
   <path id="library.java-ee.classpath">
     <pathelement location="${basedir}/lib/jsp-api.jar"/>
     <pathelement location="${basedir}/lib/jstl.jar"/>
-    <pathelement location="${basedir}/lib/servlet-api.jar"/>
+    <pathelement location="${basedir}/lib/servlet-api-3.0.1.jar"/>
     <pathelement location="${basedir}/lib/standard.jar"/>
   </path>
   
   <path id="library.javax.mail.classpath">
     <pathelement location="${basedir}/lib/javax.mail.jar"/>
+  </path>
+  
+  <path id="library.libs-for-test.classpath">
+    <fileset dir="${basedir}/lib/test">
+      <patternset refid="library.patterns"/>
+    </fileset>
   </path>
   
   <path id="library.shiro-1.2.2.classpath">
@@ -207,18 +198,6 @@
   
   <path id="chgk.runtime.production.module.classpath">
     <pathelement location="${chgk.output.dir}"/>
-    <path refid="library.struts2-2.2.1.1.classpath"/>
-    <path refid="library.spring-3.0.0.classpath"/>
-    <path refid="library.hibernate-3.6.0.classpath"/>
-    <path refid="library.db-drivers.classpath"/>
-    <path refid="library.commons.classpath"/>
-    <path refid="library.java-ee.classpath"/>
-    <path refid="library.shiro-1.2.2.classpath"/>
-    <path refid="library.cglib-nodep-2.2.3.classpath"/>
-    <path refid="library.ehcache-2.2.0.classpath"/>
-    <path refid="library.atmosphere-2.1.5.classpath"/>
-    <path refid="library.itextpdf-5.5.3.classpath"/>
-    <path refid="library.javax.mail.classpath"/>
   </path>
   
   <path id="chgk.module.classpath">
@@ -235,6 +214,7 @@
     <path refid="library.atmosphere-2.1.5.classpath"/>
     <path refid="library.itextpdf-5.5.3.classpath"/>
     <path refid="library.javax.mail.classpath"/>
+    <path refid="library.libs-for-test.classpath"/>
   </path>
   
   <path id="chgk.runtime.module.classpath">
@@ -252,6 +232,7 @@
     <path refid="library.atmosphere-2.1.5.classpath"/>
     <path refid="library.itextpdf-5.5.3.classpath"/>
     <path refid="library.javax.mail.classpath"/>
+    <path refid="library.libs-for-test.classpath"/>
   </path>
   
   
@@ -266,6 +247,12 @@
   <path id="chgk.module.sourcepath">
     <dirset dir="${module.chgk.basedir}">
       <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="chgk.module.test.sourcepath">
+    <dirset dir="${module.chgk.basedir}">
+      <include name="test"/>
     </dirset>
   </path>
   
@@ -290,7 +277,23 @@
     </copy>
   </target>
   
-  <target name="compile.module.chgk.tests" depends="compile.module.chgk.production" description="compile module ChGK; test classes" unless="skip.tests"/>
+  <target name="compile.module.chgk.tests" depends="compile.module.chgk.production" description="compile module ChGK; test classes" unless="skip.tests">
+    <mkdir dir="${chgk.testoutput.dir}"/>
+    <javac destdir="${chgk.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.chgk}"/>
+      <bootclasspath refid="chgk.module.bootclasspath"/>
+      <classpath refid="chgk.module.classpath"/>
+      <src refid="chgk.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.chgk"/>
+    </javac>
+    
+    <copy todir="${chgk.testoutput.dir}">
+      <fileset dir="${module.chgk.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
   
   <target name="clean.module.chgk" description="cleanup module">
     <delete dir="${chgk.output.dir}"/>
@@ -402,11 +405,11 @@
     </copy>
     <copy file="${basedir}/lib/jstl.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/jstl.jar"/>
     <copy file="${basedir}/lib/standard.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/standard.jar"/>
-    <copy file="${basedir}/lib/servlet-api.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api.jar"/>
     <copy file="${basedir}/lib/ehcache-core-2.2.0.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/ehcache-core-2.2.0.jar"/>
     <copy file="${basedir}/lib/atmosphere-runtime-2.1.5.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/atmosphere-runtime-2.1.5.jar"/>
     <copy file="${basedir}/lib/itextpdf-5.5.3.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/itextpdf-5.5.3.jar"/>
     <copy file="${basedir}/lib/javax.mail.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/javax.mail.jar"/>
+    <copy file="${basedir}/lib/servlet-api-3.0.1.jar" tofile="${artifact.output.chgk:war_exploded}/WEB-INF/lib/servlet-api-3.0.1.jar"/>
   </target>
   
   <target name="build.all.artifacts" depends="artifact.chgk, artifact.chgk:war, artifact.chgk:war_exploded" description="Build all artifacts">

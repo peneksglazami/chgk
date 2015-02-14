@@ -13,28 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.cherchgk.utils;
+package org.cherchgk.test.ui;
 
-import com.opensymphony.xwork2.ActionContext;
-import org.apache.struts2.ServletActionContext;
+import com.codeborne.selenide.Condition;
+import org.junit.Test;
+import org.openqa.selenium.By;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+import static com.codeborne.selenide.Selenide.*;
 
 /**
+ * UI-тесты для главной страницы приложения.
+ *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class ActionContextHelper {
+public class MainPageUITests extends BaseUITest {
 
-    public static HttpServletRequest getRequest() {
-        return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-    }
-
-    public static String getRequestParameterValue(String paramName) {
-        return getRequest().getParameter(paramName);
-    }
-
-    public static Map<String, String[]> getRequestParameters() {
-        return getRequest().getParameterMap();
+    @Test
+    public void guessCannotSeeUserListLink() {
+        open("/main.action");
+        $(By.id("user-list-link")).shouldNot(Condition.exist);
     }
 }

@@ -34,7 +34,7 @@ public class ApplicationSettingsLoaderListener implements ServletContextListener
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         Properties properties = new Properties();
         try {
-            properties.load(servletContextEvent.getServletContext().getResourceAsStream("WEB-INF/chgk.properties"));
+            properties.load(servletContextEvent.getServletContext().getResourceAsStream("/WEB-INF/chgk.properties"));
             ApplicationSettings.setProperties(properties);
         } catch (IOException e) {
             e.printStackTrace();

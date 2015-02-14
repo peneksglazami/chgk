@@ -25,6 +25,13 @@
         <param-value>/WEB-INF/tiles.xml</param-value>
     </context-param>
 
+    <jsp-config>
+        <taglib>
+            <taglib-uri>http://code.google.com/p/chgk/tags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/chgk-tags.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
     <listener>
         <listener-class>org.cherchgk.web.ApplicationSettingsLoaderListener</listener-class>
     </listener>

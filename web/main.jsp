@@ -43,7 +43,7 @@
         });
     </script>
 </c:if>
-<a href="<s:url action="tournament-list"/>">
+<a id="tournament-list-link" href="<s:url action="tournament-list"/>">
     <div class="tile double bg-color-green">
         <div class="tile-content">
             <h4>Список турниров</h4>
@@ -53,7 +53,7 @@
     </div>
 </a>
 <shiro:hasAnyRoles name="administrator,organizer">
-    <a href="<s:url action="settings/user-list"/>">
+    <a id="user-list-link" href="<s:url action="settings/user-list"/>">
         <div class="tile double bg-color-orange">
             <div class="tile-content">
                 <h4>Список пользователей</h4>
@@ -64,7 +64,7 @@
     </a>
 </shiro:hasAnyRoles>
 <shiro:hasAnyRoles name="administrator">
-    <a href="<s:url action="settings/settings"/>">
+    <a id="settings" href="<s:url action="settings/settings"/>">
         <div class="tile double bg-color-orange">
             <div class="tile-content">
                 <h4>Настройки приложения</h4>
