@@ -32,7 +32,7 @@ public class MainPageUITests extends BaseUITest {
     @Test
     public void correctRedirectToMainPage() {
         open("");
-        $(By.id("tournament-list-link")).exists();
+        $(By.id("tournament-list-link")).shouldBe(Condition.exist);
     }
 
     @Test
