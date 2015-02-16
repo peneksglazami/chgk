@@ -45,6 +45,9 @@ public class TestWebAppLauncher {
         System.out.println("Start jetty launcher at " + port);
         System.out.println("Start chgk webapp at " + new File("web").getAbsolutePath());
 
+        // тестовое приложение будет работать с БД, загружаемой в память
+        System.setProperty("jdbc.url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
         connector.setMaxIdleTime(30000);
