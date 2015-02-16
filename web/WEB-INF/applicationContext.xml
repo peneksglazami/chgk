@@ -23,15 +23,14 @@
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl"/>
-    <bean id="teamService" class="org.cherchgk.services.TeamServiceImpl"/>
+    <context:property-placeholder location="/WEB-INF/database.properties" system-properties-mode="OVERRIDE"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="H2"/>
-                <property name="showSql" value="true"/>
+                <property name="database" value="${database.name}"/>
+                <property name="showSql" value="${hibernate.showSql}"/>
                 <property name="generateDdl" value="true"/>
             </bean>
         </property>
@@ -45,10 +44,10 @@
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:~/chgktournaments"/>
-        <property name="username" value="chgk"/>
-        <property name="password" value="chgk"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -60,6 +59,9 @@
     <context:annotation-config/>
 
     <bean class="org.cherchgk.utils.EntityManagerProvider" lazy-init="false"/>
+
+    <bean id="tournamentService" class="org.cherchgk.services.TournamentServiceImpl"/>
+    <bean id="teamService" class="org.cherchgk.services.TeamServiceImpl"/>
 
     <bean id="securityService" class="org.cherchgk.services.SecurityService"/>
 
