@@ -16,6 +16,7 @@
 package org.cherchgk.test.ui;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -30,20 +31,94 @@ import static com.codeborne.selenide.Selenide.open;
 public class MainPageUITests extends BaseUITest {
 
     @Test
-    public void correctRedirectToMainPage() {
+    public void testCorrectRedirectToMainPage() {
         open("");
         $(By.id("tournament-list-link")).shouldBe(Condition.exist);
     }
 
     @Test
-    public void guestCannotSeeUserListLink() {
+    public void testGuestShouldNotSeeUserListLink() {
         open("");
         $(By.id("user-list-link")).shouldNot(Condition.exist);
     }
 
     @Test
-    public void guestCannotSeeSettingsLink() {
+    public void testGuestShouldNotSeeSettingsLink() {
         open("");
         $(By.id("settings-link")).shouldNot(Condition.exist);
+    }
+
+    @Test
+    public void testGuestShouldSeeLoginLink() {
+        open("");
+        $(By.id("loginAction")).shouldBe(Condition.visible);
+    }
+
+    @Test
+    public void testGuestShouldSeeSignUpLink() {
+        open("");
+        $(By.id("signUpAction")).shouldBe(Condition.visible);
+    }
+
+    @Test
+    public void testCorrectUserLoginAndLogout() {
+        open("");
+        $(By.id("loginAction")).shouldBe(Condition.visible);
+        loginUser("admin", "admin");
+        $(By.id("loginAction")).shouldNotBe(Condition.exist);
+        logout();
+    }
+
+    @Test
+    public void testIncorrectUserLogin() {
+        open("");
+        loginUser("", "");
+        $(By.id("dialogBox")).shouldBe(Condition.visible);
+        $(By.id("loginAction")).shouldBe(Condition.visible);
+    }
+
+    @Test
+    public void testAdminShouldSeeUserListLink() {
+        open("");
+        loginUser("admin", "admin");
+        $(By.id("user-list-link")).should(Condition.visible);
+    }
+
+    @Test
+    public void testAdminShouldSeeSettingsLink() {
+        open("");
+        loginUser("admin", "admin");
+        $(By.id("settings-link")).should(Condition.visible);
+    }
+
+    @Test
+    public void testOrganizerShouldSeeUserListLink() {
+        open("");
+        loginUser("organizer", "organizer");
+        $(By.id("user-list-link")).should(Condition.visible);
+    }
+
+    @Test
+    public void testOrganizerShouldNotSeeSettingsLink() {
+        open("");
+        loginUser("organizer", "organizer");
+        $(By.id("settings-link")).shouldNot(Condition.exist);
+    }
+
+    private void loginUser(String login, String password) {
+        $(By.id("loginAction")).shouldBe(Condition.visible);
+        $(By.id("loginAction")).click();
+        $(By.id("loginInput")).isDisplayed();
+        $(By.id("loginInput")).setValue(login);
+        $(By.name("password")).isDisplayed();
+        $(By.name("password")).setValue(password);
+        $("#dialogButtons > div > button:nth-child(1)").click();
+    }
+
+    private void logout() {
+        SelenideElement exitElement = $(By.linkText("Выход"));
+        exitElement.shouldBe(Condition.exist);
+        exitElement.shouldBe(Condition.visible);
+        exitElement.click();
     }
 }

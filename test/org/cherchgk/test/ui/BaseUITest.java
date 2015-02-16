@@ -17,12 +17,16 @@ package org.cherchgk.test.ui;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * Базовый класс для UI-тестов.
  * Перед началом выполнения тестов выполняется запуск тестового сервера,
  * по завершению тестирования сервер выключается.
+ * Перед выполнением каждого теста выполняется очистка cookies.
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
@@ -44,5 +48,10 @@ public abstract class BaseUITest {
             launcher.stop();
             launcher = null;
         }
+    }
+
+    @Before
+    public void deleteAllCookies() {
+        getWebDriver().manage().deleteAllCookies();
     }
 }
