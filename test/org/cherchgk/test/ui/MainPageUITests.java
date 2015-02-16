@@ -19,7 +19,8 @@ import com.codeborne.selenide.Condition;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 /**
  * UI-тесты для главной страницы приложения.
@@ -29,8 +30,20 @@ import static com.codeborne.selenide.Selenide.*;
 public class MainPageUITests extends BaseUITest {
 
     @Test
-    public void guessCannotSeeUserListLink() {
-        open("/main.action");
+    public void correctRedirectToMainPage() {
+        open("");
+        $(By.id("tournament-list-link")).exists();
+    }
+
+    @Test
+    public void guestCannotSeeUserListLink() {
+        open("");
         $(By.id("user-list-link")).shouldNot(Condition.exist);
+    }
+
+    @Test
+    public void guestCannotSeeSettingsLink() {
+        open("");
+        $(By.id("settings-link")).shouldNot(Condition.exist);
     }
 }

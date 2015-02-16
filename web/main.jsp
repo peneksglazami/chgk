@@ -64,7 +64,7 @@
     </a>
 </shiro:hasAnyRoles>
 <shiro:hasAnyRoles name="administrator">
-    <a id="settings" href="<s:url action="settings/settings"/>">
+    <a id="settings-link" href="<s:url action="settings/settings"/>">
         <div class="tile double bg-color-orange">
             <div class="tile-content">
                 <h4>Настройки приложения</h4>

@@ -28,6 +28,8 @@
             <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
         </result-types>
 
+        <default-action-ref name="main"/>
+
         <global-results>
             <result name="securityViolation" type="tiles">securityViolation</result>
         </global-results>
