@@ -61,6 +61,13 @@ public class MainPageUITests extends BaseUITest {
     }
 
     @Test
+    public void testAuthorizedUserShouldNotSeeSignUpLink() {
+        open("");
+        loginUser("organizer", "organizer");
+        $(By.id("signUpAction")).shouldNotBe(Condition.exist);
+    }
+
+    @Test
     public void testCorrectUserLoginAndLogout() {
         open("");
         $(By.id("loginAction")).shouldBe(Condition.visible);
