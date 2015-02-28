@@ -30,7 +30,6 @@ import java.util.Properties;
  */
 public class ApplicationSettingsLoaderListener implements ServletContextListener {
 
-    @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         Properties properties = new Properties();
         try {
@@ -41,7 +40,6 @@ public class ApplicationSettingsLoaderListener implements ServletContextListener
         }
     }
 
-    @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
     }
 }
