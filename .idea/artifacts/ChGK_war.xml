@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="ChGK:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/ChGK_war</output-path>
-    <root id="archive" name="chgk.war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ChGK-0.6-SNAPSHOT.war">
       <element id="artifact" artifact-name="ChGK:war exploded" />
     </root>
   </artifact>
