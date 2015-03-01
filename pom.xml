@@ -237,6 +237,7 @@
                 <version>2.18.1</version>
                 <configuration>
                     <argLine>-XX:-UseSplitVerifier</argLine>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
                 </configuration>
             </plugin>
         </plugins>

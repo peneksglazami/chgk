@@ -28,7 +28,7 @@ import static com.codeborne.selenide.Selenide.open;
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class MainPageUITests extends BaseUITest {
+public class MainPageUITest extends BaseUITest {
 
     @Test
     public void testCorrectRedirectToMainPage() {
