@@ -27,6 +27,9 @@
         <module name="ChGK" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ChGK" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding UTF-8" />
