@@ -73,9 +73,7 @@
         <constructor-arg ref="settingsService"/>
     </bean>
 
-    <bean id="signUpAction" scope="prototype" class="org.cherchgk.actions.security.SignUpAction">
-        <constructor-arg ref="securityService"/>
-    </bean>
+    <bean id="signUpAction" scope="prototype" class="org.cherchgk.actions.security.SignUpAction"/>
 
     <bean id="confirmSignUpAction" scope="prototype" class="org.cherchgk.actions.security.ConfirmSignUpAction">
         <constructor-arg ref="securityService"/>

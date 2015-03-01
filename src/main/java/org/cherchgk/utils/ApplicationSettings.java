@@ -44,9 +44,9 @@ public class ApplicationSettings {
      * Получение значения флага, показывающего, включён ли демо-режим
      * работы приложения.
      *
-     * @return true - демо-режимм включён, false - демо-режим не включен.
+     * @return true - демо-режим включён, false - демо-режим не включен.
      */
     public static boolean isDemoMode() {
-        return Boolean.valueOf(properties.getProperty("demo-mode"));
+        return (properties == null) ? false : Boolean.valueOf(properties.getProperty("demo-mode"));
     }
 }

@@ -238,6 +238,9 @@
                 <configuration>
                     <argLine>-XX:-UseSplitVerifier</argLine>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>src/main/webapp</additionalClasspathElement>
+                    </additionalClasspathElements>
                 </configuration>
             </plugin>
         </plugins>

@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.utils.ActionContextHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 
@@ -31,8 +32,9 @@ import java.util.Collection;
 public class SignUpAction extends ActionSupport {
 
     private SecurityService securityService;
-
-    public SignUpAction(SecurityService securityService) {
+    
+    @Autowired
+    public void setSecurityService(SecurityService securityService) {
         this.securityService = securityService;
     }
 
