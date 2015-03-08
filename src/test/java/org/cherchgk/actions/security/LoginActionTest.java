@@ -51,9 +51,11 @@ public class LoginActionTest extends StrutsSpringTestCase {
         Mockito.when(SecurityUtils.getSubject()).thenReturn(subjectMock);
         Mockito.doNothing().when(subjectMock).login(Mockito.<AuthenticationToken>any());
 
+        LoginAction loginAction = (LoginAction) proxy.getAction();
         String result = proxy.execute();
 
         assertEquals(Action.SUCCESS, result);
+        assertEquals("http://localhost/main.action", loginAction.getCurrentPage());
     }
 
     public void testUndefinedUserLogin() throws Exception {
