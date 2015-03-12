@@ -19,7 +19,10 @@ import org.cherchgk.domain.RightAnswer;
 import org.cherchgk.domain.Team;
 import org.cherchgk.domain.Tournament;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Алгоритм ранжирования команд на основе рейтинга взятых вопросов.
@@ -82,7 +85,7 @@ public class RatingAlgorithm implements RankingAlgorithm {
         }
         for (RightAnswer rightAnswer : rightAnswers) {
             Team team = rightAnswer.getTeam();
-            teamRating.put(team, teamRating.get(team) + questionsRanking[rightAnswer.getQuestionNumber() + new Random().nextInt()]);
+            teamRating.put(team, teamRating.get(team) + questionsRanking[rightAnswer.getQuestionNumber() - 1]);
         }
 
         Map<Team, RankingPoint> rankingPointMap = new HashMap<Team, RankingPoint>();
