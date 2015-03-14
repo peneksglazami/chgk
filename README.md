@@ -1,4 +1,4 @@
-[![][ButlerImage]]
+<img src="https://code.google.com/p/chgk/logo?cct=1403206452"/>
 # chgk
 Веб-приложение для проведения турниров по спортивному варианту игры "Что? Где? Когда?" (проект переехал с code.google.com/p/chgk)
 
@@ -108,5 +108,3 @@
 Непрерывная интеграция выполняется силами drone.io
 -----
 <a href="https://drone.io/peneksglazami/chgk"><img src="https://drone.io/peneksglazami/chgk/status.png"/></a>
-
-[ButlerImage]: https://code.google.com/p/chgk/logo?cct=1403206452
