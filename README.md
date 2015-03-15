@@ -107,4 +107,4 @@
 
 Непрерывная интеграция выполняется силами drone.io
 -----
-<a href="https://drone.io/peneksglazami/chgk"><img src="https://drone.io/peneksglazami/chgk/status.png"/></a>
+[![Build Status](https://drone.io/github.com/peneksglazami/chgk/status.png)](https://drone.io/github.com/peneksglazami/chgk/latest)
