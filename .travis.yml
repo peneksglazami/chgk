@@ -9,6 +9,8 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - mvn install -Dskip.unit.tests=true -Dmaven.javadoc.skip=true -V -B
-  - mvn clean
+  - mvn install -Dskip.unit.tests=true -Dmaven.javadoc.skip=true
   - mvn test
+
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
