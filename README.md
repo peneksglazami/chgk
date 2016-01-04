@@ -1,6 +1,10 @@
 <img src="https://code.google.com/p/chgk/logo?cct=1403206452"/>
 # Веб-приложение для проведения турниров по спортивному варианту игры "Что? Где? Когда?"
 
+[![Build Status](https://drone.io/github.com/peneksglazami/chgk/status.png)](https://drone.io/github.com/peneksglazami/chgk/latest)
+[![Coverage Status](https://coveralls.io/repos/peneksglazami/chgk/badge.svg?branch=master&service=github)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
+[![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
+
 Основной целью данного проекта является создание веб-приложения для проведения турниров по спортивной версии игры "Что? Где? Когда?".
 
 Текущая версия *v0.5* выпущена 26.09.2014.
