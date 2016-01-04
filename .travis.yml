@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk7
+
+install: true
+
+script:
+  - mvn install -Dskip.unit.tests=true -Dmaven.javadoc.skip=true -V -B
+  - mvn clean
+  - mvn test
