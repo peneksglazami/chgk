@@ -37,6 +37,7 @@
         <jetty.version>8.1.8.v20121106</jetty.version>
         <mockito.version>1.8.5</mockito.version>
         <powermock.version>1.4.6</powermock.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
