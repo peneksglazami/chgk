@@ -1,7 +1,7 @@
 <img src="https://code.google.com/p/chgk/logo?cct=1403206452"/>
 # Веб-приложение для проведения турниров по спортивному варианту игры "Что? Где? Когда?"
 
-[![Build Status](https://drone.io/github.com/peneksglazami/chgk/status.png)](https://drone.io/github.com/peneksglazami/chgk/latest)
+[![Build Status](https://semaphoreci.com/api/v1/projects/badce8e9-a5b8-462d-9ff5-402794bfca36/648898/badge.svg)](https://semaphoreci.com/peneksglazami/chgk)
 [![Coverage Status](https://coveralls.io/repos/peneksglazami/chgk/badge.svg?branch=master&service=github)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
 [![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
 
@@ -107,7 +107,3 @@
 Для хостинга демо-приложений мы используем
 -----
 <a href="http://openshift.com/"><img src="http://upload.wikimedia.org/wikipedia/en/3/3a/OpenShift-LogoType.svg"/></a>
-
-Непрерывная интеграция выполняется силами drone.io
------
-[![Build Status](https://drone.io/github.com/peneksglazami/chgk/status.png)](https://drone.io/github.com/peneksglazami/chgk/latest)
