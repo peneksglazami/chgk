@@ -5,7 +5,7 @@ jdk:
 install: true
 
 addons:
-  firefox: "latest"
+  firefox: "31.0esr"
 
 before_script:
   - "export DISPLAY=:99.0"
