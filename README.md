@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/peneksglazami/chgk.svg?branch=master)](https://travis-ci.org/peneksglazami/chgk)
 [![Coverage Status](https://coveralls.io/repos/peneksglazami/chgk/badge.svg?branch=master&service=github)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
 [![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
+[![SourceForge](https://img.shields.io/sourceforge/dt/chgk.svg)](http://sourceforge.net/projects/chgk/files/)
 
 Основной целью данного проекта является создание веб-приложения для проведения турниров по спортивной версии игры "Что? Где? Когда?".
 
