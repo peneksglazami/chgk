@@ -159,7 +159,7 @@
         <div class="nav-bar">
             <div class="nav-bar-inner padding10">
                 <span class="element">
-                    <a class="fg-color-white" href="http://cher-chgk.3dn.ru" target="_blank">Череповецкий клуб
+                    <a class="fg-color-white" href="https://vk.com/cher_chgk" target="_blank">Череповецкий клуб
                         интеллектуальных игр</a>
                 </span>
             </div>
