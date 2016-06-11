@@ -10,7 +10,6 @@ import org.cherchgk.actions.security.RestorePasswordAction;
 import org.cherchgk.domain.security.Role;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.services.SettingsService;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,13 +30,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class RestorePasswordUITest extends BaseUITest {
 
-    private static final GreenMail mailServer = new GreenMail(ServerSetup.SMTP);
+    private static final int mailServerPort = 12345;
+    private static final String mailServerHostName = "127.0.0.1";
+    private static final GreenMail mailServer = new GreenMail(new ServerSetup(mailServerPort, mailServerHostName, ServerSetup.PROTOCOL_SMTP));
 
     @BeforeClass
     public static void initContext() throws Exception {
-        mailServer.start();
-        mailServer.setUser("mail-server-user", "mail-server-user-password");
-
         System.setProperty("jdbc.url", TestWebAppLauncher.TEST_APPLICATION_DATABASE_CONNECTION_URL);
         System.setProperty("hibernate.showSql", "false");
         GenericXmlContextLoader xmlContextLoader = new GenericXmlContextLoader();
@@ -45,8 +43,8 @@ public class RestorePasswordUITest extends BaseUITest {
 
         SettingsService settingsService = applicationContext.getBean(SettingsService.class);
         settingsService.saveHostName("test");
-        settingsService.saveMailServerHostName(mailServer.getSmtp().getBindTo());
-        settingsService.saveMailServerPort(String.valueOf(mailServer.getSmtp().getPort()));
+        settingsService.saveMailServerHostName(mailServerHostName);
+        settingsService.saveMailServerPort(String.valueOf(mailServerPort));
         settingsService.saveMailServerUser("mail-server-user");
         settingsService.saveMailServerPassword("mail-server-user-password");
 
@@ -55,14 +53,9 @@ public class RestorePasswordUITest extends BaseUITest {
         securityService.createUser("testUser", "12345", "test-user@example.com", role, false);
     }
 
-    @AfterClass
-    public static void destroyContext() {
-        mailServer.stop();
-    }
-
     @Before
     public void clearMailServer() throws FolderException {
-        mailServer.purgeEmailFromAllMailboxes();
+        mailServer.reset();
     }
 
     @Test
@@ -79,6 +72,14 @@ public class RestorePasswordUITest extends BaseUITest {
         $(Selectors.withText(RestorePasswordAction.SUCCESS_MESSAGE)).shouldBe(Condition.visible);
         assertEquals(1, mailServer.getReceivedMessages().length);
         assertEquals("test-user@example.com", mailServer.getReceivedMessages()[0].getAllRecipients()[0].toString());
+    }
+
+    @Test
+    public void testMailSendingFailure() throws MessagingException {
+        mailServer.stop();
+        openRestorePasswordPage();
+        restorePassword("test-user@example.com");
+        $(Selectors.withText(RestorePasswordAction.MAIL_SENDING_FAILURE)).shouldBe(Condition.visible);
     }
 
     private void openRestorePasswordPage() {
