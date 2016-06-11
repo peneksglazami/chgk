@@ -29,11 +29,11 @@ import javax.mail.MessagingException;
  */
 public class RestorePasswordAction extends ActionSupport {
 
-    private final static String successMessage = "На адрес вашей электронной почты отправлена инструкция по " +
+    public final static String SUCCESS_MESSAGE = "На адрес вашей электронной почты отправлена инструкция по " +
             "восстановлению пароля.";
-    private final static String userNotFound = "Пользователь с указанным логином или адресом электронной " +
+    public final static String USER_NOT_FOUND = "Пользователь с указанным логином или адресом электронной " +
             "почты не зарегистрирован в системе.";
-    private final static String mailSendingFailure = "Не удалось выполнить отправку письма с интрукцией по" +
+    public final static String MAIL_SENDING_FAILURE = "Не удалось выполнить отправку письма с интрукцией по" +
             "восстановлению пароля. Попробуйте повторить попытку позже.";
 
     private SecurityService securityService;
@@ -52,20 +52,20 @@ public class RestorePasswordAction extends ActionSupport {
         if (user == null) {
             user = securityService.getUserByEmail(loginOrEmail);
             if (user == null) {
-                message = userNotFound;
+                message = USER_NOT_FOUND;
                 return Action.SUCCESS;
             }
         } else if (user.getEmail() == null) {
-            message = userNotFound;
+            message = USER_NOT_FOUND;
             return Action.SUCCESS;
         }
 
         try {
             securityService.restorePassword(user);
             restoreResult = true;
-            message = successMessage;
+            message = SUCCESS_MESSAGE;
         } catch (MessagingException ex) {
-            message = mailSendingFailure;
+            message = MAIL_SENDING_FAILURE;
         }
 
         return Action.SUCCESS;

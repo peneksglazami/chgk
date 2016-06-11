@@ -20,7 +20,7 @@
     <div>
         <div style="padding-top: 10px;">Логин или e-mail <s:textfield name="loginOrEmail" size="50" maxlength="250"/></div>
         <div style="padding-top: 10px;">
-            <s:submit value="Восстановить пароль" cssClass="bg-color-green fg-color-white" action="restore-password"/>
+            <s:submit id="restore-password-button" value="Восстановить пароль" cssClass="bg-color-green fg-color-white" action="restore-password"/>
             <a href="<s:url action='main'/>" class="button">Возвратиться на главную страницу</a>
         </div>
     </div>

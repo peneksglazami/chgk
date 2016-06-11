@@ -31,6 +31,8 @@ import java.io.File;
  */
 public class TestWebAppLauncher {
 
+    public static final String TEST_APPLICATION_DATABASE_CONNECTION_URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+
     private final int port;
     private final Server server;
 
@@ -46,7 +48,7 @@ public class TestWebAppLauncher {
         System.out.println("Start chgk webapp at " + new File("src/main/webapp").getAbsolutePath());
 
         // тестовое приложение будет работать с БД, загружаемой в память
-        System.setProperty("jdbc.url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+        System.setProperty("jdbc.url", TEST_APPLICATION_DATABASE_CONNECTION_URL);
 
         Connector connector = new SelectChannelConnector();
         connector.setPort(port);
