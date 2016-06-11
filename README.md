@@ -1,4 +1,3 @@
-<img src="https://code.google.com/p/chgk/logo?cct=1403206452"/>
 # Веб-приложение для проведения турниров по спортивному варианту игры "Что? Где? Когда?"
 
 [![Build Status](https://travis-ci.org/peneksglazami/chgk.svg?branch=master)](https://travis-ci.org/peneksglazami/chgk)
@@ -95,7 +94,7 @@
 
 При разработке мы используем
 -----
-<a href="http://www.jetbrains.com/idea/"><img src="http://www.jetbrains.com/idea/opensource/img/all/banners/idea468x60_white.gif"/></a>
+<a href="http://www.jetbrains.com/idea/"><img src="https://resources.jetbrains.com/assets/banners/jetbrains-com/intellij-idea/idea468x60_white.gif"/></a>
 <a href="http://projects.spring.io/spring-framework/"><img src="http://assets.spring.io/drupal/files/header/logo-spring-103x60.png"/></a>
 <a href="http://www.hibernate.org/"><img src="https://forum.hibernate.org/styles/hibernate/imageset/site_logo.gif"/></a>
 <a href="http://struts.apache.org/"><img src="http://upload.wikimedia.org/wikipedia/commons/e/e9/Struts.png"/></a>
@@ -103,8 +102,8 @@
 Для тестирования мы используем
 -----
 <a href="http://selenide.org/"><img src="http://ru.selenide.org/images/selenide-logo-big.png"/></a>
-<a href="http://mockito.org/"><img src="http://site.mockito.org/img/mockito-logo-small.svg"/></a>
+<a href="http://mockito.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Mockito_Logo.png"/></a>
 
 Для хостинга демо-приложений мы используем
 -----
-<a href="http://openshift.com/"><img src="http://upload.wikimedia.org/wikipedia/en/3/3a/OpenShift-LogoType.svg"/></a>
+<a href="http://openshift.com/"><img src="https://mirror.openshift.com/pub/openshift/logo/openshift_logo_wide_blk250.png"/></a>
