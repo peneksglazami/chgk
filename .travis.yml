@@ -15,7 +15,9 @@ addons:
 
 before_script:
   - "sudo apt-get install unzip"
-  - "wget -N http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip"
+  - "wget http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+  - "read CHROMEDRIVER_LATEST_RELEASE < LATEST_RELEASE"
+  - "wget -N http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_LATEST_RELEASE/chromedriver_linux64.zip"
   - "unzip chromedriver_linux64.zip"
   - "chmod +x chromedriver"
   - "sudo mv -f chromedriver /usr/local/share/chromedriver"
@@ -26,8 +28,7 @@ before_script:
 
 script:
   - mvn clean
-  - mvn install -Dskip.unit.tests=true -Dmaven.javadoc.skip=true -Dbrowser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
-  - mvn test -Dbrowser=chrome -Dwebdriver.chrome.driver=/usr/bin/google-chrome
+  - mvn install -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
 
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
