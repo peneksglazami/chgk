@@ -16,12 +16,15 @@
 package org.cherchgk.test.ui;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
 import com.icegreen.greenmail.store.FolderException;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 import org.cherchgk.actions.security.RestorePasswordAction;
+import org.cherchgk.actions.security.SetNewPasswordAction;
+import org.cherchgk.actions.security.ShowSetNewPasswordPageAction;
 import org.cherchgk.domain.security.Role;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.services.SettingsService;
@@ -33,10 +36,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.support.GenericXmlContextLoader;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * UI-тесты для страницы восстановления пароля.
@@ -57,7 +66,7 @@ public class RestorePasswordUITest extends BaseUITest {
         ApplicationContext applicationContext = xmlContextLoader.loadContext("/WEB-INF/applicationContext.xml");
 
         SettingsService settingsService = applicationContext.getBean(SettingsService.class);
-        settingsService.saveHostName("test");
+        settingsService.saveHostName(Configuration.baseUrl);
         settingsService.saveMailServerHostName(mailServerHostName);
         settingsService.saveMailServerPort(String.valueOf(mailServerPort));
         settingsService.saveMailServerUser("mail-server-user");
@@ -81,12 +90,48 @@ public class RestorePasswordUITest extends BaseUITest {
     }
 
     @Test
-    public void testSuccessfulRestorePassword() throws MessagingException {
+    public void testSuccessfulRestorePassword() throws MessagingException, IOException {
         openRestorePasswordPage();
         restorePassword("test-user@example.com");
         $(Selectors.withText(RestorePasswordAction.SUCCESS_MESSAGE)).shouldBe(Condition.visible);
         assertEquals(1, mailServer.getReceivedMessages().length);
-        assertEquals("test-user@example.com", mailServer.getReceivedMessages()[0].getAllRecipients()[0].toString());
+        MimeMessage message = mailServer.getReceivedMessages()[0];
+        assertEquals("test-user@example.com", message.getAllRecipients()[0].toString());
+
+        // посмотрим, какая ссылка пришла в письме, и перейдём по ней для установки нового пароля
+        String text = message.getContent().toString();
+        Matcher matcher = Pattern.compile(".*<a href=\"(.*)\">.*").matcher(text);
+        assertTrue(matcher.find());
+        String setNewPasswordPageUrl = matcher.group(1);
+        open(setNewPasswordPageUrl);
+
+        SelenideElement passwordField = $(By.name("password"));
+        SelenideElement password2Field = $(By.name("password2"));
+        SelenideElement setNewPasswordButton = $(By.id("set-new-password-button"));
+        passwordField.shouldBe(Condition.visible);
+        password2Field.shouldBe(Condition.visible);
+        setNewPasswordButton.shouldBe(Condition.visible);
+
+        passwordField.setValue("");
+        password2Field.setValue("321");
+        setNewPasswordButton.click();
+        $(Selectors.withText(SetNewPasswordAction.PASSWORD_CANNOT_BE_EMPTY)).shouldBe(Condition.visible);
+
+        passwordField.setValue("123");
+        password2Field.setValue("321");
+        setNewPasswordButton.click();
+        $(Selectors.withText(SetNewPasswordAction.PASSWORDS_MUST_BE_EQUAL)).shouldBe(Condition.visible);
+
+        passwordField.setValue("123");
+        password2Field.setValue("123");
+        setNewPasswordButton.click();
+        $(Selectors.withText(SetNewPasswordAction.PASSWORD_SUCCESSFULLY_CHANGED)).shouldBe(Condition.visible);
+
+        open(setNewPasswordPageUrl);
+        $(Selectors.withText(ShowSetNewPasswordPageAction.TOKEN_IS_INVALID)).shouldBe(Condition.visible);
+        $(By.name("password")).shouldBe(Condition.not(Condition.exist));
+        $(By.name("password2")).shouldBe(Condition.not(Condition.exist));
+        $(By.id("set-new-password-button")).shouldBe(Condition.not(Condition.exist));
     }
 
     @Test

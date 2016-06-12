@@ -31,6 +31,8 @@ import org.cherchgk.services.SecurityService;
  */
 public class ShowSetNewPasswordPageAction extends ActionSupport {
 
+    public static final String TOKEN_IS_INVALID = "Ссылка на страницу установки нового пароля устарела либо недействительна.";
+
     private SecurityService securityService;
     private String tokenUUID;
     private String message;
@@ -44,7 +46,7 @@ public class ShowSetNewPasswordPageAction extends ActionSupport {
         if (securityService.isValidToken(tokenUUID, Token.Type.RESTORE_PASSWORD)) {
             return Action.SUCCESS;
         } else {
-            message = "Ссылка на страницу установки нового пароля устарела либо недействительна.";
+            message = TOKEN_IS_INVALID;
             return Action.ERROR;
         }
     }

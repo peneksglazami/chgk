@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="set-new-password"/>
+                <s:submit id="set-new-password-button" value="Сохранить" cssClass="bg-color-green fg-color-white" action="set-new-password"/>
                 <a href="<s:url action='main'/>" class="button">Возвратиться на главную страницу</a>
             </td>
         </tr>

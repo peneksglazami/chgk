@@ -30,6 +30,11 @@ import org.cherchgk.services.SecurityService;
  */
 public class SetNewPasswordAction extends ActionSupport {
 
+    public static final String PASSWORD_CANNOT_BE_EMPTY = "Пароль не может быть пустым";
+    public static final String PASSWORDS_MUST_BE_EQUAL = "Пароль и повторно введённый пароль не совпадают";
+    public static final String PASSWORD_SUCCESSFULLY_CHANGED = "Новый пароль успешно установлен.";
+    public static final String TOKEN_IS_INVALID = "Ссылка на страницу установки нового пароля устарела либо недействительна.";
+
     private SecurityService securityService;
     private String tokenUUID;
     private String password;
@@ -43,9 +48,9 @@ public class SetNewPasswordAction extends ActionSupport {
     @Override
     public void validate() {
         if ((password == null) || ("".equals(password))) {
-            addFieldError("password", "Пароль не может быть пустым");
+            addFieldError("password", PASSWORD_CANNOT_BE_EMPTY);
         } else if (!password.equals(password2)) {
-            addFieldError("password2", "Пароль и повторно введённый пароль не совпадают");
+            addFieldError("password2", PASSWORDS_MUST_BE_EQUAL);
         }
     }
 
@@ -53,10 +58,10 @@ public class SetNewPasswordAction extends ActionSupport {
     public String execute() throws Exception {
         if (securityService.isValidToken(tokenUUID, Token.Type.RESTORE_PASSWORD)) {
             securityService.setNewPassword(tokenUUID, password);
-            message = "Новый пароль успешно установлен.";
+            message = PASSWORD_SUCCESSFULLY_CHANGED;
             return Action.SUCCESS;
         } else {
-            message = "Ссылка на страницу установки нового пароля устарела либо недействительна.";
+            message = TOKEN_IS_INVALID;
             return Action.ERROR;
         }
     }

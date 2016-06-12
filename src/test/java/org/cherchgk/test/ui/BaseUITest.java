@@ -32,7 +32,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
  */
 public abstract class BaseUITest {
 
-    private static final int TEST_SERVER_PORT = 7777;
+    protected static final int TEST_SERVER_PORT = 7777;
     private static TestWebAppLauncher launcher;
 
     @BeforeClass
