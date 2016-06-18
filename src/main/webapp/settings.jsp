@@ -91,7 +91,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <s:submit value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-settings"/>
+                <s:submit id="save-settings-button" value="Сохранить" cssClass="bg-color-green fg-color-white" action="save-settings"/>
                 <input class="button" type="button" value="Назад" onclick="history.back()">
             </td>
         </tr>

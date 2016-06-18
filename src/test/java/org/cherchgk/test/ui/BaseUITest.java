@@ -15,11 +15,15 @@
  */
 package org.cherchgk.test.ui;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
@@ -48,6 +52,23 @@ public abstract class BaseUITest {
             launcher.stop();
             launcher = null;
         }
+    }
+
+    protected void loginUser(String login, String password) {
+        $(By.id("loginAction")).shouldBe(Condition.visible);
+        $(By.id("loginAction")).click();
+        $(By.id("loginInput")).isDisplayed();
+        $(By.id("loginInput")).setValue(login);
+        $(By.name("password")).isDisplayed();
+        $(By.name("password")).setValue(password);
+        $("#dialogButtons > div > button:nth-child(1)").click();
+    }
+
+    protected void logout() {
+        SelenideElement exitElement = $(By.linkText("Выход"));
+        exitElement.shouldBe(Condition.exist);
+        exitElement.shouldBe(Condition.visible);
+        exitElement.click();
     }
 
     @Before
