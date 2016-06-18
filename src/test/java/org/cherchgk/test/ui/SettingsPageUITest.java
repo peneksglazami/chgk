@@ -34,15 +34,16 @@ import static com.codeborne.selenide.Selenide.open;
  */
 public class SettingsPageUITest extends BaseUITest {
 
-    private static final int mailServerPort = 12345;
+    private static final int mailServerPort = 23456;
     private static final String mailServerHostName = "127.0.0.1";
 
     @Test
     public void testCheckMailServerSettings() {
         open("");
         loginUser("admin", "admin");
-        $(By.id("settings-link")).shouldBe(Condition.visible);
-        $(By.id("settings-link")).followLink();
+        SelenideElement settingsLink = $(By.id("settings-link")).$(By.tagName("div"));
+        settingsLink.shouldBe(Condition.visible);
+        settingsLink.click();
         $(By.name("mailServerHostName")).setValue(mailServerHostName);
         $(By.name("mailServerPort")).setValue(String.valueOf(mailServerPort));
         $(By.name("mailServerUser")).setValue("test-user");
@@ -54,19 +55,23 @@ public class SettingsPageUITest extends BaseUITest {
         $(Selectors.withText("Подключиться не удалось")).waitUntil(Condition.visible, 30000);
 
         GreenMail mailServer = new GreenMail(new ServerSetup(mailServerPort, mailServerHostName, ServerSetup.PROTOCOL_SMTP));
-        mailServer.start();
-        checkMailServerSettingsButton.click();
-        $(Selectors.withText("Подключение выполнено успешно")).waitUntil(Condition.visible, 30000);
-        mailServer.stop();
-        logout();
+        try {
+            mailServer.start();
+            checkMailServerSettingsButton.click();
+            $(Selectors.withText("Подключение выполнено успешно")).waitUntil(Condition.visible, 30000);
+            logout();
+        } finally {
+            mailServer.stop();
+        }
     }
 
     @Test
     public void testSettingsSaving() {
         open("");
         loginUser("admin", "admin");
-        $(By.id("settings-link")).shouldBe(Condition.visible);
-        $(By.id("settings-link")).followLink();
+        SelenideElement settingsLink = $(By.id("settings-link")).$(By.tagName("div"));
+        settingsLink.shouldBe(Condition.visible);
+        settingsLink.click();
         $(By.name("mailServerHostName")).setValue(mailServerHostName);
         $(By.name("mailServerPort")).setValue(String.valueOf(mailServerPort));
         $(By.name("mailServerUser")).setValue("test-user");
@@ -74,8 +79,9 @@ public class SettingsPageUITest extends BaseUITest {
         $(By.name("hostName")).setValue("http://127.0.0.1");
         $(By.id("save-settings-button")).click();
 
-        $(By.id("settings-link")).shouldBe(Condition.visible);
-        $(By.id("settings-link")).followLink();
+        settingsLink = $(By.id("settings-link")).$(By.tagName("div"));
+        settingsLink.shouldBe(Condition.visible);
+        settingsLink.click();
         Assert.assertEquals(mailServerHostName, $(By.name("mailServerHostName")).val());
         Assert.assertEquals(String.valueOf(mailServerPort), $(By.name("mailServerPort")).val());
         Assert.assertEquals("test-user", $(By.name("mailServerUser")).val());

@@ -28,6 +28,7 @@ import org.cherchgk.actions.security.ShowSetNewPasswordPageAction;
 import org.cherchgk.domain.security.Role;
 import org.cherchgk.services.SecurityService;
 import org.cherchgk.services.SettingsService;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -75,6 +76,11 @@ public class RestorePasswordUITest extends BaseUITest {
         SecurityService securityService = applicationContext.getBean(SecurityService.class);
         Role role = securityService.getRoleByName("organizer");
         securityService.createUser("testUser", "12345", "test-user@example.com", role, false);
+    }
+
+    @AfterClass
+    public static void destroyContext() {
+        mailServer.stop();
     }
 
     @Before
