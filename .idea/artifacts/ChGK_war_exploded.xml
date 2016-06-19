@@ -58,6 +58,7 @@
           <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.3" />
           <element id="library" level="project" name="Maven: javax.mail:javax.mail-api:1.5.2" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.5" />
           <element id="library" level="project" name="Maven: org.atmosphere:atmosphere-runtime:2.1.5" />
           <element id="library" level="project" name="Maven: commons-validator:commons-validator:1.4.1" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.3" />

@@ -119,6 +119,7 @@
     <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.5.3" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:javax.mail-api:1.5.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.5.5" level="project" />
     <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-runtime:2.1.5" level="project" />
     <orderEntry type="library" name="Maven: commons-validator:commons-validator:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.3" level="project" />
@@ -180,7 +181,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-core:1.4.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.javassist:javassist:3.13.0-GA" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.icegreen:greenmail:1.5.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: com.sun.mail:javax.mail:1.5.5" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
