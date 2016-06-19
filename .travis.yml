@@ -27,8 +27,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - mvn clean
-  - mvn install -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+  - mvn clean cobertura:cobertura -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
 
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn coveralls:report
