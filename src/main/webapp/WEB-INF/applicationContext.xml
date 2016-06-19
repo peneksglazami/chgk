@@ -77,6 +77,8 @@
 
     <bean id="settingsService" class="org.cherchgk.services.SettingsService"/>
 
+    <bean class="org.cherchgk.utils.ApplicationSettingsInitBean"/>
+
     <bean id="mailService" class="org.cherchgk.services.MailService">
         <constructor-arg ref="settingsService"/>
     </bean>
