@@ -17,6 +17,7 @@ package org.cherchgk.actions.settings;
 
 import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.services.MailService;
+import org.cherchgk.services.SettingsService;
 
 /**
  * Действие проверки возможности отправки электронных писем
@@ -24,17 +25,14 @@ import org.cherchgk.services.MailService;
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class CheckMailServerSettings extends ActionSupport {
+public class CheckMailServerSettings extends BaseSettingsAction {
 
     private MailService mailService;
-    private String mailServerHostName;
-    private String mailServerPort;
-    private String mailServerUser;
-    private String mailServerPassword;
     private boolean canSendEmail;
 
-    public CheckMailServerSettings(MailService mailService) {
+    public CheckMailServerSettings(MailService mailService, SettingsService settingsService) {
         this.mailService = mailService;
+        this.settingsService = settingsService;
     }
 
     @Override
@@ -46,21 +44,5 @@ public class CheckMailServerSettings extends ActionSupport {
 
     public boolean isCanSendEmail() {
         return canSendEmail;
-    }
-
-    public void setMailServerHostName(String mailServerHostName) {
-        this.mailServerHostName = mailServerHostName;
-    }
-
-    public void setMailServerPort(String mailServerPort) {
-        this.mailServerPort = mailServerPort;
-    }
-
-    public void setMailServerUser(String mailServerUser) {
-        this.mailServerUser = mailServerUser;
-    }
-
-    public void setMailServerPassword(String mailServerPassword) {
-        this.mailServerPassword = mailServerPassword;
     }
 }

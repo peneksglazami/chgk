@@ -16,7 +16,6 @@
 package org.cherchgk.actions.settings;
 
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionSupport;
 import org.cherchgk.services.SettingsService;
 
 /**
@@ -24,13 +23,8 @@ import org.cherchgk.services.SettingsService;
  *
  * @author Andrey Grigorov (peneksglazami@gmail.com)
  */
-public class SaveSettingsAction extends ActionSupport {
+public class SaveSettingsAction extends BaseSettingsAction {
 
-    private SettingsService settingsService;
-    private String mailServerHostName;
-    private String mailServerPort;
-    private String mailServerUser;
-    private String mailServerPassword;
     private String hostName;
 
     public SaveSettingsAction(SettingsService settingsService) {
@@ -45,38 +39,6 @@ public class SaveSettingsAction extends ActionSupport {
         settingsService.saveMailServerPassword(mailServerPassword);
         settingsService.saveHostName(hostName);
         return Action.SUCCESS;
-    }
-
-    public String getMailServerHostName() {
-        return mailServerHostName;
-    }
-
-    public void setMailServerHostName(String mailServerHostName) {
-        this.mailServerHostName = mailServerHostName;
-    }
-
-    public String getMailServerPort() {
-        return mailServerPort;
-    }
-
-    public void setMailServerPort(String mailServerPort) {
-        this.mailServerPort = mailServerPort;
-    }
-
-    public String getMailServerUser() {
-        return mailServerUser;
-    }
-
-    public void setMailServerUser(String mailServerUser) {
-        this.mailServerUser = mailServerUser;
-    }
-
-    public String getMailServerPassword() {
-        return mailServerPassword;
-    }
-
-    public void setMailServerPassword(String mailServerPassword) {
-        this.mailServerPassword = mailServerPassword;
     }
 
     public String getHostName() {

@@ -67,7 +67,7 @@
         <shiro:hasPermission name="user:edit:${user.id}">
             <tr>
                 <td align="right">Пароль</td>
-                <td><s:password name="user.password" size="50" maxlength="50" showPassword="true"/></td>
+                <td><s:password name="user.password" size="50" maxlength="50" showPassword="true" autocomplete="new-password"/></td>
             </tr>
         </shiro:hasPermission>
         <shiro:hasRole name="administrator">

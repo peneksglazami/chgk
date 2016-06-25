@@ -188,5 +188,6 @@
 
     <bean id="checkMailServerSettingsAction" scope="prototype" class="org.cherchgk.actions.settings.CheckMailServerSettings">
         <constructor-arg ref="mailService"/>
+        <constructor-arg ref="settingsService"/>
     </bean>
 </beans>

@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td align="right">Пароль</td>
-            <td><s:password name="mailServerPassword" size="50" maxlength="250" showPassword="true"/></td>
+            <td><s:password name="mailServerPassword" size="50" maxlength="250" showPassword="true" autocomplete="new-password"/></td>
         </tr>
         <tr>
             <td align="right" colspan="2">

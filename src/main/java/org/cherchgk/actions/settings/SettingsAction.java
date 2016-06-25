@@ -16,6 +16,8 @@
 package org.cherchgk.actions.settings;
 
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.cherchgk.services.SettingsService;
 
 /**
@@ -44,7 +46,12 @@ public class SettingsAction extends ActionSupport {
     }
 
     public String getMailServerPassword() {
-        return settingsService.getMailServerPassword();
+        String password = settingsService.getMailServerPassword();
+        if (password == null) {
+            return null;
+        }
+        String passwordHash = new Sha512Hash(password, SecurityUtils.getSubject().getPrincipal().toString()).toHex();
+        return passwordHash.substring(0, 7);
     }
 
     public String getHostName() {
