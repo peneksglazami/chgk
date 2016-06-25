@@ -15,6 +15,7 @@
  */
 package org.cherchgk.security.realms;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -58,15 +59,7 @@ public class HibernateRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
-        User user;
-        try {
-            Query query = entityManager.createQuery("select user from User user where user.username = :username", User.class)
-                    .setParameter("username", username);
-            query.setHint("org.hibernate.cacheable", true);
-            user = (User) query.getSingleResult();
-        } catch (NoResultException ex) {
-            throw new UnknownAccountException("No account found for user [" + username + "]");
-        }
+        User user = getUser(username);
 
         if (user.getBlocked()) {
             throw new DisabledAccountException("Account for user [" + username + "] is locked");
@@ -79,10 +72,19 @@ public class HibernateRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) getAvailablePrincipal(principals);
-        Query query = entityManager.createQuery("select user from User user where user.username = :username", User.class)
-                .setParameter("username", username);
-        query.setHint("org.hibernate.cacheable", true);
-        User user = (User) query.getSingleResult();
+
+        User user;
+        try {
+            user = getUser(username);
+        } catch (UnknownAccountException ex) {
+            SecurityUtils.getSubject().logout();
+            return null;
+        }
+
+        if (user.getBlocked()) {
+            SecurityUtils.getSubject().logout();
+            return null;
+        }
 
         Set<String> roleNames = new HashSet<String>();
         Set<String> permissions = new HashSet<String>();
@@ -101,5 +103,16 @@ public class HibernateRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roleNames);
         info.setStringPermissions(permissions);
         return info;
+    }
+
+    private User getUser(String username) {
+        try {
+            Query query = entityManager.createQuery("select user from User user where user.username = :username", User.class)
+                    .setParameter("username", username);
+            query.setHint("org.hibernate.cacheable", true);
+            return (User) query.getSingleResult();
+        } catch (NoResultException ex) {
+            throw new UnknownAccountException("No account found for user [" + username + "]");
+        }
     }
 }
