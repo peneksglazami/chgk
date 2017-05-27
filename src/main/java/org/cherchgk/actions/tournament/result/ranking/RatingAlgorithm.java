@@ -72,7 +72,7 @@ public class RatingAlgorithm implements RankingAlgorithm {
     public Map<Team, RankingPoint> getRankingPoints(Tournament tournament, Collection<Team> teams,
                                                     Collection<RightAnswer> rightAnswers) {
         int[] questionsRanking = new int[tournament.getQuestionAmount()];
-        for (int i = 1; i < tournament.getQuestionAmount(); i++) {
+        for (int i = 0; i < tournament.getQuestionAmount(); i++) {
             questionsRanking[i] = teams.size() + 1;
         }
         for (RightAnswer rightAnswer : rightAnswers) {
