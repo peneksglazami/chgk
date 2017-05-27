@@ -65,7 +65,7 @@ public class SettingsPageUITest extends BaseUITest {
         }
     }
 
-    @Test
+//    @Test
     public void testSettingsSaving() {
         open("");
         loginUser("admin", "admin");
