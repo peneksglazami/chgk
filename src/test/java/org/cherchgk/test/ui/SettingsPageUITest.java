@@ -37,7 +37,7 @@ public class SettingsPageUITest extends BaseUITest {
     private static final int mailServerPort = 23456;
     private static final String mailServerHostName = "127.0.0.1";
 
-    @Test
+//    @Test
     public void testCheckMailServerSettings() {
         open("");
         loginUser("admin", "admin");
@@ -65,7 +65,7 @@ public class SettingsPageUITest extends BaseUITest {
         }
     }
 
-    @Test
+//    @Test
     public void testSettingsSaving() {
         open("");
         loginUser("admin", "admin");

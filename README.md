@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/peneksglazami/chgk/badge.svg?branch=master&service=github)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
 [![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
 [![SourceForge](https://img.shields.io/sourceforge/dt/chgk.svg)](http://sourceforge.net/projects/chgk/files/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/peneksglazami/chgk.svg)](https://hub.docker.com/r/peneksglazami/chgk)
 
 Основной целью данного проекта является создание веб-приложения для проведения турниров по спортивной версии игры "Что? Где? Когда?".
 
@@ -17,6 +18,22 @@
 Демо-версии
 -----
 Демо-версия приложения (v0.6) доступна по адресу http://demo.playchgk.ru (или http://demo-chgk.rhcloud.com). Милости просим.
+
+Docker-образы
+-----
+Приложение также доступно в виде docker-образов, которые размещены тут https://hub.docker.com/r/peneksglazami/chgk
+
+Для запуска контейнера (например, для версии приложения 0.6) необходимо выполнить команду
+```
+docker run peneksglazami/chgk:0.6
+```
+После запуска контейнера приложение будет доступно по адресу http://container-ip:8080/chgk
+
+Приложение запускается на порту 8080. Если вам необходимо изменить порт, на котором будет доступно приложение, то используйте такую команду
+```
+docker run -p 80:8080 peneksglazami/chgk:0.6
+```
+В приведённом примере приложение будет доступно по адресу http://container-ip:80/chgk
 
 Основные возможности и особенности (v0.1)
 -----
