@@ -6,6 +6,9 @@ jdk:
 
 install: true
 
+services:
+  - docker
+
 addons:
   apt:
     sources:
@@ -27,7 +30,12 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - mvn clean cobertura:cobertura -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+  - mvn clean package -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dwebdriver.chrome.driver=/usr/bin/chromedriver
 
 after_success:
   - mvn coveralls:report
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=peneksglazami/chgk
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$TAG .
+  - docker push $REPO
