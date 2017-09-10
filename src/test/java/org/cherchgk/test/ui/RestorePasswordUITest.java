@@ -88,14 +88,14 @@ public class RestorePasswordUITest extends BaseUITest {
         mailServer.reset();
     }
 
-//    @Test
+    @Test
     public void testUserNotFound() {
         openRestorePasswordPage();
         restorePassword("unknown@example.com");
         $(Selectors.withText(RestorePasswordAction.USER_NOT_FOUND)).shouldBe(Condition.visible);
     }
 
-//    @Test
+    @Test
     public void testSuccessfulRestorePassword() throws MessagingException, IOException {
         openRestorePasswordPage();
         restorePassword("test-user@example.com");
@@ -140,7 +140,7 @@ public class RestorePasswordUITest extends BaseUITest {
         $(By.id("set-new-password-button")).shouldBe(Condition.not(Condition.exist));
     }
 
-    //@Test
+    @Test
     public void testMailSendingFailure() throws MessagingException {
         mailServer.stop();
         openRestorePasswordPage();
