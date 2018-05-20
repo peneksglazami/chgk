@@ -18,7 +18,7 @@ addons:
 
 before_script:
   - "sudo apt-get install unzip"
-  - "wget http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+  - "wget -O LATEST_RELEASE http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
   - "read CHROMEDRIVER_LATEST_RELEASE < LATEST_RELEASE"
   - "wget -N http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_LATEST_RELEASE/chromedriver_linux64.zip"
   - "unzip chromedriver_linux64.zip"
