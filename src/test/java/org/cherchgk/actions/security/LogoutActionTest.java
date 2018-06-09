@@ -17,26 +17,23 @@ package org.cherchgk.actions.security;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionProxy;
-import junit.framework.TestSuite;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.struts2.StrutsSpringTestCase;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit3.PowerMockSuite;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * Тесты операции выхода из учетной записи.
  *
  * @author Andrey Grigorov
  */
+@RunWith(PowerMockRunner.class)
 @PrepareForTest(SecurityUtils.class)
 public class LogoutActionTest extends StrutsSpringTestCase {
-
-    public static TestSuite suite() throws Exception {
-        return new PowerMockSuite(LogoutActionTest.class);
-    }
 
     public void testCorrectUserLogout() throws Exception {
         ActionProxy proxy = getActionProxy("/logout");
