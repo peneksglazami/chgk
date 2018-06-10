@@ -1,7 +1,7 @@
 # Веб-приложение для проведения турниров по спортивному варианту игры "Что? Где? Когда?"
 
 [![Build Status](https://travis-ci.org/peneksglazami/chgk.svg?branch=master)](https://travis-ci.org/peneksglazami/chgk)
-[![Coverage Status](https://coveralls.io/repos/peneksglazami/chgk/badge.svg?branch=master&service=github)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/peneksglazami/chgk/badge.svg?branch=master)](https://coveralls.io/github/peneksglazami/chgk?branch=master)
 [![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
 [![SourceForge](https://img.shields.io/sourceforge/dt/chgk.svg)](http://sourceforge.net/projects/chgk/files/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/peneksglazami/chgk.svg)](https://hub.docker.com/r/peneksglazami/chgk)
