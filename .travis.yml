@@ -1,5 +1,5 @@
+os: linux
 language: java
-sudo: required
 dist: trusty
 jdk:
   - openjdk8
@@ -13,7 +13,7 @@ addons:
   chrome: stable
 
 script:
-  - mvn clean package -Dmaven.javadoc.skip=true -Dselenide.browser=chrome
+  - mvn clean package -Dmaven.javadoc.skip=true -Dselenide.browser=chrome -Dselenide.headless=true
 
 after_success:
   - mvn coveralls:report
