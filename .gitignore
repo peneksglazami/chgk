@@ -16,3 +16,5 @@
 /distrib/
 .idea
 *.iml
+/target
+/build
