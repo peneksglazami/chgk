@@ -18,8 +18,8 @@ package org.cherchgk.test.ui;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 
@@ -71,7 +71,7 @@ public abstract class BaseUITest {
         exitElement.click();
     }
 
-    @Before
+    @After
     public void deleteAllCookies() {
         getWebDriver().manage().deleteAllCookies();
     }
