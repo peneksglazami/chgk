@@ -13,8 +13,10 @@ addons:
   chrome: stable
 
 before_script:
+  - CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
+  - CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
+  - curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
   - "sudo apt-get install unzip"
-  - "wget -N http://chromedriver.storage.googleapis.com/2.38/chromedriver_linux64.zip"
   - "unzip chromedriver_linux64.zip"
   - "chmod +x chromedriver"
   - "sudo mv -f chromedriver /usr/local/share/chromedriver"
