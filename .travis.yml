@@ -10,11 +10,7 @@ services:
   - docker
 
 addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+  chrome: stable
 
 before_script:
   - "sudo apt-get install unzip"
