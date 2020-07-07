@@ -5,6 +5,7 @@
 [![](https://img.shields.io/badge/License-Apache%202-blue.svg)](LICENSE)
 [![SourceForge](https://img.shields.io/sourceforge/dt/chgk.svg)](http://sourceforge.net/projects/chgk/files/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/peneksglazami/chgk.svg)](https://hub.docker.com/r/peneksglazami/chgk)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=chgk-demo)](https://chgk-demo.herokuapp.com/)
 
 Основной целью данного проекта является создание веб-приложения для проведения турниров по спортивной версии игры "Что? Где? Когда?".
 
@@ -17,7 +18,7 @@
 
 Демо-версии
 -----
-Демо-версия приложения (соответствует ветке master) доступна по адресу http://demo.playchgk.ru. Милости просим.
+Демо-версия приложения (соответствует ветке master) доступна по адресу https://chgk-demo.herokuapp.com/.
 
 Docker-образы
 -----
@@ -131,4 +132,4 @@ docker run peneksglazami/chgk:<название ветки>
 
 Для хостинга демо-приложений мы используем
 -----
-<a href="http://openshift.com/"><img src="https://mirror.openshift.com/pub/openshift/logo/openshift_logo_wide_blk250.png"/></a>
+<a href="https://heroku.com/"><img src="https://brand.heroku.com/static/media/heroku-logotype-horizontal.81c49462.svg"/></a>
