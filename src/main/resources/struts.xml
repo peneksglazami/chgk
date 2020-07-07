@@ -22,6 +22,7 @@
     <constant name="struts.objectFactory" value="spring"/>
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.action.excludePattern" value=".*meteor.*"/>
+    <constant name="struts.mapper.action.prefix.enabled" value="true"/>
 
     <package name="chgk" extends="struts-default, json-default">
         <result-types>
