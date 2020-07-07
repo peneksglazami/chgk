@@ -14,7 +14,6 @@
 Дистрибутивные архивы
 -----
 Дистрибутивные архивы с приложением можно скачать на https://sourceforge.net/projects/chgk/files/.
-Инструкцию по запуску приложения читайте тут https://code.google.com/p/chgk/wiki/Install.
 
 Демо-версии
 -----
